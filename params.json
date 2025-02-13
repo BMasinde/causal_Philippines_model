@@ -142,6 +142,8 @@
   },
   "name": "Causal Philippines Damage Predictions",
   "projectStatus": "Sandbox",
+  "imgPattern": 4,
+  "showInitials": false,
   "metrics": {
     "probes": [],
     "engineConfig": {
@@ -221,14 +223,14 @@
             "stateChangedOn": 0
           },
           {
-            "done": false,
+            "done": true,
             "text": "Set a project image (click on the color next to the project title)",
             "createdOn": 1739442701011,
             "createdBy": "admin",
             "stateChangedOn": 0
           },
           {
-            "done": false,
+            "done": true,
             "text": "Import your [first dataset](projects/CAUSALPHILIPPINESDAMAGEPREDICTIONS/datasets/new/)",
             "createdOn": 1739442701012,
             "createdBy": "admin",
