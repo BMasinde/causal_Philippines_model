@@ -2,7 +2,8 @@
   "type": "UploadedFiles",
   "managed": false,
   "featureGroup": false,
-  "shortDesc": "DSWD Philippines tropical cyclone dataset.",
+  "description": "The data represents observations of building damage (percentages) as a result of tropical storms (Typhoons) aggregated by municipalities in the Philippines. Each observation contains variables that represent the characterstics of the tropical storm relative to the municipality. ",
+  "shortDesc": "Philippines municipality damage from tropical cyclones.",
   "formatType": "csv",
   "checklists": {
     "checklists": []
