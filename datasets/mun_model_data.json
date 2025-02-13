@@ -2,6 +2,7 @@
   "type": "UploadedFiles",
   "managed": false,
   "featureGroup": false,
+  "shortDesc": "DSWD Philippines tropical cyclone dataset.",
   "formatType": "csv",
   "checklists": {
     "checklists": []
