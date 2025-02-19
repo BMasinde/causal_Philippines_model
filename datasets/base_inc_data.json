@@ -2,6 +2,8 @@
   "type": "UploadedFiles",
   "managed": false,
   "featureGroup": false,
+  "description": "Philippines base tropical cyclone data with income classes. Same dataset as provided by Van Den Homberg \u0026 team but i addded  income classes, correspondence codes for the municipalites, population (census). If i remember correctly I got these from web-scrapping (using Python script) the Philippines Statistics Office Website.",
+  "shortDesc": "base tropical cyclone data with income classes",
   "formatType": "csv",
   "checklists": {
     "checklists": []
