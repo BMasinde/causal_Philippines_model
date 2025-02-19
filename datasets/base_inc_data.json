@@ -1,0 +1,221 @@
+{
+  "type": "UploadedFiles",
+  "managed": false,
+  "featureGroup": false,
+  "formatType": "csv",
+  "checklists": {
+    "checklists": []
+  },
+  "checks": [],
+  "customMeta": {
+    "kv": {}
+  },
+  "flowOptions": {
+    "virtualizable": false,
+    "rebuildBehavior": "NORMAL",
+    "crossProjectBuildBehavior": "DEFAULT"
+  },
+  "readWriteOptions": {
+    "preserveOrder": false,
+    "writeBuckets": 1,
+    "forceSingleOutputFile": false,
+    "defaultReadOrdering": {
+      "enabled": false,
+      "rules": []
+    }
+  },
+  "formatParams": {
+    "style": "excel",
+    "charset": "utf-8",
+    "separator": ",",
+    "quoteChar": "\"",
+    "escapeChar": "\\",
+    "maxRowChars": 100000000,
+    "dateSerializationFormat": "ISO",
+    "arrayMapFormat": "json",
+    "hiveSeparators": [
+      "\u0002",
+      "\u0003",
+      "\u0004",
+      "\u0005",
+      "\u0006",
+      "\u0007",
+      "\b"
+    ],
+    "skipRowsBeforeHeader": 0,
+    "parseHeaderRow": true,
+    "skipRowsAfterHeader": 0,
+    "probableNumberOfRecords": 45,
+    "normalizeBooleans": false,
+    "normalizeDoubles": true,
+    "readAdditionalColumnsBehavior": "INSERT_IN_DATA_WARNING",
+    "readMissingColumnsBehavior": "DISCARD_SILENT",
+    "readDataTypeMismatchBehavior": "DISCARD_WARNING",
+    "writeDataTypeMismatchBehavior": "DISCARD_WARNING",
+    "fileReadFailureBehavior": "FAIL",
+    "compress": ""
+  },
+  "partitioning": {
+    "ignoreNonMatchingFile": false,
+    "considerMissingRequestedPartitionsAsEmpty": false,
+    "dimensions": []
+  },
+  "creationTag": {
+    "versionNumber": 0,
+    "lastModifiedBy": {
+      "login": "admin"
+    },
+    "lastModifiedOn": 1739955138276
+  },
+  "tags": [],
+  "params": {
+    "uploadBoxId": "3e40506aa4b9f6ea6f21d892c7a6815d1cf669d1465c6644258c9fa09ecb87bd",
+    "uploadConnection": "Default (in DSS data dir.)",
+    "notReadyIfEmpty": false,
+    "filesSelectionRules": {
+      "mode": "ALL",
+      "excludeRules": [],
+      "includeRules": [],
+      "explicitFiles": []
+    },
+    "variablesExpansionLoopConfig": {
+      "enabled": false,
+      "mode": "CREATE_VARIABLE_FOR_EACH_COLUMN",
+      "replacements": []
+    }
+  },
+  "schema": {
+    "columns": [
+      {"name":"Mun_Code","type":"string"},
+      {"name":"typhoon","type":"string"},
+      {"name":"HAZ_rainfall_Total","type":"string"},
+      {"name":"HAZ_rainfall_max_6h","type":"string"},
+      {"name":"HAZ_rainfall_max_24h","type":"string"},
+      {"name":"HAZ_v_max","type":"string"},
+      {"name":"HAZ_dis_track_min","type":"string"},
+      {"name":"GEN_landslide_per","type":"string"},
+      {"name":"GEN_stormsurge_per","type":"string"},
+      {"name":"GEN_Bu_p_inSSA","type":"string"},
+      {"name":"GEN_Bu_p_LS","type":"string"},
+      {"name":"GEN_Red_per_LSbldg","type":"string"},
+      {"name":"GEN_Or_per_LSblg","type":"string"},
+      {"name":"GEN_Yel_per_LSSAb","type":"string"},
+      {"name":"GEN_RED_per_SSAbldg","type":"string"},
+      {"name":"GEN_OR_per_SSAbldg","type":"string"},
+      {"name":"GEN_Yellow_per_LSbl","type":"string"},
+      {"name":"TOP_mean_slope","type":"string"},
+      {"name":"TOP_mean_elevation_m","type":"string"},
+      {"name":"TOP_ruggedness_stdev","type":"string"},
+      {"name":"TOP_mean_ruggedness","type":"string"},
+      {"name":"TOP_slope_stdev","type":"string"},
+      {"name":"VUL_poverty_perc","type":"string"},
+      {"name":"GEN_with_coast","type":"string"},
+      {"name":"GEN_coast_length","type":"string"},
+      {"name":"VUL_Housing_Units","type":"string"},
+      {"name":"VUL_StrongRoof_StrongWall","type":"string"},
+      {"name":"VUL_StrongRoof_LightWall","type":"string"},
+      {"name":"VUL_StrongRoof_SalvageWall","type":"string"},
+      {"name":"VUL_LightRoof_StrongWall","type":"string"},
+      {"name":"VUL_LightRoof_LightWall","type":"string"},
+      {"name":"VUL_LightRoof_SalvageWall","type":"string"},
+      {"name":"VUL_SalvagedRoof_StrongWall","type":"string"},
+      {"name":"VUL_SalvagedRoof_LightWall","type":"string"},
+      {"name":"VUL_SalvagedRoof_SalvageWall","type":"string"},
+      {"name":"VUL_vulnerable_groups","type":"string"},
+      {"name":"VUL_pantawid_pamilya_beneficiary","type":"string"},
+      {"name":"DAM_perc_dmg","type":"string"},
+      {"name":"Mun_Code_2","type":"string"},
+      {"name":"Unnamed: 0","type":"string"},
+      {"name":"Municipality","type":"string"},
+      {"name":"10 Digit Code","type":"string"},
+      {"name":"Correspondence Code","type":"string"},
+      {"name":"Income Class","type":"string"},
+      {"name":"Population(2020 Census)","type":"string"}
+    ],
+    "userModified": true
+  },
+  "typeSystemVersion": "V2",
+  "dkuProperties": [],
+  "metrics": {
+    "probes": [
+      {
+        "type": "basic",
+        "enabled": true,
+        "computeOnBuildMode": "PARTITION",
+        "meta": {
+          "name": "Basic data",
+          "level": 0
+        },
+        "configuration": {}
+      },
+      {
+        "type": "records",
+        "enabled": true,
+        "computeOnBuildMode": "NO",
+        "meta": {
+          "name": "Record count",
+          "level": 0
+        },
+        "configuration": {}
+      }
+    ],
+    "engineConfig": {
+      "padRunsWithMetrics": false,
+      "hive": {
+        "active": true,
+        "extraConf": []
+      },
+      "basic": {},
+      "dss": {
+        "active": true,
+        "selection": {
+          "useMemTable": false,
+          "filter": {
+            "distinct": false,
+            "enabled": false
+          },
+          "partitionSelectionMethod": "ALL",
+          "latestPartitionsN": 1,
+          "ordering": {
+            "enabled": false,
+            "rules": []
+          },
+          "samplingMethod": "FULL",
+          "maxRecords": -1,
+          "targetRatio": 0.02,
+          "ascending": true,
+          "withinFirstN": -1,
+          "maxReadUncompressedBytes": -1
+        }
+      },
+      "sql": {
+        "active": true
+      },
+      "impala": {
+        "active": true
+      },
+      "spark": {
+        "active": true,
+        "extraConf": []
+      },
+      "python": {}
+    },
+    "displayedState": {
+      "columns": [],
+      "metrics": [
+        "basic:COUNT_COLUMNS",
+        "basic:COUNT_FILES",
+        "basic:SIZE",
+        "records:COUNT_RECORDS"
+      ]
+    }
+  },
+  "metricsChecks": {
+    "monitor": false,
+    "checks": [],
+    "displayedState": {
+      "checks": []
+    }
+  },
+  "customFields": {}
+}
