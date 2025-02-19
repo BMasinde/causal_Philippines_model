@@ -6,7 +6,22 @@
   "shortDesc": "base tropical cyclone data with income classes",
   "formatType": "csv",
   "checklists": {
-    "checklists": []
+    "checklists": [
+      {
+        "id": "a48c30",
+        "title": "Todo list",
+        "createdOn": 0,
+        "items": [
+          {
+            "done": false,
+            "text": "Fill missing income (if we\u0027re to do analyses based on income classes in future)",
+            "createdOn": 1739963819277,
+            "createdBy": "admin",
+            "stateChangedOn": 0
+          }
+        ]
+      }
+    ]
   },
   "checks": [],
   "customMeta": {
