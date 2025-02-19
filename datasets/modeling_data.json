@@ -118,7 +118,7 @@
       {"name":"damage_perc","type":"double"},
       {"name":"region","type":"string"},
       {"name":"island_groups","type":"string"},
-      {"name":"damage_binary","type":"double"},
+      {"name":"damage_binary","type":"double","meaning":"Boolean"},
       {"name":"wind_blue_ss","type":"double"},
       {"name":"wind_yellow_ss","type":"double"},
       {"name":"wind_orange_ss","type":"double"},
