@@ -1,7 +1,7 @@
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # Adding Regions to the base_inc_data
 library(dataiku)
-
+library(dplyr)
 
 # Regional data, including corresponding codes and names, are obtained from the
 # Philippine Statistics Authority website: https://psa.gov.ph/classification/psgc.
@@ -75,15 +75,35 @@ regions_df <- as.data.frame(
 )
 
 
-
 # Recipe inputs
 base_inc_data <- dkuReadDataset("base_inc_data", samplingMethod="head", nbRows=100000)
 
-#
+# Creating base_data_regions which will be the output of this recipe
 base_data_regions <- base_inc_data # For this sample code, simply copy input to output
 
-#
+# Correct length of Mun_Code_2 (should be 9 or 10 digits)
+base_data_regions <- within(base_data_regions, {
+  Mun_Code_2 <- as.character(Mun_Code_2)  # Ensure it's a character type
+  
+  Mun_Code_2 <- ifelse(
+    nchar(Mun_Code_2) < 9, 
+    paste0("0", Mun_Code_2),  # Append zero if length is less than 9
+    Mun_Code_2                # Otherwise, keep as is
+  )
+})
 
+# Joining base_data_regions with regions_df to add the region columns
+base_data_regions <- base_data_regions %>%
+  # Extract the first two characters of D
+  mutate(Key = substr(Mun_Code_2, 1, 2)) %>%
+  # Perform a left join with B
+  left_join(
+    regions_df %>%
+      mutate(Key = substr(region_code, 1, 2)) %>% 
+      select(Key, region, island_groups), # Keep only the relevant columns from B
+    by = "Key"
+  ) %>%
+  select(-Key) # Drop the intermediate Key column
 
 
 # Recipe outputs
