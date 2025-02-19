@@ -48,7 +48,13 @@ base_modeling_data <- base_inc_data %>%
 
 ## Keeping only columns needed for modeling
 base_modeling_data <- base_modeling_data %>%
-    select(-vulnerable_groups, 
+    select(-Mun_code,
+           -typhoon,
+           -Mun_code2,
+           -Unnamed..0,
+           -X10.Digit.Code,
+           Correspondence.Code,
+           -vulnerable_groups, 
            -pantawid_benef, 
            -rain_max6h, 
            -rain_max24h, 
