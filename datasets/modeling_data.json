@@ -118,7 +118,7 @@
       {"name":"damage_perc","type":"double"},
       {"name":"region","type":"string"},
       {"name":"island_groups","type":"string"},
-      {"name":"damage_binary","type":"double","meaning":"DoubleMeaning"},
+      {"name":"damage_binary","type":"string"},
       {"name":"wind_blue_ss","type":"double"},
       {"name":"wind_yellow_ss","type":"double"},
       {"name":"wind_orange_ss","type":"double"},
@@ -128,7 +128,7 @@
       {"name":"rain_orange_ss","type":"double"},
       {"name":"rain_red_ss","type":"double"}
     ],
-    "userModified": true
+    "userModified": false
   },
   "typeSystemVersion": "V2",
   "dkuProperties": [],
