@@ -2,6 +2,7 @@
   "type": "Filesystem",
   "managed": true,
   "featureGroup": false,
+  "shortDesc": "Cleaned data for training and validating causal ML models",
   "formatType": "csv",
   "checklists": {
     "checklists": []
@@ -128,7 +129,7 @@
       {"name":"rain_orange_ss","type":"double"},
       {"name":"rain_red_ss","type":"double"}
     ],
-    "userModified": false
+    "userModified": true
   },
   "typeSystemVersion": "V2",
   "dkuProperties": [],
