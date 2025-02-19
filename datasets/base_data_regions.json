@@ -2,6 +2,8 @@
   "type": "Filesystem",
   "managed": true,
   "featureGroup": false,
+  "description": "Philippines tropical cyclone dataset with Municipality regions and island groups",
+  "shortDesc": "base data with regions and island groups added",
   "formatType": "csv",
   "checklists": {
     "checklists": []
@@ -134,7 +136,7 @@
       {"name":"region","type":"string"},
       {"name":"island_groups","type":"string"}
     ],
-    "userModified": false
+    "userModified": true
   },
   "typeSystemVersion": "V2",
   "dkuProperties": [],
