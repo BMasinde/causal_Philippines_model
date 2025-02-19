@@ -230,7 +230,7 @@
         "id": "ZSaZubeK",
         "displayName": "No empty values exist in island_groups",
         "computeOnBuildMode": "PARTITION",
-        "autoRun": false,
+        "autoRun": true,
         "enabled": true
       }
     ],
