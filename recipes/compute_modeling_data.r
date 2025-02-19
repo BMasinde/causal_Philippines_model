@@ -79,7 +79,7 @@ modeling_data <- modeling_data %>%
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # Handling NULL values in outcome (damage_perc)
-# Update DAM_perc_dmg column based on conditions
+# Update damage_perc column based on conditions
 modeling_data$damage_perc <- with(modeling_data, {
   # Check if damage_perc is NA and if wind_max is less than 25 and rain_total is less than 50
   ifelse(
@@ -88,6 +88,7 @@ modeling_data$damage_perc <- with(modeling_data, {
     damage_perc  # otherwise, retain the original value of DAM_perc_dmg
   )
 })
+
 
 # Remove observations that remain with NULL values
 modeling_data <- modeling_data  %>%
@@ -104,6 +105,9 @@ modeling_data$damage_binary <- with(modeling_data, {
       0 # otherwise, set to zero
   )
 })
+
+# binary outcome converted to factor
+modeling_data$damage_binary <- factor(modeling_data$damage_binary)
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # Interaction terms between wind and strom surge risk zones
