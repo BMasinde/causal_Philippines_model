@@ -1,6 +1,6 @@
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # Recipe creates modeling_data
-# The output dataset modeling_data will be used for 
+# The output dataset modeling_data will be used for
 # training and validating the causal model
 
 # libraries
@@ -8,7 +8,6 @@ library(dataiku)
 library(dplyr)
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
-
 # Recipe inputs: base_data_regions
 base_data_regions <- dkuReadDataset("base_data_regions", samplingMethod="head", nbRows=100000)
 
@@ -58,7 +57,6 @@ modeling_data <- modeling_data %>%
   )
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
-
 # Removing columns not needed for modeling
 modeling_data <- modeling_data %>%
     select(-Mun_Code,
@@ -80,7 +78,6 @@ modeling_data <- modeling_data %>%
           )
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
-
 # Handling NULL values in outcome (damage_perc)
 # Update DAM_perc_dmg column based on conditions
 modeling_data$damage_perc <- with(modeling_data, {
@@ -92,19 +89,23 @@ modeling_data$damage_perc <- with(modeling_data, {
   )
 })
 
-# -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
+# Remove observations that remain with NULL values
+modeling_data <- modeling_data  %>%
+  filter(
+      !is.na(damage_perc)
+  )
 
+# -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # Creating a binary outcome (damage_binary) (1 = damage_perc >= 10, 0 otherwise)
 modeling_data$damage_binary <- with(modeling_data, {
   ifelse(
       damage_perc >= 10, # check if damage_perc is greater or equal to 10
       1, # if condition is true, set damage_binary to 1
       0 # otherwise, set to zero
-  )  
+  )
 })
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
-
 # Interaction terms between wind and strom surge risk zones
 # And interaction terms between rainfall and landslide risk zones
 modeling_data <- modeling_data %>%
