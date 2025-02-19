@@ -86,8 +86,6 @@
   },
   "schema": {
     "columns": [
-      {"name":"Mun_Code","type":"string"},
-      {"name":"typhoon","type":"string"},
       {"name":"rain_total","type":"double"},
       {"name":"wind_max","type":"double"},
       {"name":"track_min_dist","type":"double"},
@@ -117,11 +115,7 @@
       {"name":"roof_salv_wall_strong","type":"double"},
       {"name":"roof_salv_wall_light","type":"double"},
       {"name":"roof_salv_wall_salv","type":"double"},
-      {"name":"damage_perc","type":"double"},
-      {"name":"Mun_Code_2","type":"bigint"},
-      {"name":"Unnamed..0","type":"double"},
-      {"name":"X10.Digit.Code","type":"double"},
-      {"name":"Correspondence.Code","type":"double"}
+      {"name":"damage_perc","type":"double"}
     ],
     "userModified": false
   },
