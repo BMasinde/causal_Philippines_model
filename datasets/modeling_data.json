@@ -128,7 +128,7 @@
       {"name":"rain_orange_ss","type":"double"},
       {"name":"rain_red_ss","type":"double"}
     ],
-    "userModified": false
+    "userModified": true
   },
   "typeSystemVersion": "V2",
   "dkuProperties": [],
@@ -208,7 +208,64 @@
   },
   "metricsChecks": {
     "monitor": false,
-    "checks": [],
+    "checks": [
+      {
+        "type": "ColumnNotEmptyRule",
+        "columns": [
+          "rain_total",
+          "wind_max",
+          "track_min_dist",
+          "ls_risk_pct",
+          "ss_risk_pct",
+          "blue_ss_frac",
+          "blue_ls_frac",
+          "red_ls_frac",
+          "orange_ls_frac",
+          "yellow_ss_frac",
+          "red_ss_frac",
+          "orange_ss_frac",
+          "yellow_ls_frac",
+          "slope_mean",
+          "elev_mean",
+          "ruggedness_sd",
+          "ruggedness_mean",
+          "slope_sd",
+          "has_coast",
+          "coast_length",
+          "roof_strong_wall_strong",
+          "roof_strong_wall_light",
+          "roof_strong_wall_salv",
+          "roof_light_wall_strong",
+          "roof_light_wall_light",
+          "roof_light_wall_salv",
+          "roof_salv_wall_strong",
+          "roof_salv_wall_light",
+          "roof_salv_wall_salv",
+          "damage_perc",
+          "region",
+          "island_groups",
+          "damage_binary",
+          "wind_blue_ss",
+          "wind_yellow_ss",
+          "wind_orange_ss",
+          "wind_red_ss",
+          "rain_blue_ss",
+          "rain_yellow_ss",
+          "rain_orange_ss",
+          "rain_red_ss"
+        ],
+        "thresholdType": "ENTIRE_COLUMN_NOT_EMPTY",
+        "maximum": 0.0,
+        "maximumEnabled": false,
+        "softMaximum": 0.0,
+        "softMaximumEnabled": false,
+        "id": "kAwhxZYk",
+        "displayName": "No empty values exist in 41 columns",
+        "computeOnBuildMode": "PARTITION",
+        "autoRun": true,
+        "enabled": true
+      }
+    ],
     "displayedState": {
       "checks": []
     }
