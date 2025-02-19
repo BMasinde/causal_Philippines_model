@@ -46,6 +46,8 @@
     },
     "lastModifiedOn": 1739965478275
   },
+  "description": "Recipe creates modeling data by renaming columns, handling NA values in outcome variable, and creates a dummy binary outcome variable (for hurdle method later). Finally, computes interaction variables for wind and storm surge risk zones an rainfall and landslide risk zones.",
+  "shortDesc": "Creates modeling data",
   "tags": [],
   "customFields": {},
   "checklists": {
