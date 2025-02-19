@@ -3,35 +3,35 @@
 library(dataiku)
 
 
-# Regional data, including corresponding codes and names, are obtained from the  
-# Philippine Statistics Authority website: https://psa.gov.ph/classification/psgc.  
-# To access historical data, we use the Wayback Machine to retrieve a snapshot  
-# from June 19, 2020. Specifically, we refer to the file named  
+# Regional data, including corresponding codes and names, are obtained from the
+# Philippine Statistics Authority website: https://psa.gov.ph/classification/psgc.
+# To access historical data, we use the Wayback Machine to retrieve a snapshot
+# from June 19, 2020. Specifically, we refer to the file named
 # *PSGC Publication March 2020.xlsx*. Since the file is small, we enter the data manually.
 # We get Island groups from Wikipedia: https://en.wikipedia.org/wiki/Island_groups_of_the_Philippines
 # NOTE: WE DO NOT HAVE THE NIR REGION IN THE DATASET
 
 # creating a dataframe with regions:
-region <- c('National Capital Region', 
+region <- c('National Capital Region',
             'Cordillera Administrative Region',
-            'Ilocos Region', 
-            'Cagayan Valley', 
+            'Ilocos Region',
+            'Cagayan Valley',
             'Central Luzon',
-            'CALABARZON', 
+            'CALABARZON',
             'MIMAROPA Region',
             'Bicol Region',
             'Western Visayas',
             'Central Visayas',
             'Eastern Visayas',
             'Zamboanga Peninsula',
-            'Northern Mindanao', 
+            'Northern Mindanao',
             'Davao Region',
             'SOCCSKSARGEN',
             'Caraga',
             'ARMM')
 
 region_code <- c('1300000000',
-                 '1400000000', 
+                 '1400000000',
                  '0100000000',
                  '0200000000',
                  '0300000000',
@@ -49,27 +49,27 @@ region_code <- c('1300000000',
                  '1500000000')
 
 
-island_groups <- c("Luzon", 
-                   "Luzon", 
-                   "Luzon", 
-                   "Luzon", 
-                   "Luzon", 
-                   "Luzon", 
-                   "Luzon", 
+island_groups <- c("Luzon",
                    "Luzon",
-                   "Visayas", 
-                   "Visayas", 
-                   "Visayas", 
-                   "Mindanao", 
-                   "Mindanao", 
+                   "Luzon",
+                   "Luzon",
+                   "Luzon",
+                   "Luzon",
+                   "Luzon",
+                   "Luzon",
+                   "Visayas",
+                   "Visayas",
+                   "Visayas",
                    "Mindanao",
-                   "Mindanao", 
-                   "Mindanao", 
+                   "Mindanao",
+                   "Mindanao",
+                   "Mindanao",
+                   "Mindanao",
                    "Mindanao"
                    )
-# creating dataframe with the region names, regional codes, and respective island groups
+# Creating dataframe with the region names, regional codes, and respective island groups
 regions_df <- as.data.frame(
-    cbind(region_code, 
+    cbind(region_code,
           region, island_groups
          )
 )
