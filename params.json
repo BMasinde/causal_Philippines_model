@@ -207,6 +207,7 @@
     },
     "lastModifiedOn": 1739442700990
   },
+  "description": "Project investigates for algorithmic biases in the Philippines TC early warning system using structural causal models and counterfactuals.",
   "shortDesc": "The project *Causal Philippines Damage Predictions* was created by Brian Masinde on Feb 13th 2025",
   "tags": [],
   "customFields": {},
