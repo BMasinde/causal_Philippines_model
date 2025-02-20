@@ -22,4 +22,4 @@ saveRDS(base_wind_max_model, file = paste0(dkuManagedFolderPath, "/base_wind_max
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # Recipe outputs
-scm_models <- dkuManagedFolderPath("XxDUuuYe")
+#scm_models <- dkuManagedFolderPath("XxDUuuYe")
