@@ -14,14 +14,19 @@ df_base_train <- dkuReadDataset("base_train", samplingMethod="head", nbRows=1000
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # training on base_train data
-wind_max_fit <- rpart(wind_max ~ track_min_dist, 
-                       data = df_base_train, 
+wind_max_fit <- rpart(wind_max ~ track_min_dist,
+                       data = df_base_train,
                        method = "anova")
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
-# predict
-wind_max_pred <- predict(wind_max_fit, 
+# scm prediction for wind
+# wind_max = f(track_min_dist, e)
+wind_max_pred <- predict(wind_max_fit,
                          newdata = df_base_train)
+
+# -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
+# creating a dataframe with the prediction
+base_wind_pred  <- as.data.frame(wind_max_pred)
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # Recipe outputs
