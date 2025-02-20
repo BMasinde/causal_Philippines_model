@@ -5,13 +5,14 @@
       "grid": {
         "tiles": []
       },
+      "title": "Causal Model(s) Metrics",
       "show": true,
-      "showTitle": false,
+      "showTitle": true,
       "titleAlign": "CENTER",
       "titleFontColor": "#444444",
       "titleFontSize": 28,
       "enableCrossFilters": true,
-      "backgroundColor": "#ffffff",
+      "backgroundColor": "#DBE9DD",
       "showFilterPanel": true,
       "filtersParams": {
         "panelPosition": "TOP",
