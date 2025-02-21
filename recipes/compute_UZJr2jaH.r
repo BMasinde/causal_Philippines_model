@@ -20,7 +20,7 @@ scm_models <- dkuManagedFolderPath("XxDUuuYe")  # Input Managed Folder
 mlflow_output <- dkuManagedFolderPath("UZJr2jaH")  # Output Managed Folder
 
 # Define path to download the RDS file (temporary location)
-local_model_path <- "/tmp/base_wind_pred.rds"
+local_model_path <- "/tmp/base_wind_max_model.rds"
 
 # Download file from Dataiku Managed Folder
 dkuManagedFolderDownloadPath("XxDUuuYe", "base_wind_max_model.rds", local_model_path)
