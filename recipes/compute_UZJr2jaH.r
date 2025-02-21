@@ -1,7 +1,20 @@
+# -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # Load required libraries
 library(dataiku)
 library(mlflow)
 
+# -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
+#folder_path <- dkuManagedFolderPath("scm_models")
+#print(folder_path)
+
+# -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
+# Specify the full file path
+#rds_file_path <- file.path(folder_path, "base_wind_max_model.rds")  # Replace with actual filename
+
+# Read the .rds file
+#my_data <- readRDS(rds_file_path)
+
+# -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # Set up Dataiku Managed Folders
 scm_models <- dkuManagedFolderPath("XxDUuuYe")  # Input Managed Folder
 mlflow_output <- dkuManagedFolderPath("UZJr2jaH")  # Output Managed Folder
@@ -10,7 +23,7 @@ mlflow_output <- dkuManagedFolderPath("UZJr2jaH")  # Output Managed Folder
 local_model_path <- "/tmp/base_wind_pred.rds"
 
 # Download file from Dataiku Managed Folder
-dkuManagedFolderDownloadPath("XxDUuuYe", "base_wind_pred.rds", local_model_path)
+dkuManagedFolderDownloadPath("XxDUuuYe", "base_wind_max_model.rds", local_model_path)
 
 # Check if the file exists
 if (!file.exists(local_model_path)) {
@@ -37,7 +50,7 @@ mlflow_log_metric("RMSE",7.0000)  # Example: log accuracy if available
 mlflow_rfunc_model(model, "base_wind_model")
 
 # Save MLflow model to the Managed Folder
-mlflow_model_path <- file.path(mlflow_output, "wind_model")
+mlflow_model_path <- file.path(mlflow_output, "base_wind_model")
 mlflow_save_model(model, mlflow_model_path)
 
 # End the MLflow run
