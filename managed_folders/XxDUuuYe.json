@@ -1,5 +1,5 @@
 {
-  "name": "scm_models",
+  "name": "scm_base_models",
   "type": "Filesystem",
   "params": {
     "connection": "filesystem_folders",
