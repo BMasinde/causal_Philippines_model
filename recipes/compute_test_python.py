@@ -18,3 +18,6 @@ test_python_df = mun_model_data_df # For this sample code, simply copy input to 
 # Write recipe outputs
 test_python = dataiku.Dataset("test_python")
 test_python.write_with_schema(test_python_df)
+
+
+
