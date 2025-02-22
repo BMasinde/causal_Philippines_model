@@ -1,3 +1,4 @@
+# -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # -*- coding: utf-8 -*-
 import dataiku
 import pandas as pd, numpy as np
@@ -18,6 +19,3 @@ test_python_df = mun_model_data_df # For this sample code, simply copy input to 
 # Write recipe outputs
 test_python = dataiku.Dataset("test_python")
 test_python.write_with_schema(test_python_df)
-
-
-
