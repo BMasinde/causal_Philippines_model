@@ -1,6 +1,7 @@
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 library(dataiku)
 library(rpart)
+library(dplyr)
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # Read the dataset as a R dataframe in memory
