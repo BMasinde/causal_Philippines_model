@@ -100,4 +100,4 @@ metrics_folder_path <- dkuManagedFolderPath("Xu27U2QF")
 dkuWriteDataset(metrics_df, "min_clas_metrics_df")
 
 # Print message to confirm
-print(paste("Metrics saved to:", file_path))
+print(paste("Metrics saved to:", metrics_folder_path))
