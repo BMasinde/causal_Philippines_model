@@ -24,7 +24,7 @@ rain_file_path  <- file.path(folder_path, "base_rain_model.rds")
 
 
 # read the .rds model
-base_clas_min_model  <- readRDS(file_path)
+base_clas_min_model  <- readRDS(clas_file_path)
 base_wind_model  <- readRDS(wind_file_path)
 base_rain_model  <- readRDS(rain_file_path)
 
@@ -88,16 +88,16 @@ metrics_df
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # Recipe outputs
-#metrics_folder_path <- dkuManagedFolderPath("Xu27U2QF")
+metrics_folder_path <- dkuManagedFolderPath("Xu27U2QF")
 
 # Saving the predicted values
 # Define file path
-#file_path <- file.path(metrics_folder_path, "model_metrics.csv")
+file_path <- file.path(metrics_folder_path, "model_metrics.csv")
 
 # Write to CSV
-#fwrite(metrics_df, file = file_path, row.names = FALSE)
+fwrite(metrics_df, file = file_path, row.names = FALSE)
 
-#dkuWriteDataset(metrics_df, "min_clas_metrics_df")
+dkuWriteDataset(metrics_df, "min_clas_metrics_df")
 
 # Print message to confirm
-#print(paste("Metrics saved to:", metrics_folder_path))
+print(paste("Metrics saved to:", metrics_folder_path))
