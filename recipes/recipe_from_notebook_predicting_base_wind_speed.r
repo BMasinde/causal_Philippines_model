@@ -28,11 +28,11 @@ base_rain_total_model <- rpart(rain_total ~ track_min_dist,
 # Adding the predicted parents' to the training dataset
 
 ## predicting wind_max
-wind_max_pred <- predict(base_wind_max_model, 
+wind_max_pred <- predict(base_wind_max_model,
                          newdata = df_base_train)
 
 ## predicting rain_total
-rain_total_pred <- predict(base_rain_total_model, 
+rain_total_pred <- predict(base_rain_total_model,
                          newdata = df_base_train)
 
 df_base_train <- df_base_train %>%
@@ -42,7 +42,7 @@ df_base_train <- df_base_train %>%
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # Training decision tree for classification
-damage_fit_class <- rpart(damage_binary ~ wind_max_pred +
+damage_fit_class_min <- rpart(damage_binary ~ wind_max_pred +
                            rain_total_pred +
                            roof_strong_wall_strong +
                            roof_strong_wall_light +
@@ -55,8 +55,6 @@ damage_fit_class <- rpart(damage_binary ~ wind_max_pred +
                            roof_salv_wall_salv +
                            ls_risk_pct +
                            ss_risk_pct +
-                           ruggedness_mean +
-                           slope_mean +
                            wind_blue_ss +
                            wind_yellow_ss +
                            wind_orange_ss +
@@ -71,7 +69,7 @@ damage_fit_class <- rpart(damage_binary ~ wind_max_pred +
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # Training decision tree for regression
-base_damage_fit_reg <- rpart(damage_perc ~ wind_max_pred +
+base_damage_fit_reg_min <- rpart(damage_perc ~ wind_max_pred +
                            rain_total_pred +
                            roof_strong_wall_strong +
                            roof_strong_wall_light +
@@ -84,8 +82,6 @@ base_damage_fit_reg <- rpart(damage_perc ~ wind_max_pred +
                            roof_salv_wall_salv +
                            ls_risk_pct +
                            ss_risk_pct +
-                           ruggedness_mean +
-                           slope_mean +
                            wind_blue_ss +
                            wind_yellow_ss +
                            wind_orange_ss +
@@ -109,10 +105,7 @@ saveRDS(base_wind_max_model, file = paste0(dkuManagedFolderPath, "/base_wind_max
 saveRDS(base_rain_total_model, file = paste0(dkuManagedFolderPath, "/base_rain_total_model.rds"))
 
 # Saving classification model
-saveRDS(damage_fit_class, file = paste0(dkuManagedFolderPath, "/damage_fit_class_model.rds"))
+saveRDS(damage_fit_class_min, file = paste0(dkuManagedFolderPath, "/damage_fit_class_min_model.rds"))
 
 # Saving base regression model
-saveRDS(base_damage_fit_reg, file = paste0(dkuManagedFolderPath, "/base_damage_fit_reg_model.rds"))
-
-# -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
-colnames(df_base_train)
+saveRDS(base_damage_fit_reg_min, file = paste0(dkuManagedFolderPath, "/base_damage_fit_reg_min_model.rds"))
