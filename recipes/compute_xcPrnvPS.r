@@ -216,27 +216,27 @@ cat("test-set accuracy of minimal SCM model:", accuracy, sep = " ")
 #log_model_to_mlflow <- function(model, accuracy, hyperparameters) {
     # Start an MLflow run
 #  mlflow$start_run()
-    
+
   # Log hyperparameters
 #  mlflow$log_param("cp", hyperparameters$cp)
 #  mlflow$log_param("maxdepth", hyperparameters$maxdepth)
 #  mlflow$log_param("minsplit", hyperparameters$minsplit)
 #  mlflow$log_param("minbucket", hyperparameters$minbucket)
-    
-  
+
+
   # Log model accuracy
 #  mlflow$log_metric("accuracy", accuracy)
-  
+
   # Save the model to the managed folder path in Dataiku DSS
 #  managed_folder_path <- dkuManagedFolderPath("xcPrnvPS")
 #  model_path <- paste0(managed_folder_path, "/base_clas_min_model.rds")
-  
+
   # Save the model as an RDS file in the managed folder
 #  saveRDS(model, file = model_path)
-  
+
   # Log the saved model as an artifact in MLflow
 #  mlflow$log_artifact(model_path)
-    
+
     # End the MLflow run
 #  mlflow$end_run()
 #}
@@ -248,3 +248,5 @@ cat("test-set accuracy of minimal SCM model:", accuracy, sep = " ")
 # Recipe outputs
 managed_folder_path <- dkuManagedFolderPath("xcPrnvPS")
 saveRDS(damage_fit_class_min, file = paste0(managed_folder_path, "/base_clas_min_model.rds"))
+saveRDS(base_wind_model, file = paste0(managed_folder_path, "/base_wind_model.rds"))
+saveRDS(base_rain_model, file = paste0(managed_folder_path, "/base_wind_model.rds"))
