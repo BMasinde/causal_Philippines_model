@@ -1,5 +1,5 @@
 {
-  "name": "base_scm_classification_model",
+  "name": "base_scm_classification_min_model",
   "type": "Filesystem",
   "params": {
     "connection": "filesystem_folders",
