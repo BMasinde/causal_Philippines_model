@@ -1,5 +1,8 @@
+# -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 library(dataiku)
+library(rpart)
 
+# -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # Recipe inputs
 scm_base_models <- dkuManagedFolderPath("XxDUuuYe")
 base_validation <- dkuReadDataset("base_validation", samplingMethod="head", nbRows=100000)
