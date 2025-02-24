@@ -95,7 +95,7 @@ metrics_folder_path <- dkuManagedFolderPath("Xu27U2QF")
 file_path <- file.path(metrics_folder_path, "model_metrics.csv")
 
 # Write to CSV
-fwrite(metrics_df, file = file_path, row.names = FALSE)
+#fwrite(metrics_df, file = file_path, row.names = FALSE)
 
 dkuWriteDataset(metrics_df, "min_clas_metrics_df")
 
