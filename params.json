@@ -66,8 +66,9 @@
     },
     "codeEnvs": {
       "python": {
-        "mode": "INHERIT",
-        "preventOverride": false
+        "mode": "EXPLICIT_ENV",
+        "preventOverride": false,
+        "envName": "python3_12"
       },
       "r": {
         "mode": "EXPLICIT_ENV",
