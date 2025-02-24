@@ -230,4 +230,4 @@ damage_fit_class_min <- rpart(damage_binary ~ wind_max_pred +
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # Recipe outputs
 managed_folder_path <- dkuManagedFolderPath("8jrmex16")
-saveRDS(base_scm_classification_min_model, file = paste0(managed_folder_path, "/base_clas_min_model.rds"))
+saveRDS(damage_fit_class_min, file = paste0(managed_folder_path, "/base_clas_min_model.rds"))
