@@ -46,7 +46,7 @@ df_base_test  <- base_test %>%
 y_preds_prob <- predict(base_clas_min_model, newdata = df_base_test, type = "prob")[,2]  # Probability of class 1
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
-# AUC 
+# AUC
 # Compute AUC (better for classification)
 auc_value <- auc(roc(df_base_test$damage_binary, y_preds_prob))
 auc_value
@@ -72,7 +72,7 @@ cat("test-set accuracy of minimal CLASSIFICATION SCM model:", accuracy, sep = " 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # Extract recall and precision
 # Compute confusion matrix
-conf_matrix <- confusionMatrix(as.factor(y_pred), as.factor(df_base_test$damage_binary), positive = "1") 
+conf_matrix <- confusionMatrix(as.factor(y_pred), as.factor(df_base_test$damage_binary), positive = "1")
 recall <- conf_matrix$byClass["Sensitivity"]  # Recall (Sensitivity)
 precision <- conf_matrix$byClass["Precision"] # Precision
 
@@ -92,8 +92,7 @@ metrics_folder_path <- dkuManagedFolderPath("Xu27U2QF")
 
 # Saving the predicted values
 # Define file path
-# Define CSV file path
-file_path <- file.path(folder_path, "model_metrics.csv")
+file_path <- file.path(metrics_folder_path, "model_metrics.csv")
 
 # Write to CSV
 fwrite(metrics_df, file = file_path, row.names = FALSE)
