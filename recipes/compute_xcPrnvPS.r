@@ -7,6 +7,10 @@ library(caret)
 library(pROC) # For AUC calculation
 library(data.table)
 library(mlflow)
+library(reticulate)
+
+# -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
+py_config()
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # Recipe inputs
@@ -185,36 +189,60 @@ accuracy <- sum(diag(conf_matrix)) / sum(conf_matrix)
 cat("test-set accuracy of minimal SCM model:", accuracy, sep = " ")
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
+#' Loggint the model and parameter using MLflow
 # Start MLflow Run
-# Start MLflow Run
 
-#mlflow_start_run()
+# Configure reticulate to use the Python environment with MLflow
+# use_python(Sys.which("python3"))
 
-# Log model hyperparameters
-#mlflow_log_param("cp", best_params$cp)
-#mlflow_log_param("maxdepth", best_params$maxdepth)
-#mlflow_log_param("minsplit", best_params$minsplit)
-#mlflow_log_param("minbucket", best_params$minbucket)
+# mlflow <- import("mlflow")
 
-# Evaluate model on training set
-#train_pred <- predict(damage_fit_class_min, final_training_df, type = "class")
-#train_accuracy <- sum(train_pred == final_training_df$damage_binary) / nrow(final_training_df)
+# Assuming 'damage_fit_class_min' is your R model object
+# Load your R model (saved as .rds file)
+# model <- readRDS("path/to/your/model.rds")
 
-# Log training performance
-#mlflow_log_metric("train_accuracy", train_accuracy)
+# Assuming you have some hyperparameters for the model (example)
+#hyperparameters <- list(
+#  cp = best_params$cp,
+#  maxdepth = best_params$maxdepth,
+#  minsplit = best_params$minsplit,
+#  minbucket = best_params$minbucket
+#)
 
-# Save the model as an .rds file
-#saveRDS(damage_fit_class_min, "damage_fit_class_min.rds")
+# Assuming 'accuracy' is the accuracy score of your model (example)
+#accuracy <- 0.85  # Replace with your actual accuracy score
 
-# Save the model to Dataiku DSS managed folder
-#managed_folder <- dkuManagedFolderPath("8jrmex16")  # Replace with your managed folder ID
-#managed_folder$upload_file("damage_fit_class_min.rds", "damage_fit_class_min.rds")
+# Function to log the R model with hyperparameters and accuracy
+#log_model_to_mlflow <- function(model, accuracy, hyperparameters) {
+    # Start an MLflow run
+#  mlflow$start_run()
+    
+  # Log hyperparameters
+#  mlflow$log_param("cp", hyperparameters$cp)
+#  mlflow$log_param("maxdepth", hyperparameters$maxdepth)
+#  mlflow$log_param("minsplit", hyperparameters$minsplit)
+#  mlflow$log_param("minbucket", hyperparameters$minbucket)
+    
+  
+  # Log model accuracy
+#  mlflow$log_metric("accuracy", accuracy)
+  
+  # Save the model to the managed folder path in Dataiku DSS
+#  managed_folder_path <- dkuManagedFolderPath("xcPrnvPS")
+#  model_path <- paste0(managed_folder_path, "/base_clas_min_model.rds")
+  
+  # Save the model as an RDS file in the managed folder
+#  saveRDS(model, file = model_path)
+  
+  # Log the saved model as an artifact in MLflow
+#  mlflow$log_artifact(model_path)
+    
+    # End the MLflow run
+#  mlflow$end_run()
+#}
 
-# Log the artifact in MLflow (optional, for MLflow tracking)
-#mlflow_log_artifact("damage_fit_class_min.rds")
-
-# End MLflow Run
-#mlflow_end_run()
+# Log the model, accuracy, and hyperparameters to MLflow
+#log_model_to_mlflow(damage_fit_class_min, accuracy, hyperparameters)
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # Recipe outputs
