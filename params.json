@@ -70,8 +70,9 @@
         "preventOverride": false
       },
       "r": {
-        "mode": "INHERIT",
-        "preventOverride": false
+        "mode": "EXPLICIT_ENV",
+        "preventOverride": false,
+        "envName": "R_env"
       },
       "julia": {
         "mode": "INHERIT",
