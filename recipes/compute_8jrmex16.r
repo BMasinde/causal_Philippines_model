@@ -174,14 +174,14 @@ damage_fit_class_min <- rpart(damage_binary ~ wind_max_pred +
 
 ## Outcome prediction on the final_training_df dataset
 ## default function predict returns class probabilities (has two columns)
-y_pred_probs <- predict(damage_fit_class_min,
+#y_pred_probs <- predict(damage_fit_class_min,
                   newdata = final_training_df)
 
 ## extracting probability that y_pred == 1
-y_pred_prob_1 <- y_pred_probs[ ,2]
+#y_pred_prob_1 <- y_pred_probs[ ,2]
 
 ## assigning final class based on threshold
-y_pred <- ifelse(y_pred_prob_1 > 0.5, 1, 0)
+#y_pred <- ifelse(y_pred_prob_1 > 0.5, 1, 0)
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # using table function
@@ -191,7 +191,7 @@ y_pred <- ifelse(y_pred_prob_1 > 0.5, 1, 0)
 #print(conf_matrix)
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
-accuracy <- sum(diag(conf_matrix)) / sum(conf_matrix)
+#accuracy <- sum(diag(conf_matrix)) / sum(conf_matrix)
 
 #cat("test-set accuracy of minimal SCM model:", accuracy, sep = " ")
 
