@@ -129,7 +129,7 @@
       {"name":"rain_orange_ss","type":"double"},
       {"name":"rain_red_ss","type":"double"}
     ],
-    "userModified": true
+    "userModified": false
   },
   "typeSystemVersion": "V2",
   "dkuProperties": [],
