@@ -88,7 +88,7 @@ metrics_df
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # Recipe outputs
-metrics_folder_path <- dkuManagedFolderPath("Xu27U2QF")
+#metrics_folder_path <- dkuManagedFolderPath("Xu27U2QF")
 
 # Saving the predicted values
 # Define file path
@@ -97,7 +97,7 @@ metrics_folder_path <- dkuManagedFolderPath("Xu27U2QF")
 # Write to CSV
 #fwrite(metrics_df, file = file_path, row.names = FALSE)
 
-dkuWriteDataset(metrics_df, "min_clas_metrics_df")
+#dkuWriteDataset(metrics_df, "min_clas_metrics_df")
 
 # Print message to confirm
-print(paste("Metrics saved to:", metrics_folder_path))
+#print(paste("Metrics saved to:", metrics_folder_path))
