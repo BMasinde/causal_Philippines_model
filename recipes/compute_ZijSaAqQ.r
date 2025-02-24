@@ -50,7 +50,7 @@ minbucket_values <- c(5, 10, 20)
 
 # Create an empty list to store results
 # Create an empty list to store results
-results <- data.frame(cp = numeric(), maxdepth = numeric(), 
+results <- data.frame(cp = numeric(), maxdepth = numeric(),
                       minsplit = numeric(), minbucket = numeric(), RMSE = numeric())
 
 # predicting for wind and rainfall for the validation dataset
@@ -74,7 +74,7 @@ for (cp in cp_values) {
 
         # Train the model with specific hyperparameters
         model <- rpart(
-          damage_binary ~ wind_max_pred +
+          damage_perc ~ wind_max_pred +
             rain_total_pred +
             roof_strong_wall_strong +
             roof_strong_wall_light +
@@ -103,10 +103,10 @@ for (cp in cp_values) {
 
         # Make predictions on the validation set
         val_predictions <- predict(model, newdata = df_val_base_tune)
-        
+
         # Compute RMSE
         rmse_value <- rmse(df_val_base_tune$damage_perc, val_predictions)
-        
+
         # Store results
         results <- rbind(results, data.frame(cp, maxdepth, minsplit, minbucket, RMSE = rmse_value))
       }
@@ -127,7 +127,7 @@ final_training_df  <- rbind(df_base_train,
                            df_val_base_tune)
 
 
-damage_fit_reg_min <- rpart(damage_binary ~ wind_max_pred +
+damage_fit_reg_min <- rpart(damage_perc ~ wind_max_pred +
                               rain_total_pred +
                               roof_strong_wall_strong +
                               roof_strong_wall_light +
