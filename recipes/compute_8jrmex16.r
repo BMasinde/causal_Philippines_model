@@ -187,7 +187,7 @@ damage_fit_class_min <- rpart(damage_binary ~ wind_max_pred +
 # using table function
 #conf_matrix <- table(predicted = y_pred,
 #                     actual = final_training_df$damage_binary
-                     )
+#                     )
 #print(conf_matrix)
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
