@@ -247,6 +247,9 @@ cat("test-set accuracy of minimal SCM model:", accuracy, sep = " ")
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # Recipe outputs
 managed_folder_path <- dkuManagedFolderPath("xcPrnvPS")
+
 saveRDS(damage_fit_class_min, file = paste0(managed_folder_path, "/base_clas_min_model.rds"))
+
 saveRDS(base_wind_model, file = paste0(managed_folder_path, "/base_wind_model.rds"))
-saveRDS(base_rain_model, file = paste0(managed_folder_path, "/base_wind_model.rds"))
+
+saveRDS(base_rain_model, file = paste0(managed_folder_path, "/base_rain_model.rds"))
