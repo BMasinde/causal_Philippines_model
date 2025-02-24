@@ -43,7 +43,7 @@ df_base_train <- base_train %>%
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # parameter tuning
 # Define a grid of hyperparameters
-cp_values <- seq(0.0001, 0.05, by = 0.005)
+cp_values <- seq(0.0001, 0.05, by = 0.0005)
 maxdepth_values <- c(3, 5, 7, 10)
 minsplit_values <- c(10, 20, 30, 40)
 minbucket_values <- c(5, 10, 20)
