@@ -136,7 +136,7 @@
       {"name":"region","type":"string"},
       {"name":"island_groups","type":"string"}
     ],
-    "userModified": true
+    "userModified": false
   },
   "typeSystemVersion": "V2",
   "dkuProperties": [],
