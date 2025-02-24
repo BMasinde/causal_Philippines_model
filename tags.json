@@ -1,7 +1,13 @@
 {
   "tags": {
-    "recipe-editor": {},
-    "deleted-recipe-editor": {},
-    "R_code": {}
+    "deleted-recipe-editor": {
+      "color": "#90a8b7"
+    },
+    "recipe-editor": {
+      "color": "#1ac2ab"
+    },
+    "R_code": {
+      "color": "#123883"
+    }
   }
 }
