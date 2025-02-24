@@ -175,7 +175,7 @@ damage_fit_class_min <- rpart(damage_binary ~ wind_max_pred +
 ## Outcome prediction on the final_training_df dataset
 ## default function predict returns class probabilities (has two columns)
 #y_pred_probs <- predict(damage_fit_class_min,
-                  newdata = final_training_df)
+#                  newdata = final_training_df)
 
 ## extracting probability that y_pred == 1
 #y_pred_prob_1 <- y_pred_probs[ ,2]
@@ -186,7 +186,7 @@ damage_fit_class_min <- rpart(damage_binary ~ wind_max_pred +
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # using table function
 #conf_matrix <- table(predicted = y_pred,
-                     actual = final_training_df$damage_binary
+#                     actual = final_training_df$damage_binary
                      )
 #print(conf_matrix)
 
