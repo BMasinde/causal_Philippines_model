@@ -154,7 +154,7 @@ rmse_value
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # Recipe outputs
-trunk_scm_min_model <- dkuManagedFolderPath("dL4i4SKb")
+managed_folder_path <- dkuManagedFolderPath("dL4i4SKb")
 
 saveRDS(trunc_damage_fit_reg, file = paste0(managed_folder_path, "/trunc_reg_min_model.rds"))
 
