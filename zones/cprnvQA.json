@@ -1,7 +1,56 @@
 {
   "name": "Data Preparation",
   "color": "#4B8021",
-  "items": [],
+  "items": [
+    {
+      "objectId": "base_inc_data",
+      "objectType": "DATASET"
+    },
+    {
+      "objectId": "base_data_regions",
+      "objectType": "DATASET"
+    },
+    {
+      "objectId": "modeling_data",
+      "objectType": "DATASET"
+    },
+    {
+      "objectId": "train_test_val_split",
+      "objectType": "RECIPE"
+    },
+    {
+      "objectId": "add_regions",
+      "objectType": "RECIPE"
+    },
+    {
+      "objectId": "create_modeling_data",
+      "objectType": "RECIPE"
+    },
+    {
+      "objectId": "base_test",
+      "objectType": "DATASET"
+    },
+    {
+      "objectId": "truncated_train",
+      "objectType": "DATASET"
+    },
+    {
+      "objectId": "base_train",
+      "objectType": "DATASET"
+    },
+    {
+      "objectId": "truncated_test",
+      "objectType": "DATASET"
+    },
+    {
+      "objectId": "truncated_validation",
+      "objectType": "DATASET"
+    },
+    {
+      "objectId": "base_validation",
+      "objectType": "DATASET"
+    }
+  ],
   "shared": [],
   "position": {},
   "tags": [],
