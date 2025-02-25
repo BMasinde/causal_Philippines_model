@@ -49,6 +49,54 @@
     {
       "objectId": "base_validation",
       "objectType": "DATASET"
+    },
+    {
+      "objectId": "xcPrnvPS",
+      "objectType": "MANAGED_FOLDER"
+    },
+    {
+      "objectId": "ZijSaAqQ",
+      "objectType": "MANAGED_FOLDER"
+    },
+    {
+      "objectId": "dL4i4SKb",
+      "objectType": "MANAGED_FOLDER"
+    },
+    {
+      "objectId": "iHIKf1Do",
+      "objectType": "MANAGED_FOLDER"
+    },
+    {
+      "objectId": "5NPBmWH1",
+      "objectType": "MANAGED_FOLDER"
+    },
+    {
+      "objectId": "Xu27U2QF",
+      "objectType": "MANAGED_FOLDER"
+    },
+    {
+      "objectId": "compute_dL4i4SKb",
+      "objectType": "RECIPE"
+    },
+    {
+      "objectId": "compute_ZijSaAqQ",
+      "objectType": "RECIPE"
+    },
+    {
+      "objectId": "compute_xcPrnvPS",
+      "objectType": "RECIPE"
+    },
+    {
+      "objectId": "compute_Xu27U2QF",
+      "objectType": "RECIPE"
+    },
+    {
+      "objectId": "compute_5NPBmWH1",
+      "objectType": "RECIPE"
+    },
+    {
+      "objectId": "compute_iHIKf1Do",
+      "objectType": "RECIPE"
     }
   ],
   "shared": [],
