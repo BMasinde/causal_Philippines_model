@@ -8,6 +8,8 @@
     },
     "R_code": {
       "color": "#123883"
-    }
+    },
+    "full_scm": {},
+    "xgboost": {}
   }
 }
