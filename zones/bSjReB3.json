@@ -1,7 +1,36 @@
 {
   "name": "Data splits",
   "color": "#8C2DA7",
-  "items": [],
+  "items": [
+    {
+      "objectId": "base_test",
+      "objectType": "DATASET"
+    },
+    {
+      "objectId": "base_validation",
+      "objectType": "DATASET"
+    },
+    {
+      "objectId": "base_train",
+      "objectType": "DATASET"
+    },
+    {
+      "objectId": "truncated_train",
+      "objectType": "DATASET"
+    },
+    {
+      "objectId": "truncated_validation",
+      "objectType": "DATASET"
+    },
+    {
+      "objectId": "train_test_val_split",
+      "objectType": "RECIPE"
+    },
+    {
+      "objectId": "truncated_test",
+      "objectType": "DATASET"
+    }
+  ],
   "shared": [],
   "position": {},
   "tags": [],
