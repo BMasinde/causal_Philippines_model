@@ -1,4 +1,7 @@
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
+# Turning warning messages off
+options(warn = 0) # i don't care for the messages
+
 # Libraries
 library(dataiku)
 library(rpart)
@@ -8,9 +11,7 @@ library(pROC) # For AUC calculation
 library(data.table)
 library(mlflow)
 library(reticulate)
-
-# -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
-py_config()
+library(Matrix)
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # Recipe inputs
@@ -18,8 +19,20 @@ df_base_train <- dkuReadDataset("base_train", samplingMethod="head", nbRows=1000
 df_base_validation <- dkuReadDataset("base_validation", samplingMethod="head", nbRows=100000)
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
+# Training track_min_dist ~ island_groups
+base_track_model  <- rpart(track_min_dist  ~ island_groups,
+                          data = df_base_train,
+                          method = "anova")
+# new values for trac_min_dist
+df_base_train  <- df_base_train %>%
+    mutate(track_min_dist = predict(base_track_model,
+                                   newdata = df_base_train)
+          )
+
+# -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # Training structural equation for wind speed
 # wind_speed = f(track_min_dist, eps)
+
 
 base_wind_model <- rpart(wind_max ~ track_min_dist,
                        data = df_base_train,
@@ -37,6 +50,7 @@ base_rain_model <- rpart(rain_total ~ track_min_dist,
 # Adding the predicted parents' to the training dataset
 
 df_base_train <- df_base_train %>%
+  mutate(track_min_dist = predict(base_track_model, newdata = df_base_train)) # predicted min_dist
   mutate(wind_max_pred = predict(base_wind_model,
                                  newdata = df_base_train),
          rain_total_pred = predict(base_rain_model,
@@ -44,38 +58,55 @@ df_base_train <- df_base_train %>%
          )
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
-# parameter tuning
-# Define a grid of hyperparameters
-cp_values <- seq(0.0001, 0.05, by = 0.005)
-maxdepth_values <- c(3, 5, 7, 10)
-minsplit_values <- c(10, 20, 30, 40)
-minbucket_values <- c(5, 10, 20)
+# Parameter tuning
+
+# Define tuning grid
+tune_grid <- expand.grid(
+  nrounds = c(50, 100, 150),       # Number of boosting rounds
+  max_depth = c(3, 6, 9),          # Maximum tree depth
+  eta = c(0.01, 0.1, 0.3),         # Learning rate
+  gamma = 0,                       # Minimum loss reduction
+  colsample_bytree = 0.8,          # Feature selection rate
+  min_child_weight = 1,            # Minimum instance weight
+  subsample = 0.8                  # Sample ratio per boosting round
+)
+
 
 # Create an empty list to store results
 results_list <- list()
 
+# Extra data prep
+# Ensure target variable is a factor for classification
+df_base_train$damage_binary <- as.factor(df_base_train$damage_binary)
+
 # predicting for wind and rainfall for the validation dataset
 df_val_base_tune <- df_base_validation %>%
+  mutate(track_min_dist = predict(base_track_model, newdata = df_base_validation)) %>%  # First predict for track_min_dist from regions
   mutate(
-    wind_max_pred = predict(
-      base_wind_model, newdata = df_base_validation),
-    rain_total_pred = predict(
-      base_rain_model,
-      newdata = df_base_validation)
-    )
+    wind_max_pred = predict(base_wind_model, newdata = df_base_validation),
+    rain_total_pred = predict(base_rain_model, newdata = df_base_validation)
+  ) %>% # recalculate interactions
+  mutate(
+      wind_blue_ss = wind_max_pred * blue_ss_frac,
+      wind_yellow_ss = wind_max_pred * yellow_ss_frac,
+      wind_orange_ss = wind_max_pred * orange_ss_frac,
+      wind_red_ss = wind_max_pred * red_ss_frac,
+      rain_blue_ss = rain_total_pred * blue_ls_frac,
+      rain_yellow_ss = rain_total_pred * yellow_ls_frac,
+      rain_orange_ss = rain_total_pred * orange_ls_frac,
+      rain_red_ss = rain_total_pred * red_ls_frac,
+  )
+
 
 # Train the model using manual grid search
 grid_id <- 1  # Index for list storage
 
 # Iterate over all combinations of hyperparameters
-for (cp in cp_values) {
-  for (maxdepth in maxdepth_values) {
-    for (minsplit in minsplit_values) {
-      for (minbucket in minbucket_values) {
-
+for (i in 1:nrow(tune_grid)) {
+  params <- tune_grid[i, ]
         # Train the model with specific hyperparameters
-        model <- rpart(
-          damage_binary ~ wind_max_pred +
+        xgb_model <- train(
+          as.factor(damage_binary) ~ wind_max_pred +
             rain_total_pred +
             roof_strong_wall_strong +
             roof_strong_wall_light +
@@ -97,23 +128,19 @@ for (cp in cp_values) {
             rain_orange_ss +
             rain_red_ss,
           data = df_base_train,
-          method = "class",  # classification
-          control = rpart.control(cp = cp, maxdepth = maxdepth,
-                                  minsplit = minsplit, minbucket = minbucket)
+          method = "xgbTree", # XGBoost method
+          trControl = trainControl(method = "none"),  # No automatic validation
+          tuneGrid = params # Hyperparameter grid
         )
 
         # Make probability predictions for classification
-        val_predictions <- predict(model, newdata = df_val_base_tune, type = "prob")[,2]  # Probability of class 1
+        val_predictions <- predict(xgb_model, newdata = df_val_base_tune, type = "prob")[,2]  # Probability of class 1
 
         # Compute AUC (better for classification)
         auc_value <- auc(df_val_base_tune$damage_binary, val_predictions)
 
         # Store results efficiently in a list
-        results_list[[grid_id]] <- data.frame(cp, maxdepth, minsplit, minbucket, AUC = auc_value)
-        grid_id <- grid_id + 1
-      }
-    }
-  }
+        results_list[[i]] <- data.frame(params, AUC = auc_value)
 }
 
 # Convert list to data frame
@@ -132,34 +159,33 @@ final_training_df  <- rbind(df_base_train,
                            df_val_base_tune)
 
 
-damage_fit_class_min <- rpart(damage_binary ~ wind_max_pred +
-                              rain_total_pred +
-                              roof_strong_wall_strong +
-                              roof_strong_wall_light +
-                              roof_strong_wall_salv +
-                              roof_light_wall_strong +
-                              roof_light_wall_light +
-                              roof_light_wall_salv +
-                              roof_salv_wall_strong +
-                              roof_salv_wall_light +
-                              roof_salv_wall_salv +
-                              ls_risk_pct +
-                              ss_risk_pct +
-                              wind_blue_ss +
-                              wind_yellow_ss +
-                              wind_orange_ss +
-                              wind_red_ss +
-                              rain_blue_ss +
-                              rain_yellow_ss +
-                              rain_orange_ss +
-                              rain_red_ss,
-                              method = "class",
-                              control = rpart.control(cp = best_params$cp,
-                                                      maxdepth = best_params$maxdepth,
-                                                      minsplit = best_params$minsplit,
-                                                      minbucket = best_params$minbucket),
-                              data = final_training_df
-                         )
+damage_fit_class_min <- xgb_model <- train(
+          as.factor(damage_binary) ~ wind_max_pred +
+            rain_total_pred +
+            roof_strong_wall_strong +
+            roof_strong_wall_light +
+            roof_strong_wall_salv +
+            roof_light_wall_strong +
+            roof_light_wall_light +
+            roof_light_wall_salv +
+            roof_salv_wall_strong +
+            roof_salv_wall_light +
+            roof_salv_wall_salv +
+            ls_risk_pct +
+            ss_risk_pct +
+            wind_blue_ss +
+            wind_yellow_ss +
+            wind_orange_ss +
+            wind_red_ss +
+            rain_blue_ss +
+            rain_yellow_ss +
+            rain_orange_ss +
+            rain_red_ss,
+          data = final_training_df, # USE TRAINING AND VALIDATION SETS COMBINED
+          method = "xgbTree", # XGBoost method
+          trControl = trainControl(method = "none"),  # No automatic validation
+          tuneGrid = params # USE BEST PARAMETER
+        )
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # Sanity Check
@@ -189,8 +215,52 @@ accuracy <- sum(diag(conf_matrix)) / sum(conf_matrix)
 cat("test-set accuracy of minimal SCM model:", accuracy, sep = " ")
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
-#' Loggint the model and parameter using MLflow
-# Start MLflow Run
+# Logging the model and parameter using MLflow
+
+# set tracking URI
+mlflow_set_tracking_uri("http://127.0.0.1:5000")
+
+# Ensure any active run is ended
+suppressWarnings(try(mlflow_end_run(), silent = TRUE))
+
+# set experiment 
+# Logging metrics for model training and the parameters used
+mlflow_set_experiment(experiment_name = "Classify above 10 damage (Training metircs)")
+
+# Start MLflow run
+mlflow_start_run(nested = FALSE)
+
+# Ensure the run ends even if an error occurs
+on.exit(mlflow_end_run(), add = TRUE)
+
+# Training
+training_df$type <- as.factor(training_df$type)
+model <- randomForest(type~ ., data = training_df, ntree = 100, proximity = TRUE)
+
+# testing
+preds  <- predict(model, test_df)
+
+# summarize results
+cnfm  <- confusionMatrix(preds, as.factor(test_df$type))
+
+accuracy  <- cnfm$overall['Accuracy']
+
+# Log parameters and metrics
+mlflow_log_param("model_type", "random forest")
+mlflow_log_metric("accuracy", accuracy)
+
+
+# Save model
+saveRDS(model, file = file.path(path_2_folder, "spam_clas_model.rds"))
+
+#mlflow_log_artifact(path = file.path(path_2_folder, "spam_clas_model.rds"))
+#saveRDS(model, file.path(output_dir, "model.rds"))
+
+# Save model in MLflow format
+#mlflow_save_model(model, path = paste0(path_2_folder, "mlflow_spam_clas_model"))
+
+# End MLflow run
+mlflow_end_run()
 
 # Configure reticulate to use the Python environment with MLflow
 # use_python(Sys.which("python3"))
@@ -253,3 +323,4 @@ saveRDS(damage_fit_class_min, file = paste0(managed_folder_path, "/base_clas_min
 saveRDS(base_wind_model, file = paste0(managed_folder_path, "/base_wind_model.rds"))
 
 saveRDS(base_rain_model, file = paste0(managed_folder_path, "/base_rain_model.rds"))
+saveRDS(base_track_model, file = paste0(managed_folder_path, "/base_track_model.rds"))
