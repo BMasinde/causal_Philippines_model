@@ -20,7 +20,7 @@ df_base_validation <- dkuReadDataset("base_validation", samplingMethod="head", n
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # Training track_min_dist ~ island_groups
-# we will need to also include island_groups 
+# we will need to also include island_groups
 # in the final outcome prediction model to adjust for the confounding
 
 base_track_model  <- rpart(track_min_dist  ~ island_groups,
@@ -107,7 +107,7 @@ grid_id <- 1  # Index for list storage
 # Iterate over all combinations of hyperparameters
 for (i in 1:nrow(tune_grid)) {
   params <- tune_grid[i, ]
-       
+
         # setting seed for reproducibility
         set.seed(1234)
         # Train the model with specific hyperparameters
@@ -173,7 +173,7 @@ final_training_df  <- rbind(df_base_train,
 best_params_model <- best_params %>% # Remove AUC column if present
     select(-AUC)
 
-damage_fit_class_full <- xgb_model <- train(
+damage_fit_class_full <- train(
           as.factor(damage_binary) ~ wind_max_pred +
             rain_total_pred +
             roof_strong_wall_strong +
@@ -214,7 +214,7 @@ y_pred <- predict(damage_fit_class_full,
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # using table function
 conf_matrix <- confusionMatrix(y_pred,
-                     final_training_df$damage_binary,  
+                     final_training_df$damage_binary,
                      positive = "1"
                      )
 conf_matrix
@@ -291,7 +291,7 @@ damage_fit_class_full <- xgb_model <- train(
 
 # summarize results
 conf_matrix <- confusionMatrix(y_pred,
-                     final_training_df$damage_binary,  
+                     final_training_df$damage_binary,
                      positive = "1"
                      )
 
