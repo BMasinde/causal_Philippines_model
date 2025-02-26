@@ -1,5 +1,5 @@
 {
-  "name": "scm_clas_min_model_test",
+  "name": "scm_clas_ful_model_test",
   "type": "Filesystem",
   "params": {
     "connection": "filesystem_folders",
