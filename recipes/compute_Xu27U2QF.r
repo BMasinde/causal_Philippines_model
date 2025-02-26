@@ -66,7 +66,7 @@ auc_value
 #y_preds_prob_1 <- y_preds_prob[ ,2]
 
 ## assigning final class based on threshold
-y_pred <- ifelse(y_preds_prob > 0.5, 1, 0)
+y_pred <- ifelse(y_preds_probs > 0.5, 1, 0)
 
 # using table function
 conf_matrix <- confusionMatrix(as.factor(y_pred),
