@@ -1,5 +1,5 @@
 {
-  "name": "trunk_scm_min_model",
+  "name": "trunk_scm_ful_model",
   "type": "Filesystem",
   "params": {
     "connection": "filesystem_folders",
