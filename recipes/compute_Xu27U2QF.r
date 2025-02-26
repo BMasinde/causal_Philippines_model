@@ -118,7 +118,7 @@ mlflow_log_param("model_type", "scm-xgboost-classification")
 
 # predicting
 y_preds_probs <- predict(base_clas_full_model, newdata = df_base_test, type = "prob")[,2]  # Probability of class 1
-y_pred <- ifelse(y_preds_prob > 0.5, 1, 0)
+y_pred <- ifelse(y_preds_probs > 0.5, 1, 0)
 
 # summarize results
 conf_matrix <- confusionMatrix(as.factor(y_pred),
@@ -143,7 +143,7 @@ mlflow_log_metric("accuracy", accuracy)
 mlflow_log_metric("F1", f1_score)
 mlflow_log_metric("Precision", precision)
 mlflow_log_metric("Recall", recall)
-#mlflow_log_metric("AUC", auc_value)
+mlflow_log_metric("AUC", auc_value)
 
 
 # Save model
