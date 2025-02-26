@@ -138,7 +138,8 @@ trunc_damage_fit_reg <- rpart(damage_perc ~ wind_max_pred +
                            rain_blue_ss +
                            rain_yellow_ss +
                            rain_orange_ss +
-                           rain_red_ss, 
+                           rain_red_ss +
+                           island_groups, 
                          method = "anova", 
                          data = final_training_df
                              )
