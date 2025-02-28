@@ -53,7 +53,7 @@ base_rain_model <- rpart(rain_total ~ track_min_dist,
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # Building typologies are determined by region
-base_roof_strong_wall_strong_model  <- rpart(roof_strong_wall_strong  ~ island_groups, 
+base_roof_strong_wall_strong_model  <- rpart(roof_strong_wall_strong  ~ island_groups,
                                              data = df_base_train2,
                                             method = "anova")
 
@@ -106,7 +106,7 @@ model_list <- list(
 
 # Apply predictions efficiently
 df_base_train2 <- df_base_train2 %>%
-  mutate(across(names(model_list), ~ predict(model_list[[cur_column()]], newdata = df_base_train2), .names = "{.col}_pred")) 
+  mutate(across(names(model_list), ~ predict(model_list[[cur_column()]], newdata = df_base_train2), .names = "{.col}_pred"))
 
 # Define wind and rain interaction variables
 wind_fractions <- c("blue_ss_frac", "yellow_ss_frac", "orange_ss_frac", "red_ss_frac")
@@ -117,13 +117,14 @@ df_base_train2 <- df_base_train2 %>%
   mutate(across(all_of(wind_fractions), ~ . * wind_max_pred, .names = "wind_{.col}"),
          across(all_of(rain_fractions), ~ . * rain_total_pred, .names = "rain_{.col}"))
 # ------------------------------- OLD MODEL TRAINING
+
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # Adding the predicted parents' to the training dataset
 
 # df_train <- df_train %>%
 #   mutate(track_min_dist_pred = predict(base_track_model, newdata = df_base_train2), # predicted min_dist
 #          wind_max_pred = predict(base_wind_model, newdata = df_base_train2),
-#          rain_total_pred = predict(base_rain_model, newdata = df_base_train2), 
+#          rain_total_pred = predict(base_rain_model, newdata = df_base_train2),
 #          #---- Updating interaction terms ------------------------
 #          wind_blue_ss = wind_max_pred * blue_ss_frac,
 #          wind_yellow_ss = wind_max_pred * yellow_ss_frac,
@@ -134,7 +135,7 @@ df_base_train2 <- df_base_train2 %>%
 #          rain_orange_ss = rain_total_pred * orange_ls_frac,
 #          rain_red_ss = rain_total_pred * red_ls_frac,
 #          # -------- Updating building typologies ------------------
-#          roof_strong_wall_strong_pred = predict(base_roof_strong_wall_strong_model, newdata = df_base_train2), 
+#          roof_strong_wall_strong_pred = predict(base_roof_strong_wall_strong_model, newdata = df_base_train2),
 #          roof_strong_wall_light_pred = predict(base_roof_strong_wall_light_model, newdata = df_base_train2),
 #          roof_strong_wall_salv_pred = predict(base_roof_strong_wall_salv_model, newdata = df_base_train2),
 #          roof_light_wall_strong_pred = predict(base_roof_light_wall_strong_model, newdata = df_base_train2),
@@ -142,7 +143,7 @@ df_base_train2 <- df_base_train2 %>%
 #          roof_light_wall_salv_pred = predict(base_roof_light_wall_salv_model, newdata = df_base_train2),
 #          roof_salv_wall_strong_pred = predict(base_roof_salv_wall_strong_model, newdata = df_base_train2),
 #          roof_salv_wall_light_pred = predict(base_roof_salv_wall_light_model, newdata = df_base_train2),
-#          roof_salv_wall_salv_pred = predict(base_roof_salv_wall_salv_model, newdata = df_base_train2), 
+#          roof_salv_wall_salv_pred = predict(base_roof_salv_wall_salv_model, newdata = df_base_train2),
 #          )
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
@@ -251,7 +252,7 @@ df_base_train2 <- df_base_train2 %>%
 
 # -------------------------------------------------------------------------------------------------------------
 
-df_base_train2$damage_binary_2 <- factor(df_base_train2$damage_binary, 
+df_base_train2$damage_binary_2 <- factor(df_base_train2$damage_binary,
                                        levels = c("0", "1"),  # Your current levels
                                        labels = c("Damage_below_10", "Damage_above_10"))  # New valid labels
 
@@ -325,7 +326,7 @@ system.time({
     )
     Sys.sleep(2)  # This is just an example to simulate a delay
 })
-    
+
 # Print best parameters
 print(xgb_model$bestTune)
 
@@ -457,7 +458,7 @@ damage_fit_class_full <- train(
             rain_red_ss +
             island_groups +  # Confounder adjustment
            track_min_dist_pred, # Confounder adjustment
-          data = final_training_df, # USE TRAINING AND VALIDATION SETS COMBINED
+          data = df_base_train2, # USE TRAINING AND VALIDATION SETS COMBINED
           method = "xgbTree", # XGBoost method
           trControl = trainControl(method = "none"),  # No automatic validation
           tuneGrid = best_params_model # USE BEST PARAMETER
@@ -466,7 +467,7 @@ damage_fit_class_full <- train(
 
 # summarize results
 conf_matrix <- confusionMatrix(y_pred,
-                     final_training_df$damage_binary_2,
+                     df_base_train2$damage_binary_2,
                      positive = "Damage_above_10"
                      )
 
@@ -500,29 +501,29 @@ managed_folder_path <- dkuManagedFolderPath("xcPrnvPS")
 
 # ------------ Models in a list -----------------------
 models <- list(damage_fit_class_full,
-               base_wind_model, 
-               base_rain_model, 
+               base_wind_model,
+               base_rain_model,
                base_track_model,
                base_roof_strong_wall_strong_model,
                base_roof_strong_wall_light_model,
                base_roof_strong_wall_salv_model,
                base_roof_light_wall_strong_model,
                base_roof_light_wall_light_model,
-               base_roof_light_wall_salv_model, 
+               base_roof_light_wall_salv_model,
                base_roof_salv_wall_strong_model,
                base_roof_salv_wall_light_model,
                base_roof_salv_wall_salv_model
               )
 model_names <- c("base_clas_full_model",
-                 "base_wind_model", 
-                 "base_rain_model", 
+                 "base_wind_model",
+                 "base_rain_model",
                  "base_track_model",
                  "base_roof_strong_wall_strong_model",
                  "base_roof_strong_wall_light_model",
                  "base_roof_strong_wall_salv_model",
                  "base_roof_light_wall_strong_model",
                  "base_roof_light_wall_light_model",
-                 "base_roof_light_wall_salv_model", 
+                 "base_roof_light_wall_salv_model",
                  "base_roof_salv_wall_strong_model",
                  "base_roof_salv_wall_light_model",
                  "base_roof_salv_wall_salv_model"
