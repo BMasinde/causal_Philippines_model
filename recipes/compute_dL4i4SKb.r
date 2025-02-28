@@ -176,15 +176,25 @@ df_trunc_train2 <- df_trunc_train2 %>%
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # Define tuning grid
+#tune_grid <- expand.grid(
+#  nrounds = c(50, 100, 150),
+#  max_depth = c(3, 6, 9),
+#  eta = c(0.1, 0.2),
+#  gamma = c(0, 0.01, 1),
+#  colsample_bytree = c(0.7, 1.0),
+#  min_child_weight = c(1, 3),
+#  subsample = c(0.7, 1.0)
+#)
+
 tune_grid <- expand.grid(
-  nrounds = c(50, 100, 150),
-  max_depth = c(3, 6, 9),
-  eta = c(0.1, 0.2),
-  gamma = c(0, 0.01, 1),
-  colsample_bytree = c(0.7, 1.0),
-  min_child_weight = c(1, 3),
-  subsample = c(0.7, 1.0)
-)
+   nrounds = c(50, 100, 200, 300, 400, 500),
+   max_depth = c(3, 6, 9, 12),
+   eta = c(0.01, 0.05, 0.1, 0.2, 0.3),
+   gamma = c(0, 1, 5, 10),
+   colsample_bytree = c(0.5, 0.7, 0.8, 1.0),
+   min_child_weight = c(1, 3, 5, 10),
+   subsample = c(0.5, 0.7, 0.8, 1.0)
+ )
 
 
 # Set up train control with 10-fold cross-validation
