@@ -269,14 +269,25 @@ df_base_train2$damage_binary_2 <- factor(df_base_train2$damage_binary,
 #   subsample = c(0.5, 0.7, 0.8, 1.0)
 # )
 
+# Results for this grid -> Run_id b6393df93c67420d90457c0d6eeb145b
+# tune_grid <- expand.grid(
+#   nrounds = c(50, 100, 150),
+#   max_depth = c(3, 6, 9),
+#   eta = c(0.1, 0.2),
+#   gamma = c(0, 0.01, 1),
+#   colsample_bytree = c(0.7, 1.0),
+#   min_child_weight = c(1, 3),
+#   subsample = c(0.7, 1.0)
+# )
+
 tune_grid <- expand.grid(
-  nrounds = c(50, 100, 150),
-  max_depth = c(3, 6, 9),
-  eta = c(0.1, 0.2),
-  gamma = c(0, 0.01, 1),
-  colsample_bytree = c(0.7, 1.0),
-  min_child_weight = c(1, 3),
-  subsample = c(0.7, 1.0)
+  nrounds = c(40,50, 60, 70),
+  max_depth = c(2, 3, 4, 5),
+  eta = c(0.01, 0.05, 0.1),
+  gamma = c(0, 0.01, 0.02, 0.03),
+  colsample_bytree = c(0.9, 1.0, 1.1),
+  min_child_weight = c(2, 3, 4,5),
+  subsample = c(0.5, 0.6, 0.7, 0.8)
 )
 
 
