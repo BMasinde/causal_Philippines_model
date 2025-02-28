@@ -253,14 +253,14 @@
             "stateChangedOn": 0
           },
           {
-            "done": false,
+            "done": true,
             "text": "Save building typologies models as .rds files",
             "createdOn": 1740730698376,
             "createdBy": "admin",
             "stateChangedOn": 0
           },
           {
-            "done": false,
+            "done": true,
             "text": "Test trained model with best parameters  on test set and take note of positive class metrics ",
             "createdOn": 1740730740592,
             "createdBy": "admin",
