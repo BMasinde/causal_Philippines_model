@@ -309,28 +309,28 @@
         "createdOn": 0,
         "items": [
           {
-            "done": false,
+            "done": true,
             "text": "Add region to building typologies",
             "createdOn": 1740730520514,
             "createdBy": "admin",
             "stateChangedOn": 0
           },
           {
-            "done": false,
+            "done": true,
             "text": "Adjsut for distance",
             "createdOn": 1740730535020,
             "createdBy": "admin",
             "stateChangedOn": 0
           },
           {
-            "done": false,
+            "done": true,
             "text": "Train with k-fold CV and grid search for parameter tuning",
             "createdOn": 1740730557595,
             "createdBy": "admin",
             "stateChangedOn": 0
           },
           {
-            "done": false,
+            "done": true,
             "text": "Save building typologies models as .rds files",
             "createdOn": 1740730795806,
             "createdBy": "admin",
