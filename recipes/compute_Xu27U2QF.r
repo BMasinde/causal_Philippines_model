@@ -18,6 +18,13 @@ folder_path <- dkuManagedFolderPath("xcPrnvPS")
 base_test <- dkuReadDataset("base_test", samplingMethod="head", nbRows=100000)
 
 
+# Access the models using their names
+base_clas_full_model  <- models$base_clas_model
+base_wind_model  <- models$base_wind_model
+base_rain_model  <- models$base_rain_model
+base_track_model  <- models$base_track_model
+
+
 # Construct the full file paths for the models
 clas_file_path <- file.path(folder_path, "base_clas_full_model.rds")
 wind_file_path  <- file.path(folder_path, "base_wind_model.rds")
@@ -46,7 +53,7 @@ df_base_test  <- base_test %>%
     rain_blue_ss = rain_total_pred * blue_ls_frac,
     rain_yellow_ss = rain_total_pred * yellow_ls_frac,
     rain_orange_ss = rain_total_pred * orange_ls_frac,
-    rain_red_ss = rain_total_pred * red_ls_frac,    
+    rain_red_ss = rain_total_pred * red_ls_frac,
     )
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
@@ -122,7 +129,7 @@ y_pred <- ifelse(y_preds_probs > 0.5, 1, 0)
 
 # summarize results
 conf_matrix <- confusionMatrix(as.factor(y_pred),
-                     as.factor(df_base_test$damage_binary),  
+                     as.factor(df_base_test$damage_binary),
                      positive = "1"
                      )
 
