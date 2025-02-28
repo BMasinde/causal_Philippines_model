@@ -250,7 +250,7 @@ base_xgb_reg_model <- train(
   method = "xgbTree",
   trControl = train_control,
   tuneGrid = tune_grid,
-  metric = "RMSE"  # Optimize based on AUC
+  metric = "RMSE"  # Optimize based on RMSE
 )
 
 # Print best parameters
