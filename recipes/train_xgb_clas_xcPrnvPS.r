@@ -288,7 +288,7 @@ tune_grid <- expand.grid(
   gamma = c(0, 1, 2, 3, 4, 5),
   colsample_bytree = c(0.9, 1.0, 1.1),
   min_child_weight = c(2, 3, 4,5),
-  subsample = c(0.5, 0.6, 0.7, 0.8)
+  subsample = c(0.5, 0.6, 0.7, 0.8),
   scale_pos_weight = c(1, 10, 20)  
 )
 
