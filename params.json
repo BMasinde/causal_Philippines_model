@@ -337,6 +337,27 @@
             "stateChangedOn": 0
           }
         ]
+      },
+      {
+        "id": "fa2db5",
+        "title": "28/02/2025 Hurdle Method Update",
+        "createdOn": 0,
+        "items": [
+          {
+            "done": false,
+            "text": "Read the updated models (efficient code)",
+            "createdOn": 1740755561829,
+            "createdBy": "admin",
+            "stateChangedOn": 0
+          },
+          {
+            "done": false,
+            "text": " Binned Metrics",
+            "createdOn": 1740755569507,
+            "createdBy": "admin",
+            "stateChangedOn": 0
+          }
+        ]
       }
     ]
   }
