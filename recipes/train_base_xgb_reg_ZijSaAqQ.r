@@ -50,7 +50,7 @@ base_rain_model <- rpart(rain_total ~ track_min_dist,
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # Building typologies are determined by region
-base_roof_strong_wall_strong_model  <- rpart(roof_strong_wall_strong  ~ island_groups, 
+base_roof_strong_wall_strong_model  <- rpart(roof_strong_wall_strong  ~ island_groups,
                                              data = df_base_train2,
                                             method = "anova")
 
@@ -111,7 +111,7 @@ model_list <- list(
 
 # Apply predictions efficiently
 df_base_train2 <- df_base_train2 %>%
-  mutate(across(names(model_list), ~ predict(model_list[[cur_column()]], newdata = df_base_train2), .names = "{.col}_pred")) 
+  mutate(across(names(model_list), ~ predict(model_list[[cur_column()]], newdata = df_base_train2), .names = "{.col}_pred"))
 
 # Define wind and rain interaction variables
 wind_fractions <- c("blue_ss_frac", "yellow_ss_frac", "orange_ss_frac", "red_ss_frac")
@@ -254,7 +254,7 @@ base_xgb_reg_model <- train(
 )
 
 # Print best parameters
-print(base_xgb_model$bestTune)
+print(base_xgb_reg_model$bestTune)
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # # Training based on tuned parameters
@@ -352,7 +352,7 @@ damage_fit_reg_min <- train(damage_perc ~ wind_max_pred +
                               method = "xgbTree",
                               trControl = trainControl(method = "none"),
                               tuneGrid = best_params, # Use the best parameters here
-                              metric = "RMSE", 
+                              metric = "RMSE",
                               data = df_base_train2
                          )
 
@@ -393,7 +393,7 @@ RMSE_10 <-  rmse_by_bin[2, "rmse"]
 RMSE_50 <- rmse_by_bin[3, "rmse"]
 RMSE_100 <- rmse_by_bin[4, "rmse"]
 
-# Log binned RMSE metrics  
+# Log binned RMSE metrics
 mlflow_log_metric("RMSE_1", RMSE_1)
 mlflow_log_metric("RMSE_10", RMSE_10)
 mlflow_log_metric("RMSE_50", RMSE_50)
@@ -401,40 +401,6 @@ mlflow_log_metric("RMSE_100", RMSE_100)
 
 # End MLflow run
 mlflow_end_run()
-
-# -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
-train_predictions <- predict(damage_fit_reg_min, newdata = df_base_train2)
-
-
-# Define bin edges
-# Define bin edges
-bins <- c(0.00009, 1, 10, 50, 100)
-
-# Assign data to bins
-bin_labels <- cut(df_base_train2$damage_perc, breaks = bins, include.lowest = TRUE, right = TRUE)
-
-# Create a data frame with actual, predicted, and bin labels
-data <- data.frame(
-  actual = df_base_train2$damage_perc,
-  predicted = train_predictions,
-  bin = bin_labels
-)
-
-# Calculate RMSE per bin
-unique_bins <- levels(data$bin) # Get unique bin labels
-rmse_by_bin <- data.frame(bin = unique_bins, rmse = NA, count = NA) # Initialize results data frame
-
-for (i in seq_along(unique_bins)) {
-  bin_data <- data[data$bin == unique_bins[i], ] # Filter data for the current bin
-  rmse_by_bin$rmse[i] <- sqrt(mean((bin_data$actual - bin_data$predicted)^2, na.rm = TRUE)) # Calculate RMSE
-  rmse_by_bin$count[i] <- nrow(bin_data) # Count observations in the bin
-}
-
-# Display RMSE by bin
-print(rmse_by_bin)
-
-# -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
-str(rmse_by_bin)
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # Sanity Check
@@ -451,29 +417,29 @@ managed_folder_path <- dkuManagedFolderPath("ZijSaAqQ")
 
 # ------------ Models in a list -----------------------
 models <- list(damage_fit_reg_min,
-               base_wind_model, 
-               base_rain_model, 
+               base_wind_model,
+               base_rain_model,
                base_track_model,
                base_roof_strong_wall_strong_model,
                base_roof_strong_wall_light_model,
                base_roof_strong_wall_salv_model,
                base_roof_light_wall_strong_model,
                base_roof_light_wall_light_model,
-               base_roof_light_wall_salv_model, 
+               base_roof_light_wall_salv_model,
                base_roof_salv_wall_strong_model,
                base_roof_salv_wall_light_model,
                base_roof_salv_wall_salv_model
               )
 model_names <- c("base_reg_min_model",
-                 "base_wind_model", 
-                 "base_rain_model", 
+                 "base_wind_model",
+                 "base_rain_model",
                  "base_track_model",
                  "base_roof_strong_wall_strong_model",
                  "base_roof_strong_wall_light_model",
                  "base_roof_strong_wall_salv_model",
                  "base_roof_light_wall_strong_model",
                  "base_roof_light_wall_light_model",
-                 "base_roof_light_wall_salv_model", 
+                 "base_roof_light_wall_salv_model",
                  "base_roof_salv_wall_strong_model",
                  "base_roof_salv_wall_light_model",
                  "base_roof_salv_wall_salv_model"
