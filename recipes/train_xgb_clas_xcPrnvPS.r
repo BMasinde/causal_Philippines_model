@@ -339,7 +339,7 @@ system.time({
         method = "xgbTree",
         trControl = train_control,
         tuneGrid = tune_grid,
-        metric = "ROC" # Optimize based on AUC
+        metric = "F1" # Optimize based on F1 because we have an imbalanced dataset and we care about minority class
     )
     Sys.sleep(2)  # This is just an example to simulate a delay
 })
