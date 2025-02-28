@@ -27,10 +27,6 @@
       "objectType": "MANAGED_FOLDER"
     },
     {
-      "objectId": "compute_Xu27U2QF",
-      "objectType": "RECIPE"
-    },
-    {
       "objectId": "compute_5NPBmWH1",
       "objectType": "RECIPE"
     },
@@ -49,6 +45,10 @@
     {
       "objectId": "Xu27U2QF",
       "objectType": "MANAGED_FOLDER"
+    },
+    {
+      "objectId": "test_predict_xgboost_clas",
+      "objectType": "RECIPE"
     }
   ],
   "shared": [],
