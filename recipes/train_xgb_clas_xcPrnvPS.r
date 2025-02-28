@@ -282,7 +282,7 @@ df_base_train2$damage_binary_2 <- factor(df_base_train2$damage_binary,
 # )
 
 tune_grid <- expand.grid(
-  nrounds = c(40,50, 60, 70),
+  # nrounds = c(48,50, 52, 54), # comment if we use early stopping 
   max_depth = c(2, 3, 4, 5),
   eta = c(0.01, 0.05, 0.1),
   gamma = c(0, 0.01, 0.02, 0.03),
@@ -295,7 +295,7 @@ tune_grid <- expand.grid(
 # Set up train control with 10-fold cross-validation
 train_control <- trainControl(
   method = "cv",
-  number = 3,
+  number = 5,
   classProbs = TRUE,  # Needed for AUC calculation
   summaryFunction = twoClassSummary,
   sampling = "smote" # caret automatically identifies minority class
@@ -339,7 +339,7 @@ system.time({
         trControl = train_control,
         tuneGrid = tune_grid,
         metric = "ROC", # Optimize based on AUC
-        sample = "smote"
+        early_stopping_rounds = 10  # Stops if no improvement in 10 rounds
     )
     Sys.sleep(2)  # This is just an example to simulate a delay
 })
