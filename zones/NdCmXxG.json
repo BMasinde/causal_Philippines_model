@@ -3,10 +3,6 @@
   "color": "#4B8021",
   "items": [
     {
-      "objectId": "compute_xcPrnvPS",
-      "objectType": "RECIPE"
-    },
-    {
       "objectId": "compute_ZijSaAqQ",
       "objectType": "RECIPE"
     },
@@ -48,6 +44,10 @@
     },
     {
       "objectId": "test_predict_xgboost_clas",
+      "objectType": "RECIPE"
+    },
+    {
+      "objectId": "train_xgb_clas_xcPrnvPS",
       "objectType": "RECIPE"
     }
   ],
