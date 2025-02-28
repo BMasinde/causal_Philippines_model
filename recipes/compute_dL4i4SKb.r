@@ -240,7 +240,7 @@ mlflow_set_tracking_uri("http://127.0.0.1:5000")
 suppressWarnings(try(mlflow_end_run(), silent = TRUE))
 
 # Logging metrics for model training and the parameters used
-mlflow_set_experiment(experiment_name = "SCM - XGBOOST base regression - CV (Training metircs)")
+mlflow_set_experiment(experiment_name = "SCM - XGBOOST Truncated regression - CV (Training metircs)")
 
 # Ensure that MLflow has only one run. Start MLflow run once.
 run_name <- paste("XGBoost Run", Sys.time())  # Unique name using current time
