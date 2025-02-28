@@ -423,8 +423,7 @@ mlflow_start_run(nested = FALSE)
 #on.exit(mlflow_end_run(), add = TRUE)
 
 # Extract the best parameters (remove AUC column)
-best_params_model <- best_params %>% # Remove AUC column if present
-    select(-AUC)
+best_params_model <- xgb_model$bestTune
 
 # Log each of the best parameters in MLflow
 for (param in names(best_params_model)) {
