@@ -19,10 +19,6 @@
       "objectType": "MANAGED_FOLDER"
     },
     {
-      "objectId": "compute_5NPBmWH1",
-      "objectType": "RECIPE"
-    },
-    {
       "objectId": "compute_iHIKf1Do",
       "objectType": "RECIPE"
     },
@@ -48,6 +44,10 @@
     },
     {
       "objectId": "train_base_xgb_reg_ZijSaAqQ",
+      "objectType": "RECIPE"
+    },
+    {
+      "objectId": "predict_base_xgb_reg_5NPBmWH1",
       "objectType": "RECIPE"
     }
   ],
