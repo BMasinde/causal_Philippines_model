@@ -274,7 +274,7 @@
         "createdOn": 0,
         "items": [
           {
-            "done": false,
+            "done": true,
             "text": "Add region to building typologies ",
             "createdOn": 1740730268310,
             "createdBy": "admin",
