@@ -282,7 +282,7 @@ df_base_train2$damage_binary_2 <- factor(df_base_train2$damage_binary,
 # )
 
 tune_grid <- expand.grid(
-  # nrounds = c(48,50, 52, 54), # comment if we use early stopping 
+  nrounds = c(48,50, 52, 54), # early stopping does not work, we still need to specify nrounds 
   max_depth = c(2, 3, 4, 5),
   eta = c(0.01, 0.05, 0.1),
   gamma = c(0, 0.01, 0.02, 0.03),
@@ -298,7 +298,9 @@ train_control <- trainControl(
   number = 5,
   classProbs = TRUE,  # Needed for AUC calculation
   summaryFunction = twoClassSummary,
-  sampling = "smote" # caret automatically identifies minority class
+  sampling = "smote", # caret automatically identifies minority class
+  search = "random" # random selection of the expanded grid 
+  seeds = 1234
 )
 
 # Detect and register the number of available cores (use all but one)
@@ -339,7 +341,8 @@ system.time({
         trControl = train_control,
         tuneGrid = tune_grid,
         metric = "ROC", # Optimize based on AUC
-        early_stopping_rounds = 10  # Stops if no improvement in 10 rounds
+        tuneLength = 
+
     )
     Sys.sleep(2)  # This is just an example to simulate a delay
 })
