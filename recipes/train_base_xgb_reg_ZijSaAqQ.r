@@ -430,7 +430,7 @@ models <- list(damage_fit_reg_min,
                base_roof_salv_wall_light_model,
                base_roof_salv_wall_salv_model
               )
-model_names <- c("base_reg_min_model",
+model_names <- c("base_reg_model",
                  "base_wind_model",
                  "base_rain_model",
                  "base_track_model",
@@ -451,7 +451,7 @@ mapply(function(model, name) {
 }, models, model_names)
 
 
-# saveRDS(damage_fit_reg_min, file = paste0(managed_folder_path, "/base_reg_min_model.rds"))
+# saveRDS(damage_fit_reg_min, file = paste0(managed_folder_path, "/base_reg_model.rds"))
 
 # saveRDS(base_wind_model, file = paste0(managed_folder_path, "/base_wind_model.rds"))
 
