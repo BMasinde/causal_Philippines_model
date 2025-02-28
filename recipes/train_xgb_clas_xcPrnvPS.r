@@ -270,10 +270,10 @@ df_base_train2$damage_binary_2 <- factor(df_base_train2$damage_binary,
 # )
 
 tune_grid <- expand.grid(
-  nrounds = c(50, 100, 200),
-  max_depth = c(3, 6),
+  nrounds = c(50, 100, 150),
+  max_depth = c(3, 6, 9),
   eta = c(0.1, 0.2),
-  gamma = c(0, 1),
+  gamma = c(0, 0.01, 1),
   colsample_bytree = c(0.7, 1.0),
   min_child_weight = c(1, 3),
   subsample = c(0.7, 1.0)
