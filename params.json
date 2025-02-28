@@ -251,6 +251,20 @@
             "createdOn": 1740730094392,
             "createdBy": "admin",
             "stateChangedOn": 0
+          },
+          {
+            "done": false,
+            "text": "Save building typologies models as .rds files",
+            "createdOn": 1740730698376,
+            "createdBy": "admin",
+            "stateChangedOn": 0
+          },
+          {
+            "done": false,
+            "text": "Test trained model with best parameters  on test set and take note of positive class metrics ",
+            "createdOn": 1740730740592,
+            "createdBy": "admin",
+            "stateChangedOn": 0
           }
         ]
       },
@@ -279,6 +293,13 @@
             "createdOn": 1740730385760,
             "createdBy": "admin",
             "stateChangedOn": 0
+          },
+          {
+            "done": false,
+            "text": "save building typologies models as .rds files",
+            "createdOn": 1740730766794,
+            "createdBy": "admin",
+            "stateChangedOn": 0
           }
         ]
       },
@@ -305,6 +326,13 @@
             "done": false,
             "text": "Train with k-fold CV and grid search for parameter tuning",
             "createdOn": 1740730557595,
+            "createdBy": "admin",
+            "stateChangedOn": 0
+          },
+          {
+            "done": false,
+            "text": "Save building typologies models as .rds files",
+            "createdOn": 1740730795806,
             "createdBy": "admin",
             "stateChangedOn": 0
           }
