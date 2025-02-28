@@ -8,6 +8,7 @@ library(data.table)
 library(mlflow)
 library(reticulate)
 library(Metrics)
+library(purrr)
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # Recipe inputs
@@ -18,7 +19,7 @@ base_validation <- dkuReadDataset("base_validation", samplingMethod="head", nbRo
 # Combining train and validation datasets to one
 # Because we are going to use CV to train the models later
 # naming it df_base_train2 to remain consistent with df naming
-df_base_train2  <- rbind(df_base_train, df_base_validation)
+df_base_train2  <- rbind(base_train, base_validation)
 
 cat("number of rows in combined train data:", nrow(df_base_train2), sep = " ")
 
@@ -202,13 +203,13 @@ df_base_train2 <- df_base_train2 %>%
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # Define tuning grid
 tune_grid <- expand.grid(
-  nrounds = c(50, 100, 200, 300, 400, 500),
-  max_depth = c(3, 6, 9, 12),
-  eta = c(0.01, 0.05, 0.1, 0.2, 0.3),
-  gamma = c(0, 1, 5, 10),
-  colsample_bytree = c(0.5, 0.7, 0.8, 1.0),
-  min_child_weight = c(1, 3, 5, 10),
-  subsample = c(0.5, 0.7, 0.8, 1.0)
+  nrounds = c(50, 100, 150),
+  max_depth = c(3, 6, 9),
+  eta = c(0.1, 0.2),
+  gamma = c(0, 0.01, 1),
+  colsample_bytree = c(0.7, 1.0),
+  min_child_weight = c(1, 3),
+  subsample = c(0.7, 1.0)
 )
 
 
@@ -216,14 +217,13 @@ tune_grid <- expand.grid(
 train_control <- trainControl(
   method = "cv",
   number = 3,
-  classProbs = TRUE,  # Needed for AUC calculation
-  summaryFunction = twoClassSummary
+  summaryFunction = defaultSummary
 )
 
-# Train the model using grid search with 10-fold CV
+# Train the model using grid search with 3-fold CV
 set.seed(1234)
 base_xgb_reg_model <- train(
-  damage_pred ~ wind_max_pred +
+  damage_perc ~ wind_max_pred +
     rain_total_pred +
     roof_strong_wall_strong_pred +
     roof_strong_wall_light_pred +
@@ -352,12 +352,12 @@ damage_fit_reg_min <- train(damage_perc ~ wind_max_pred +
                               method = "xgbTree",
                               trControl = trainControl(method = "none"),
                               tuneGrid = best_params, # Use the best parameters here
-                              metric = "RMSE" 
+                              metric = "RMSE", 
                               data = df_base_train2
                          )
 
 # obtain predicted values
-train_predictions <- damage_fit_reg_min$pred$pred
+train_predictions <- predict(damage_fit_reg_min, newdata = df_base_train2)
 
 
 # Define bin edges
@@ -369,7 +369,7 @@ bin_labels <- cut(df_base_train2$damage_perc, breaks = bins, include.lowest = TR
 
 # Create a data frame with actual, predicted, and bin labels
 data <- data.frame(
-  actual = df_test$damage_perc,
+  actual = df_base_train2$damage_perc,
   predicted = train_predictions,
   bin = bin_labels
 )
@@ -387,14 +387,54 @@ for (i in seq_along(unique_bins)) {
 # Display RMSE by bin
 print(rmse_by_bin)
 
+as.data.frame(rmse_by_bin)
+RMSE_1 <- rmse_by_bin[1, "rmse"]
+RMSE_10 <-  rmse_by_bin[2, "rmse"]
+RMSE_50 <- rmse_by_bin[3, "rmse"]
+RMSE_100 <- rmse_by_bin[4, "rmse"]
+
 # Log binned RMSE metrics  
-mlflow_log_metric("RMSE \[0.00009, 1]", rmse_by_bin[1, 1])
-mlflow_log_metric("RMSE \[1, 10]", rmse_by_bin[2, 1])
-mlflow_log_metric("RMSE \[10, 50]", rmse_by_bin[3, 1])
-mlflow_log_metric("RMSE \[50, 100]", rmse_by_bin[4, 1])
+mlflow_log_metric("RMSE_1", RMSE_1)
+mlflow_log_metric("RMSE_10", RMSE_10)
+mlflow_log_metric("RMSE_50", RMSE_50)
+mlflow_log_metric("RMSE_100", RMSE_100)
 
 # End MLflow run
 mlflow_end_run()
+
+# -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
+train_predictions <- predict(damage_fit_reg_min, newdata = df_base_train2)
+
+
+# Define bin edges
+# Define bin edges
+bins <- c(0.00009, 1, 10, 50, 100)
+
+# Assign data to bins
+bin_labels <- cut(df_base_train2$damage_perc, breaks = bins, include.lowest = TRUE, right = TRUE)
+
+# Create a data frame with actual, predicted, and bin labels
+data <- data.frame(
+  actual = df_base_train2$damage_perc,
+  predicted = train_predictions,
+  bin = bin_labels
+)
+
+# Calculate RMSE per bin
+unique_bins <- levels(data$bin) # Get unique bin labels
+rmse_by_bin <- data.frame(bin = unique_bins, rmse = NA, count = NA) # Initialize results data frame
+
+for (i in seq_along(unique_bins)) {
+  bin_data <- data[data$bin == unique_bins[i], ] # Filter data for the current bin
+  rmse_by_bin$rmse[i] <- sqrt(mean((bin_data$actual - bin_data$predicted)^2, na.rm = TRUE)) # Calculate RMSE
+  rmse_by_bin$count[i] <- nrow(bin_data) # Count observations in the bin
+}
+
+# Display RMSE by bin
+print(rmse_by_bin)
+
+# -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
+str(rmse_by_bin)
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # Sanity Check
@@ -402,7 +442,7 @@ mlflow_end_run()
 # Compute RMSE
 
 damage_pred  <- predict(damage_fit_reg_min, newdata = df_base_train2)
-rmse_value <- rmse(final_training_df$damage_perc, damage_pred)
+rmse_value <- rmse(df_base_train2$damage_perc, damage_pred)
 rmse_value
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
