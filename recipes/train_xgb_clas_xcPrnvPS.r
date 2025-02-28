@@ -11,6 +11,7 @@ library(reticulate)
 library(Matrix)
 library(purrr) # useful for code optimization
 library(themis)
+library(doMC)
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # Recipe inputs
@@ -299,6 +300,11 @@ train_control <- trainControl(
   summaryFunction = twoClassSummary,
   sampling = "smote" # caret automatically identifies minority class
 )
+
+# Detect and register the number of available cores (use all but one)
+num_cores <- parallel::detectCores() - 2
+registerDoMC(cores = num_cores)  # Enable parallel processing
+
 
 # Measure the time for a code block to run
 system.time({
