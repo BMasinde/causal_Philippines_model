@@ -232,7 +232,7 @@
             "stateChangedOn": 0
           },
           {
-            "done": false,
+            "done": true,
             "text": "Balance outcome class ",
             "createdOn": 1740730041791,
             "createdBy": "admin",
@@ -281,7 +281,7 @@
             "stateChangedOn": 0
           },
           {
-            "done": false,
+            "done": true,
             "text": "Adjust for distance",
             "createdOn": 1740730374109,
             "createdBy": "admin",
@@ -295,7 +295,7 @@
             "stateChangedOn": 0
           },
           {
-            "done": false,
+            "done": true,
             "text": "save building typologies models as .rds files",
             "createdOn": 1740730766794,
             "createdBy": "admin",
