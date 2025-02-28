@@ -1,4 +1,5 @@
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
+# ---------------------------- TRUNCATED XGBOOST MODEL TRAINING -------------------
 library(dataiku)
 library(rpart)
 library(dplyr)
