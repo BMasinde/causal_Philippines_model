@@ -29,7 +29,7 @@ library(purrr)
 #     rain_yellow_ss = rain_total_pred * yellow_ls_frac,
 #     rain_orange_ss = rain_total_pred * orange_ls_frac,
 #     rain_red_ss = rain_total_pred * red_ls_frac,
-    
+
 #     )
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
@@ -40,8 +40,8 @@ base_test <- dkuReadDataset("base_test", samplingMethod="head", nbRows=100000)
 # Define the list of model names
 model_names <- c("clas_full",
                  "track",
-                 "wind", 
-                 "rain", 
+                 "wind",
+                 "rain",
                  "track",
                  "roof_strong_wall_strong",
                  "roof_strong_wall_light",
@@ -61,7 +61,7 @@ models_list <- list()
 for (model_name in model_names) {
   # Construct the file path for the model
   file_path <- file.path(folder_path, paste0("base_", model_name, "_model.rds"))
-  
+
   # Read the model and store it in the list with the model name as the key
   models_list[[paste0("base_", model_name, "_model")]] <- readRDS(file_path)
 }
@@ -109,7 +109,7 @@ col_models_list <- list(
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 df_base_test <-  base_test %>%
-  mutate(across(names(col_models_list), ~ predict(col_models_list[[cur_column()]], 
+  mutate(across(names(col_models_list), ~ predict(col_models_list[[cur_column()]],
                                              newdata = base_test), .names = "{.col}_pred"))
 
 # Define wind and rain interaction variables
@@ -204,7 +204,7 @@ y_pred  <- factor(y_pred, levels = c("0", "1"),  # Your current levels
 
 # summarize results
 conf_matrix <- confusionMatrix(as.factor(y_pred),
-                     as.factor(df_base_test$damage_binary),
+                     df_base_test$damage_binary_2,
                      positive = "Damage_above_10"
                      )
 
@@ -225,7 +225,7 @@ mlflow_log_metric("accuracy", accuracy)
 mlflow_log_metric("F1", f1_score)
 mlflow_log_metric("Precision", precision)
 mlflow_log_metric("Recall", recall)
-mlflow_log_metric("AUC", auc_value)
+#mlflow_log_metric("AUC", auc_value)
 
 
 # Save model
