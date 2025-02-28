@@ -116,7 +116,7 @@ rain_fractions <- c("blue_ls_frac", "yellow_ls_frac", "orange_ls_frac", "red_ls_
 df_base_train2 <- df_base_train2 %>%
   mutate(across(all_of(wind_fractions), ~ . * wind_max_pred, .names = "wind_{.col}"),
          across(all_of(rain_fractions), ~ . * rain_total_pred, .names = "rain_{.col}"))
-
+# ------------------------------- OLD MODEL TRAINING
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # Adding the predicted parents' to the training dataset
 
@@ -248,6 +248,8 @@ df_base_train2 <- df_base_train2 %>%
 # Ensure the target variable is a factor with valid names
 
 #df_base_train2$damage_binary <- as.factor(df_base_train2$damage_binary)
+
+# -------------------------------------------------------------------------------------------------------------
 
 df_base_train2$damage_binary_2 <- factor(df_base_train2$damage_binary, 
                                        levels = c("0", "1"),  # Your current levels
