@@ -3,10 +3,6 @@
   "color": "#4B8021",
   "items": [
     {
-      "objectId": "compute_ZijSaAqQ",
-      "objectType": "RECIPE"
-    },
-    {
       "objectId": "compute_dL4i4SKb",
       "objectType": "RECIPE"
     },
@@ -48,6 +44,10 @@
     },
     {
       "objectId": "train_xgb_clas_xcPrnvPS",
+      "objectType": "RECIPE"
+    },
+    {
+      "objectId": "train_base_xgb_reg_ZijSaAqQ",
       "objectType": "RECIPE"
     }
   ],
