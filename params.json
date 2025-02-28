@@ -288,7 +288,7 @@
             "stateChangedOn": 0
           },
           {
-            "done": false,
+            "done": true,
             "text": "Train with k-fold CV and grid search for parameter tuning",
             "createdOn": 1740730385760,
             "createdBy": "admin",
