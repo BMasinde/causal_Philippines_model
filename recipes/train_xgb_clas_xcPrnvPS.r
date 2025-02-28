@@ -299,7 +299,7 @@ train_control <- trainControl(
   classProbs = TRUE,  # Needed for AUC calculation
   summaryFunction = twoClassSummary,
   sampling = "smote", # caret automatically identifies minority class
-  search = "random" # random selection of the expanded grid 
+  search = "random", # random selection of the expanded grid 
   seeds = 1234
 )
 
