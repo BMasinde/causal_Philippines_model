@@ -225,7 +225,7 @@
         "createdOn": 0,
         "items": [
           {
-            "done": false,
+            "done": true,
             "text": "Add Region to building typologies",
             "createdOn": 1740729922379,
             "createdBy": "admin",
@@ -239,14 +239,14 @@
             "stateChangedOn": 0
           },
           {
-            "done": false,
+            "done": true,
             "text": "Adjust for distance",
             "createdOn": 1740730069478,
             "createdBy": "admin",
             "stateChangedOn": 0
           },
           {
-            "done": false,
+            "done": true,
             "text": "Train with k-fold CV and grid search for parameter tuning",
             "createdOn": 1740730094392,
             "createdBy": "admin",
