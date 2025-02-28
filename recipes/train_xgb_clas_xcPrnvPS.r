@@ -376,8 +376,8 @@ damage_fit_class_full <- train(
             roof_salv_wall_strong_pred +
             roof_salv_wall_light_pred +
             roof_salv_wall_salv_pred +
-            ls_risk_pct +
-            ss_risk_pct +
+            #ls_risk_pct + # Not local variables
+            #ss_risk_pct +
             wind_blue_ss +
             wind_yellow_ss +
             wind_orange_ss +
@@ -465,8 +465,8 @@ damage_fit_class_full <- train(
             roof_salv_wall_strong_pred +
             roof_salv_wall_light_pred +
             roof_salv_wall_salv_pred +
-            ls_risk_pct +
-            ss_risk_pct +
+            #ls_risk_pct + Not local variables
+            #ss_risk_pct +
             wind_blue_ss +
             wind_yellow_ss +
             wind_orange_ss +
