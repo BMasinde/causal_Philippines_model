@@ -200,7 +200,7 @@ tune_grid <- expand.grid(
 # Set up train control with 10-fold cross-validation
 train_control <- trainControl(
   method = "cv",
-  number = 3,
+  number = 7,
   summaryFunction = defaultSummary
 )
 
