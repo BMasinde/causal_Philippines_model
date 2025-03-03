@@ -218,8 +218,8 @@ trunc_xgb_reg_model <- train(
     roof_salv_wall_strong_pred +
     roof_salv_wall_light_pred +
     roof_salv_wall_salv_pred +
-    ls_risk_pct +
-    ss_risk_pct +
+    #ls_risk_pct +
+    #ss_risk_pct +
     wind_blue_ss +
     wind_yellow_ss +
     wind_orange_ss +
@@ -283,8 +283,8 @@ trunc_damage_fit_reg <- train(damage_perc ~ wind_max_pred +
                               roof_salv_wall_strong_pred +
                               roof_salv_wall_light_pred +
                               roof_salv_wall_salv_pred +
-                              ls_risk_pct +
-                              ss_risk_pct +
+                              #ls_risk_pct +
+                              #ss_risk_pct +
                               wind_blue_ss +
                               wind_yellow_ss +
                               wind_orange_ss +
