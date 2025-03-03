@@ -34,11 +34,11 @@ trunc_track_model  <- rpart(track_min_dist  ~ island_groups,
 # Fitting tree for wind and rain
 # wind_max prediction using decision trees
 
-trunc_wind_model <- rpart(wind_max ~ track_min_dist,
+trunc_wind_model <- rpart(wind_max ~ track_min_dist + island_groups,
                        data = df_trunc_train2,
                        method = "anova")
 
-trunc_rain_model <- rpart(rain_total ~ track_min_dist,
+trunc_rain_model <- rpart(rain_total ~ track_min_dist + island_groups,
                        data = df_trunc_train2,
                        method = "anova")
 
@@ -200,7 +200,7 @@ tune_grid <- expand.grid(
 # Set up train control with 10-fold cross-validation
 train_control <- trainControl(
   method = "cv",
-  number = 7,
+  number = 10,
   summaryFunction = defaultSummary
 )
 
