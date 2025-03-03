@@ -37,7 +37,7 @@ base_track_model  <- rpart(track_min_dist  ~ island_groups,
 # Training structural equation for wind speed
 # wind_speed = f(track_min_dist, eps)
 
-base_wind_model <- rpart(wind_max ~ track_min_dist,
+base_wind_model <- rpart(wind_max ~ track_min_dist + island_groups,
                        data = df_base_train2,
                        method = "anova")
 
@@ -45,7 +45,7 @@ base_wind_model <- rpart(wind_max ~ track_min_dist,
 # Training structural equation for rain speed
 # rain_total = f(track_min_dist, eps)
 
-base_rain_model <- rpart(rain_total ~ track_min_dist,
+base_rain_model <- rpart(rain_total ~ track_min_dist + island_groups,
                        data = df_base_train2,
                        method = "anova")
 
