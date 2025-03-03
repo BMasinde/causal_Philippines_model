@@ -143,7 +143,7 @@ auc_value
 #y_preds_prob_1 <- y_preds_prob[ ,2]
 
 ## assigning final class based on threshold
-y_pred <- ifelse(y_preds_probs > 0.5, 1, 0)
+y_pred <- ifelse(y_preds_probs > 0.35, 1, 0)
 
 y_pred  <- factor(y_pred, levels = c("0", "1"),  # Your current levels
                                        labels = c("Damage_below_10", "Damage_above_10"))  # New valid labels
