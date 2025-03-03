@@ -197,7 +197,7 @@ mlflow_log_param("model_type", "scm-xgboost-classification")
 
 # predicting
 y_preds_probs <- predict(models_list[["base_clas_full_model"]], newdata = df_base_test, type = "prob")[,2]  # Probability of class 1
-y_pred <- ifelse(y_preds_probs > 0.5, 1, 0)
+y_pred <- ifelse(y_preds_probs > 0.35, 1, 0)
 
 y_pred  <- factor(y_pred, levels = c("0", "1"),  # Your current levels
                                        labels = c("Damage_below_10", "Damage_above_10"))  # New valid labels
