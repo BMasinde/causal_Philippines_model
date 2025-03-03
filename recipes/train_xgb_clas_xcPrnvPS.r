@@ -27,6 +27,11 @@ df_base_train2  <- rbind(df_base_train, df_base_validation)
 cat("number of rows in combined train data:", nrow(df_base_train2), sep = " ")
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
+# Define training control (cross-validation) for parent nodes
+# par_train_control <- trainControl(method = "cv", number = 2)  # 5-fold cross-validation
+# par_tune_grid <- expand.grid(cp = seq(0.01, 0.1, by = 0.01))
+
+# -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # Training track_min_dist ~ island_groups
 # we will need to also include island_groups
 # in the final outcome prediction model to adjust for the confounding
@@ -40,7 +45,7 @@ base_track_model  <- rpart(track_min_dist  ~ island_groups,
 # wind_speed = f(track_min_dist, eps)
 
 
-base_wind_model <- rpart(wind_max ~ track_min_dist,
+base_wind_model <- rpart(wind_max ~ track_min_dist + island_groups,
                        data = df_base_train2,
                        method = "anova")
 
@@ -48,7 +53,7 @@ base_wind_model <- rpart(wind_max ~ track_min_dist,
 # Training structural equation for rain speed
 # rain_total = f(track_min_dist, eps)
 
-base_rain_model <- rpart(rain_total ~ track_min_dist,
+base_rain_model <- rpart(rain_total ~ track_min_dist + island_groups,
                        data = df_base_train2,
                        method = "anova")
 
@@ -281,13 +286,16 @@ df_base_train2$damage_binary_2 <- factor(df_base_train2$damage_binary,
 #   subsample = c(0.7, 1.0)
 # )
 
+# setting seed for reproducibility
+set.seed(1234)
+
 tune_grid <- expand.grid(
-  nrounds = c(47,50, 60,70, 80), # early stopping does not work, we still need to specify nrounds 
+  nrounds = c(47,50, 60,70), # early stopping does not work, we still need to specify nrounds
   max_depth = c(2, 3, 4, 6),
   eta = c(0.09, 0.1, 0.11, 0.12),
-  gamma = c(0, 1, 2, 3, 4, 5),
+  gamma = c(0, 1, 2, 3, 4),
   colsample_bytree = c(0.9, 1.0, 1.1),
-  min_child_weight = c(2, 3, 4,5),
+  min_child_weight = c(2, 3, 4),
   subsample = c(0.5, 0.6, 0.7, 0.8)
 )
 
@@ -295,11 +303,11 @@ tune_grid <- expand.grid(
 # Set up train control with 10-fold cross-validation
 train_control <- trainControl(
   method = "cv",
-  number = 10,
+  number = 7,
   classProbs = TRUE,  # Needed for AUC calculation
   summaryFunction = twoClassSummary,
   sampling = "smote", # caret automatically identifies minority class
-  search = "random" # random selection of the expanded grid 
+  search = "random" # random selection of the expanded grid
 )
 
 # Detect and register the number of available cores (use all but one)
@@ -310,9 +318,10 @@ registerDoMC(cores = num_cores)  # Enable parallel processing
 # Measure the time for a code block to run
 system.time({
     # Train the model using grid search with 10-fold CV
-    set.seed(1234)
+    
     xgb_model <- train(
-      damage_binary_2 ~ wind_max_pred +
+      damage_binary_2 ~ track_min_dist_pred + 
+        wind_max_pred +
         rain_total_pred +
         roof_strong_wall_strong_pred +
         roof_strong_wall_light_pred +
@@ -333,13 +342,12 @@ system.time({
         rain_yellow_ss +
         rain_orange_ss +
         rain_red_ss +
-        island_groups +  # Confounder adjustment
-        track_min_dist_pred, # Confounder adjustment
+        island_groups,  # Confounder adjustment
         data = df_base_train2,
         method = "xgbTree",
         trControl = train_control,
         tuneGrid = tune_grid,
-        metric = "F1" # Optimize based on F1 because we have an imbalanced dataset and we care about minority class
+        metric = "ROC" # "xgbTree" does not support other metrics for classification tasks (e.g., Kappa or F1)
     )
     Sys.sleep(2)  # This is just an example to simulate a delay
 })
