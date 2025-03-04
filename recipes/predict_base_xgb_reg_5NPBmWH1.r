@@ -167,7 +167,7 @@ names(trunc_models_list)
 #'
 
 predictDamage <- function(df, scm_models_base, scm_models_high, threshold) {
-    
+
 base_col_models_list <- list(
   track_min_dist = scm_models_base[["base_track_model"]],
   wind_max = scm_models_base[["base_wind_model"]],
@@ -181,7 +181,7 @@ base_col_models_list <- list(
   roof_salv_wall_strong = scm_models_base[["base_roof_salv_wall_strong_model"]],
   roof_salv_wall_light = scm_models_base[["base_roof_salv_wall_light_model"]],
   roof_salv_wall_salv = scm_models_base[["base_roof_salv_wall_salv_model"]]
-) 
+)
 
   ## common predictions btw class & base regression
   df <-  df %>%
@@ -211,7 +211,7 @@ base_col_models_list <- list(
   ## Step 3: Predict the high-impact damage percentage using the high-impact
   ### SCM models (for high impact cases)
   ## wind and rainfall predictions are based on high impact data (damage >= 10)
-    
+
   trunc_col_models_list <- list(
   track_min_dist = scm_models_high[["trunc_track_model"]],
   wind_max = scm_models_high[["trunc_wind_model"]],
@@ -225,7 +225,7 @@ base_col_models_list <- list(
   roof_salv_wall_strong = scm_models_high[["trunc_roof_salv_wall_strong_model"]],
   roof_salv_wall_light = scm_models_high[["trunc_roof_salv_wall_light_model"]],
   roof_salv_wall_salv = scm_models_high[["trunc_roof_salv_wall_salv_model"]]
-) 
+)
   # add the predictions of wind and rainfall to the dataframe df
   df2 <- df %>%
       mutate(across(names(trunc_col_models_list), ~ predict(trunc_col_models_list[[cur_column()]],
@@ -256,7 +256,7 @@ threshold = 0.35
 
 preds <- predictDamage(df = df_test, scm_models_base = base_models_list,
   scm_models_high = trunc_models_list, threshold = threshold
-  
+
 )
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
@@ -284,8 +284,15 @@ for (i in seq_along(unique_bins)) {
   rmse_by_bin$count[i] <- nrow(bin_data) # Count observations in the bin
 }
 
+# Calculate weighted average RMSE
+total_count <- sum(rmse_by_bin$count, na.rm = TRUE)
+w_avg  <- sum(rmse_by_bin$rmse * rmse_by_bin$count)/total_count
+
 # Display RMSE by bin
 print(rmse_by_bin)
+
+# -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
+w_avg
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # Log metrics using MLFLOW
@@ -316,6 +323,7 @@ mlflow_log_metric("RMSE_1", RMSE_1)
 mlflow_log_metric("RMSE_10", RMSE_10)
 mlflow_log_metric("RMSE_50", RMSE_50)
 mlflow_log_metric("RMSE_100", RMSE_100)
+mlflow_log_metric("w_avg", w_avg)
 # End MLflow run
 mlflow_end_run()
 
