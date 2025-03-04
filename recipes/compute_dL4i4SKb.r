@@ -190,8 +190,8 @@ df_trunc_train2 <- df_trunc_train2 %>%
 
 set.seed(1234)
 tune_grid <- expand.grid(
-   nrounds = c(50, 100, 200, 300, 400, 500),
-   max_depth = c(3, 6, 9, 12),
+   nrounds = c(200, 250, 275, 300, 350),
+   max_depth = c(3, 6,),
    eta = c(0.01, 0.05, 0.1, 0.2, 0.3),
    gamma = c(0, 1, 5, 10),
    colsample_bytree = c(0.5, 0.7, 0.8, 1.0),
