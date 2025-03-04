@@ -202,29 +202,38 @@ df_base_train2 <- df_base_train2 %>%
 # print(best_params)
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
+# setting seed for reproducibility
+set.seed(1234)
+
 # Define tuning grid
 tune_grid <- expand.grid(
-  nrounds = c(50, 100, 150),
-  max_depth = c(3, 6, 9),
-  eta = c(0.1, 0.2),
-  gamma = c(0, 0.01, 1),
-  colsample_bytree = c(0.7, 1.0),
-  min_child_weight = c(1, 3),
-  subsample = c(0.7, 1.0)
+  nrounds = c(47,50, 60,70), # early stopping does not work, we still need to specify nrounds
+  max_depth = c(2, 3, 4, 6),
+  eta = c(0.09, 0.1, 0.11, 0.12),
+  gamma = c(0, 1, 2, 3, 4),
+  colsample_bytree = c(0.9, 1.0, 1.1),
+  min_child_weight = c(2, 3, 4),
+  subsample = c(0.5, 0.6, 0.7, 0.8)
 )
 
 
 # Set up train control with 10-fold cross-validation
 train_control <- trainControl(
   method = "cv",
-  number = 3,
-  summaryFunction = defaultSummary
+  number = 7,
+  summaryFunction = defaultSummary,
+  search = "random" # random selection of the expanded grid
 )
 
-# Train the model using grid search with 3-fold CV
-set.seed(1234)
+# Detect and register the number of available cores (use all but one)
+num_cores <- parallel::detectCores() - 2
+registerDoMC(cores = num_cores)  # Enable parallel processing
+
+# Measure the time for a code block to run
+system.time({
+# Train the model using grid search with 7-fold CV
 base_xgb_reg_model <- train(
-  damage_perc ~ wind_max_pred +
+  damage_perc ~ track_min_dist_pred + # Confounder adjustmentwind_max_pred +
     rain_total_pred +
     roof_strong_wall_strong_pred +
     roof_strong_wall_light_pred +
@@ -245,15 +254,15 @@ base_xgb_reg_model <- train(
     rain_yellow_ss +
     rain_orange_ss +
     rain_red_ss +
-    island_groups +  # Confounder adjustment
-    track_min_dist_pred, # Confounder adjustment
+    island_groups,  # Confounder adjustment
   data = df_base_train2,
   method = "xgbTree",
   trControl = train_control,
   tuneGrid = tune_grid,
   metric = "RMSE"  # Optimize based on RMSE
 )
-
+Sys.sleep(2)  # This is just an example to simulate a delay
+})
 # Print best parameters
 print(base_xgb_reg_model$bestTune)
 
