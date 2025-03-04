@@ -196,8 +196,7 @@ tune_grid <- expand.grid(
    gamma = c(0, 1, 5, 10),
    colsample_bytree = c(0.5, 0.7, 0.8, 1.0),
    min_child_weight = c(1, 3, 5, 10),
-   subsample = c(0.5, 0.7, 0.8, 1.0),
-   search = "random" # random selection of the expanded grid
+   subsample = c(0.5, 0.7, 0.8, 1.0) 
  )
 
 
@@ -206,6 +205,7 @@ train_control <- trainControl(
   method = "cv",
   number = 10,
   summaryFunction = defaultSummary
+  search = "random" # random selection of the expanded grid
 )
 
 # Detect and register the number of available cores (use all but one)
