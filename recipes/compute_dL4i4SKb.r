@@ -8,6 +8,8 @@ library(data.table)
 library(mlflow)
 library(reticulate)
 library(Metrics)
+library(themis)
+library(doMC)
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # Recipe inputs
@@ -95,7 +97,7 @@ model_list <- list(
 
 # Apply predictions efficiently
 df_trunc_train2 <- df_trunc_train2 %>%
-  mutate(across(names(model_list), ~ predict(model_list[[cur_column()]], 
+  mutate(across(names(model_list), ~ predict(model_list[[cur_column()]],
                                              newdata = df_trunc_train2), .names = "{.col}_pred"))
 
 # Define wind and rain interaction variables
@@ -186,6 +188,7 @@ df_trunc_train2 <- df_trunc_train2 %>%
 #  subsample = c(0.7, 1.0)
 #)
 
+set.seed(1234)
 tune_grid <- expand.grid(
    nrounds = c(50, 100, 200, 300, 400, 500),
    max_depth = c(3, 6, 9, 12),
@@ -193,7 +196,8 @@ tune_grid <- expand.grid(
    gamma = c(0, 1, 5, 10),
    colsample_bytree = c(0.5, 0.7, 0.8, 1.0),
    min_child_weight = c(1, 3, 5, 10),
-   subsample = c(0.5, 0.7, 0.8, 1.0)
+   subsample = c(0.5, 0.7, 0.8, 1.0),
+   search = "random" # random selection of the expanded grid
  )
 
 
@@ -204,8 +208,13 @@ train_control <- trainControl(
   summaryFunction = defaultSummary
 )
 
+# Detect and register the number of available cores (use all but one)
+num_cores <- parallel::detectCores() - 2
+registerDoMC(cores = num_cores)  # Enable parallel processing
+
+# Measure the time for a code block to run
+system.time({
 # Train the model using grid search with 3-fold CV
-set.seed(1234)
 trunc_xgb_reg_model <- train(
   damage_perc ~ wind_max_pred +
     rain_total_pred +
@@ -236,7 +245,9 @@ trunc_xgb_reg_model <- train(
   tuneGrid = tune_grid,
   metric = "RMSE"  # Optimize based on RMSE
 )
+Sys.sleep(2)  # This is just an example to simulate a delay
 
+})
 # Print best parameters
 print(trunc_xgb_reg_model$bestTune)
 
