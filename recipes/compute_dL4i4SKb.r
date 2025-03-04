@@ -204,7 +204,7 @@ tune_grid <- expand.grid(
 train_control <- trainControl(
   method = "cv",
   number = 10,
-  summaryFunction = defaultSummary
+  summaryFunction = defaultSummary,
   search = "random" # random selection of the expanded grid
 )
 
