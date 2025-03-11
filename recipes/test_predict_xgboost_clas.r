@@ -93,18 +93,18 @@ for (model_name in model_names) {
 
 # Define models in a named list
 col_models_list <- list(
-  track_min_dist = models_list[["base_track_model"]],
+  #track_min_dist = models_list[["base_track_model"]],
   wind_max = models_list[["base_wind_model"]],
-  rain_total = models_list[["base_rain_model"]],
-  roof_strong_wall_strong = models_list[["base_roof_strong_wall_strong_model"]],
-  roof_strong_wall_light = models_list[["base_roof_strong_wall_light_model"]],
-  roof_strong_wall_salv = models_list[["base_roof_strong_wall_salv_model"]],
-  roof_light_wall_strong = models_list[["base_roof_light_wall_strong_model"]],
-  roof_light_wall_light = models_list[["base_roof_light_wall_light_model"]],
-  roof_light_wall_salv = models_list[["base_roof_light_wall_salv_model"]],
-  roof_salv_wall_strong = models_list[["base_roof_salv_wall_strong_model"]],
-  roof_salv_wall_light = models_list[["base_roof_salv_wall_light_model"]],
-  roof_salv_wall_salv = models_list[["base_roof_salv_wall_salv_model"]]
+  rain_total = models_list[["base_rain_model"]]
+  #roof_strong_wall_strong = models_list[["base_roof_strong_wall_strong_model"]],
+  #roof_strong_wall_light = models_list[["base_roof_strong_wall_light_model"]],
+  #roof_strong_wall_salv = models_list[["base_roof_strong_wall_salv_model"]],
+  #roof_light_wall_strong = models_list[["base_roof_light_wall_strong_model"]],
+  #roof_light_wall_light = models_list[["base_roof_light_wall_light_model"]],
+  #roof_light_wall_salv = models_list[["base_roof_light_wall_salv_model"]],
+  #roof_salv_wall_strong = models_list[["base_roof_salv_wall_strong_model"]],
+  #roof_salv_wall_light = models_list[["base_roof_salv_wall_light_model"]],
+  #roof_salv_wall_salv = models_list[["base_roof_salv_wall_salv_model"]]
 )
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
@@ -169,7 +169,7 @@ suppressWarnings(try(mlflow_end_run(), silent = TRUE))
 
 # set experiment
 # Logging metrics for model training and the parameters used
-mlflow_set_experiment(experiment_name = "SCM - XGBOOST classification -CV (Test metircs)")
+mlflow_set_experiment(experiment_name = "U-SCM - XGBOOST classification -CV (Test metircs)")
 
 # Ensure that MLflow has only one run. Start MLflow run once.
 run_name <- paste("XGBoost Run", Sys.time())  # Unique name using current time
