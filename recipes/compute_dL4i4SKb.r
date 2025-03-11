@@ -79,8 +79,8 @@ trunc_rain_model <- rpart(rain_total ~ track_min_dist,
 #                                  method = "anova")
 
 #trunc_roof_salv_wall_salv_model  <- rpart(roof_salv_wall_salv ~ island_groups,
-                                  data = df_trunc_train2,
-                                  method = "anova")
+#                                  data = df_trunc_train2,
+#                                  method = "anova")
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 model_list <- list(
