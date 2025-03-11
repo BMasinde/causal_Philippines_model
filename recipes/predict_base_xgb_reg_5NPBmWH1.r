@@ -304,7 +304,7 @@ suppressWarnings(try(mlflow_end_run(), silent = TRUE))
 
 # set experiment
 # Logging metrics for model training and the parameters used
-mlflow_set_experiment(experiment_name = "SCM - Hurlde - CV (Test metircs)")
+mlflow_set_experiment(experiment_name = "U-SCM - Hurlde - CV (Test metircs)")
 
 # Ensure that MLflow has only one run. Start MLflow run once.
 run_name <- paste("Hurdle Run", Sys.time())  # Unique name using current time
