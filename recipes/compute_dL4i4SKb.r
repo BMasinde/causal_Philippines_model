@@ -29,53 +29,56 @@ cat("number of rows in combined train data:", nrow(df_trunc_train2), sep = " ")
 # we will need to also include island_groups
 # in the final outcome prediction model to adjust for the confounding
 
-trunc_track_model  <- rpart(track_min_dist  ~ island_groups,
-                          data = df_trunc_train2,
-                          method = "anova")
+#trunc_track_model  <- rpart(track_min_dist  ~ island_groups,
+#                          data = df_trunc_train2,
+#                          method = "anova")
 
 # Fitting tree for wind and rain
 # wind_max prediction using decision trees
 
-trunc_wind_model <- rpart(wind_max ~ track_min_dist + island_groups,
+trunc_wind_model <- rpart(wind_max ~ track_min_dist,
                        data = df_trunc_train2,
                        method = "anova")
 
-trunc_rain_model <- rpart(rain_total ~ track_min_dist + island_groups,
+trunc_rain_model <- rpart(rain_total ~ track_min_dist,
                        data = df_trunc_train2,
                        method = "anova")
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # Building typologies are determined by region
-trunc_roof_strong_wall_strong_model  <- rpart(roof_strong_wall_strong  ~ island_groups,
-                                             data = df_trunc_train2,
-                                            method = "anova")
+#trunc_roof_strong_wall_strong_model  <- rpart(roof_strong_wall_strong  ~ island_groups,
+#                                             data = df_trunc_train2,
+#                                            method = "anova")
 
-trunc_roof_strong_wall_light_model  <- rpart(roof_strong_wall_light ~ island_groups,
-                                           data = df_trunc_train2,
-                                           method = "anova")
+#trunc_roof_strong_wall_light_model  <- rpart(roof_strong_wall_light ~ island_groups,
+#                                           data = df_trunc_train2,
+#                                           method = "anova")
 
-trunc_roof_strong_wall_salv_model  <- rpart(roof_strong_wall_salv ~ island_groups,
-                                          data = df_trunc_train2,
-                                          method = "anova")
-trunc_roof_light_wall_strong_model  <- rpart(roof_light_wall_strong ~ island_groups,
-                                           data = df_trunc_train2,
-                                           method = "anova")
-trunc_roof_light_wall_light_model  <- rpart(roof_light_wall_light ~ island_groups,
-                                          data = df_trunc_train2,
-                                          method = "anova")
-trunc_roof_light_wall_salv_model  <- rpart(roof_light_wall_salv ~ island_groups,
-                                         data = df_trunc_train2,
-                                         method = "anova")
+#trunc_roof_strong_wall_salv_model  <- rpart(roof_strong_wall_salv ~ island_groups,
+#                                          data = df_trunc_train2,
+#                                          method = "anova")
 
-trunc_roof_salv_wall_strong_model  <- rpart(roof_salv_wall_strong ~ island_groups,
-                                          data = df_trunc_train2,
-                                          method = "anova")
+#trunc_roof_light_wall_strong_model  <- rpart(roof_light_wall_strong ~ island_groups,
+#                                           data = df_trunc_train2,
+#                                           method = "anova")
 
-trunc_roof_salv_wall_light_model  <- rpart(roof_salv_wall_light ~ island_groups,
-                                  data = df_trunc_train2,
-                                  method = "anova")
+#trunc_roof_light_wall_light_model  <- rpart(roof_light_wall_light ~ island_groups,
+#                                          data = df_trunc_train2,
+#                                          method = "anova")
 
-trunc_roof_salv_wall_salv_model  <- rpart(roof_salv_wall_salv ~ island_groups,
+#trunc_roof_light_wall_salv_model  <- rpart(roof_light_wall_salv ~ island_groups,
+#                                         data = df_trunc_train2,
+#                                         method = "anova")
+
+#trunc_roof_salv_wall_strong_model  <- rpart(roof_salv_wall_strong ~ island_groups,
+#                                          data = df_trunc_train2,
+#                                          method = "anova")
+
+#trunc_roof_salv_wall_light_model  <- rpart(roof_salv_wall_light ~ island_groups,
+#                                  data = df_trunc_train2,
+#                                  method = "anova")
+
+#trunc_roof_salv_wall_salv_model  <- rpart(roof_salv_wall_salv ~ island_groups,
                                   data = df_trunc_train2,
                                   method = "anova")
 
@@ -84,15 +87,15 @@ model_list <- list(
   track_min_dist = trunc_track_model,
   wind_max = trunc_wind_model,
   rain_total = trunc_rain_model,
-  roof_strong_wall_strong = trunc_roof_strong_wall_strong_model,
-  roof_strong_wall_light = trunc_roof_strong_wall_light_model,
-  roof_strong_wall_salv = trunc_roof_strong_wall_salv_model,
-  roof_light_wall_strong = trunc_roof_light_wall_strong_model,
-  roof_light_wall_light = trunc_roof_light_wall_light_model,
-  roof_light_wall_salv = trunc_roof_light_wall_salv_model,
-  roof_salv_wall_strong = trunc_roof_salv_wall_strong_model,
-  roof_salv_wall_light = trunc_roof_salv_wall_light_model,
-  roof_salv_wall_salv = trunc_roof_salv_wall_salv_model
+  #roof_strong_wall_strong = trunc_roof_strong_wall_strong_model,
+  #roof_strong_wall_light = trunc_roof_strong_wall_light_model,
+  #roof_strong_wall_salv = trunc_roof_strong_wall_salv_model,
+  #roof_light_wall_strong = trunc_roof_light_wall_strong_model,
+  #roof_light_wall_light = trunc_roof_light_wall_light_model,
+  #roof_light_wall_salv = trunc_roof_light_wall_salv_model,
+  #roof_salv_wall_strong = trunc_roof_salv_wall_strong_model,
+  #roof_salv_wall_light = trunc_roof_salv_wall_light_model,
+  #roof_salv_wall_salv = trunc_roof_salv_wall_salv_model
 )
 
 # Apply predictions efficiently
@@ -108,73 +111,6 @@ rain_fractions <- c("blue_ls_frac", "yellow_ls_frac", "orange_ls_frac", "red_ls_
 df_trunc_train2 <- df_trunc_train2 %>%
   mutate(across(all_of(wind_fractions), ~ . * wind_max_pred, .names = "wind_{.col}"),
          across(all_of(rain_fractions), ~ . * rain_total_pred, .names = "rain_{.col}"))
-
-# -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
-## -------------- NOT NEEDED ----------------------------------------
-# # Define a grid of hyperparameters same as used for the base model
-# cp_values <- seq(0.0001, 0.05, by = 0.0005)
-# maxdepth_values <- c(3, 5, 7, 10)
-# minsplit_values <- c(10, 20, 30, 40)
-# minbucket_values <- c(5, 10, 20)
-
-# # Create an empty list to store results
-# results <- data.frame(cp = numeric(), maxdepth = numeric(),
-#                       minsplit = numeric(), minbucket = numeric(), RMSE = numeric())
-
-
-
-# # Train the model using manual grid search
-# # Iterate over all combinations of hyperparameters
-# for (cp in cp_values) {
-#   for (maxdepth in maxdepth_values) {
-#     for (minsplit in minsplit_values) {
-#       for (minbucket in minbucket_values) {
-
-#         # Train the model with specific hyperparameters
-#         model <- rpart(
-#           damage_perc ~ wind_max_pred +
-#             rain_total_pred +
-#             roof_strong_wall_strong +
-#             roof_strong_wall_light +
-#             roof_strong_wall_salv +
-#             roof_light_wall_strong +
-#             roof_light_wall_light +
-#             roof_light_wall_salv +
-#             roof_salv_wall_strong +
-#             roof_salv_wall_light +
-#             roof_salv_wall_salv +
-#             ls_risk_pct +
-#             ss_risk_pct +
-#             wind_blue_ss +
-#             wind_yellow_ss +
-#             wind_orange_ss +
-#             wind_red_ss +
-#             rain_blue_ss +
-#             rain_yellow_ss +
-#             rain_orange_ss +
-#             rain_red_ss,
-#           data = df_trunc_train,
-#           method = "anova",  # Regression tree
-#           control = rpart.control(cp = cp, maxdepth = maxdepth,
-#                                   minsplit = minsplit, minbucket = minbucket)
-#         )
-
-#         # Make predictions on the validation set
-#         val_predictions <- predict(model, newdata = df_trunc_val)
-
-#         # Compute RMSE
-#         rmse_value <- rmse(df_trunc_val$damage_perc, val_predictions)
-
-#         # Store results
-#         results <- rbind(results, data.frame(cp, maxdepth, minsplit, minbucket, RMSE = rmse_value))
-#       }
-#     }
-#   }
-# }
-
-# # Print the best hyperparameter combination
-# best_params <- results[which.min(results$RMSE), ]
-# print(best_params)
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # Define tuning grid
@@ -196,7 +132,7 @@ tune_grid <- expand.grid(
    gamma = c(0, 1, 5, 10),
    colsample_bytree = c(0.5, 0.7, 0.8, 1.0),
    min_child_weight = c(1, 3, 5, 10),
-   subsample = c(0.5, 0.7, 0.8, 1.0) 
+   subsample = c(0.5, 0.7, 0.8, 1.0)
  )
 
 
@@ -218,15 +154,15 @@ system.time({
 trunc_xgb_reg_model <- train(
   damage_perc ~ wind_max_pred +
     rain_total_pred +
-    roof_strong_wall_strong_pred +
-    roof_strong_wall_light_pred +
-    roof_strong_wall_salv_pred +
-    roof_light_wall_strong_pred +
-    roof_light_wall_light_pred +
-    roof_light_wall_salv_pred +
-    roof_salv_wall_strong_pred +
-    roof_salv_wall_light_pred +
-    roof_salv_wall_salv_pred +
+    roof_strong_wall_strong +
+    roof_strong_wall_light +
+    roof_strong_wall_salv +
+    roof_light_wall_strong +
+    roof_light_wall_light +
+    roof_light_wall_salv +
+    roof_salv_wall_strong +
+    roof_salv_wall_light +
+    roof_salv_wall_salv +
     #ls_risk_pct +
     #ss_risk_pct +
     wind_blue_ss +
@@ -237,8 +173,7 @@ trunc_xgb_reg_model <- train(
     rain_yellow_ss +
     rain_orange_ss +
     rain_red_ss +
-    island_groups +  # Confounder adjustment
-    track_min_dist_pred, # Confounder adjustment
+    track_min_dist, # Confounder adjustment
   data = df_trunc_train2,
   method = "xgbTree",
   trControl = train_control,
@@ -261,7 +196,7 @@ mlflow_set_tracking_uri("http://127.0.0.1:5000")
 suppressWarnings(try(mlflow_end_run(), silent = TRUE))
 
 # Logging metrics for model training and the parameters used
-mlflow_set_experiment(experiment_name = "SCM - XGBOOST Truncated regression - CV (Training metircs)")
+mlflow_set_experiment(experiment_name = "U-SCM - XGBOOST Truncated regression - CV (Training metircs)")
 
 # Ensure that MLflow has only one run. Start MLflow run once.
 run_name <- paste("XGBoost Run", Sys.time())  # Unique name using current time
@@ -285,15 +220,15 @@ for (param in names(best_params)) {
 # ---------- train using best parameters
 trunc_damage_fit_reg <- train(damage_perc ~ wind_max_pred +
                               rain_total_pred +
-                              roof_strong_wall_strong_pred +
-                              roof_strong_wall_light_pred +
-                              roof_strong_wall_salv_pred +
-                              roof_light_wall_strong_pred +
-                              roof_light_wall_light_pred +
-                              roof_light_wall_salv_pred +
-                              roof_salv_wall_strong_pred +
-                              roof_salv_wall_light_pred +
-                              roof_salv_wall_salv_pred +
+                              roof_strong_wall_strong +
+                              roof_strong_wall_light +
+                              roof_strong_wall_salv +
+                              roof_light_wall_strong +
+                              roof_light_wall_light +
+                              roof_light_wall_salv +
+                              roof_salv_wall_strong +
+                              roof_salv_wall_light +
+                              roof_salv_wall_salv +
                               #ls_risk_pct +
                               #ss_risk_pct +
                               wind_blue_ss +
@@ -304,8 +239,7 @@ trunc_damage_fit_reg <- train(damage_perc ~ wind_max_pred +
                               rain_yellow_ss +
                               rain_orange_ss +
                               rain_red_ss +
-                              island_groups +  # Confounder adjustment
-                              track_min_dist_pred, # Confounder adjustment
+                              track_min_dist, # Confounder adjustment
                               method = "xgbTree",
                               trControl = trainControl(method = "none"),
                               tuneGrid = best_params, # Use the best parameters here
@@ -360,38 +294,6 @@ mlflow_log_metric("RMSE_100", RMSE_100)
 mlflow_end_run()
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
-# # Training based on tuned parameters
-# # Combining training data and validation data
-# final_training_df  <- rbind(df_trunc_train,
-#                            df_trunc_val)
-
-# trunc_damage_fit_reg <- rpart(damage_perc ~ wind_max_pred +
-#                            rain_total_pred +
-#                            roof_strong_wall_strong +
-#                            roof_strong_wall_light +
-#                            roof_strong_wall_salv +
-#                            roof_light_wall_strong +
-#                            roof_light_wall_light +
-#                            roof_light_wall_salv +
-#                            roof_salv_wall_strong +
-#                            roof_salv_wall_light +
-#                            roof_salv_wall_salv +
-#                            ls_risk_pct +
-#                            ss_risk_pct +
-#                            wind_blue_ss +
-#                            wind_yellow_ss +
-#                            wind_orange_ss +
-#                            wind_red_ss +
-#                            rain_blue_ss +
-#                            rain_yellow_ss +
-#                            rain_orange_ss +
-#                            rain_red_ss +
-#                            island_groups,
-#                          method = "anova",
-#                          data = final_training_df
-#                              )
-
-# -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # Sanity Check
 # RMSE on the trainset (training + validation)
 # Compute RMSE
@@ -407,31 +309,31 @@ managed_folder_path <- dkuManagedFolderPath("dL4i4SKb")
 # ------------ Models in a list -----------------------
 models <- list(trunc_damage_fit_reg,
                trunc_wind_model,
-               trunc_rain_model,
-               trunc_track_model,
-               trunc_roof_strong_wall_strong_model,
-               trunc_roof_strong_wall_light_model,
-               trunc_roof_strong_wall_salv_model,
-               trunc_roof_light_wall_strong_model,
-               trunc_roof_light_wall_light_model,
-               trunc_roof_light_wall_salv_model,
-               trunc_roof_salv_wall_strong_model,
-               trunc_roof_salv_wall_light_model,
-               trunc_roof_salv_wall_salv_model
+               trunc_rain_model
+               #trunc_track_model,
+               #trunc_roof_strong_wall_strong_model,
+               #trunc_roof_strong_wall_light_model,
+               #trunc_roof_strong_wall_salv_model,
+               #trunc_roof_light_wall_strong_model,
+               #trunc_roof_light_wall_light_model,
+               #trunc_roof_light_wall_salv_model,
+               #trunc_roof_salv_wall_strong_model,
+               #trunc_roof_salv_wall_light_model,
+               #trunc_roof_salv_wall_salv_model
               )
 model_names <- c("trunc_reg_model",
                  "trunc_wind_model",
-                 "trunc_rain_model",
-                 "trunc_track_model",
-                 "trunc_roof_strong_wall_strong_model",
-                 "trunc_roof_strong_wall_light_model",
-                 "trunc_roof_strong_wall_salv_model",
-                 "trunc_roof_light_wall_strong_model",
-                 "trunc_roof_light_wall_light_model",
-                 "trunc_roof_light_wall_salv_model",
-                 "trunc_roof_salv_wall_strong_model",
-                 "trunc_roof_salv_wall_light_model",
-                 "trunc_roof_salv_wall_salv_model"
+                 "trunc_rain_model"
+                 #"trunc_track_model",
+                 #"trunc_roof_strong_wall_strong_model",
+                 #"trunc_roof_strong_wall_light_model",
+                 #"trunc_roof_strong_wall_salv_model",
+                 #"trunc_roof_light_wall_strong_model",
+                 #"trunc_roof_light_wall_light_model",
+                 #"trunc_roof_light_wall_salv_model",
+                 #"trunc_roof_salv_wall_strong_model",
+                 #"trunc_roof_salv_wall_light_model",
+                 #"trunc_roof_salv_wall_salv_model"
                 )
 
 #----------------------- Saving trained XGBOOST model ----------------------------------------
