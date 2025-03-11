@@ -39,19 +39,19 @@ base_test <- dkuReadDataset("base_test", samplingMethod="head", nbRows=100000)
 
 # Define the list of model names
 model_names <- c("clas_full",
-                 "track",
+                 #"track",
                  "wind",
-                 "rain",
-                 "track",
-                 "roof_strong_wall_strong",
-                 "roof_strong_wall_light",
-                 "roof_strong_wall_salv",
-                 "roof_light_wall_strong",
-                 "roof_light_wall_light",
-                 "roof_light_wall_salv",
-                 "roof_salv_wall_strong",
-                 "roof_salv_wall_light",
-                 "roof_salv_wall_salv"
+                 "rain"
+                 #"track",
+                 #"roof_strong_wall_strong",
+                 #"roof_strong_wall_light",
+                 #"roof_strong_wall_salv",
+                 #"roof_light_wall_strong",
+                 #"roof_light_wall_light",
+                 #"roof_light_wall_salv",
+                 #"roof_salv_wall_strong",
+                 #"roof_salv_wall_light",
+                 #"roof_salv_wall_salv"
                 )
 
 # Create a named list to store the models
