@@ -86,7 +86,7 @@ trunc_rain_model <- rpart(rain_total ~ track_min_dist,
 model_list <- list(
   track_min_dist = trunc_track_model,
   wind_max = trunc_wind_model,
-  rain_total = trunc_rain_model,
+  rain_total = trunc_rain_model
   #roof_strong_wall_strong = trunc_roof_strong_wall_strong_model,
   #roof_strong_wall_light = trunc_roof_strong_wall_light_model,
   #roof_strong_wall_salv = trunc_roof_strong_wall_salv_model,
