@@ -25,19 +25,19 @@ trunc_reg_path <- dkuManagedFolderPath("dL4i4SKb")
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # Define the list of model names for the base model
 model_names <- c("clas_full",
-                 "track",
+                 #"track",
                  "wind",
-                 "rain",
-                 "track",
-                 "roof_strong_wall_strong",
-                 "roof_strong_wall_light",
-                 "roof_strong_wall_salv",
-                 "roof_light_wall_strong",
-                 "roof_light_wall_light",
-                 "roof_light_wall_salv",
-                 "roof_salv_wall_strong",
-                 "roof_salv_wall_light",
-                 "roof_salv_wall_salv"
+                 "rain"
+                 #"track",
+                 #"roof_strong_wall_strong",
+                 #"roof_strong_wall_light",
+                 #"roof_strong_wall_salv",
+                 #"roof_light_wall_strong",
+                 #"roof_light_wall_light",
+                 #"roof_light_wall_salv",
+                 #"roof_salv_wall_strong",
+                 #"roof_salv_wall_light",
+                 #"roof_salv_wall_salv"
                 )
 
 # Create a named list to store the models
@@ -60,18 +60,18 @@ base_models_list$base_reg_model  <- readRDS(
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # reading truncated models
 trunc_model_names <- c("reg",
-                 "track",
+                 #"track",
                  "wind",
-                 "rain",
-                 "roof_strong_wall_strong",
-                 "roof_strong_wall_light",
-                 "roof_strong_wall_salv",
-                 "roof_light_wall_strong",
-                 "roof_light_wall_light",
-                 "roof_light_wall_salv",
-                 "roof_salv_wall_strong",
-                 "roof_salv_wall_light",
-                 "roof_salv_wall_salv"
+                 "rain"
+                 #"roof_strong_wall_strong",
+                 #"roof_strong_wall_light",
+                 #"roof_strong_wall_salv",
+                 #"roof_light_wall_strong",
+                 #"roof_light_wall_light",
+                 #"roof_light_wall_salv",
+                 #"roof_salv_wall_strong",
+                 #"roof_salv_wall_light",
+                 #"roof_salv_wall_salv"
                 )
 
 # Create a named list to store the models
@@ -169,18 +169,18 @@ names(trunc_models_list)
 predictDamage <- function(df, scm_models_base, scm_models_high, threshold) {
 
 base_col_models_list <- list(
-  track_min_dist = scm_models_base[["base_track_model"]],
+  #track_min_dist = scm_models_base[["base_track_model"]],
   wind_max = scm_models_base[["base_wind_model"]],
-  rain_total = scm_models_base[["base_rain_model"]],
-  roof_strong_wall_strong = scm_models_base[["base_roof_strong_wall_strong_model"]],
-  roof_strong_wall_light = scm_models_base[["base_roof_strong_wall_light_model"]],
-  roof_strong_wall_salv = scm_models_base[["base_roof_strong_wall_salv_model"]],
-  roof_light_wall_strong = scm_models_base[["base_roof_light_wall_strong_model"]],
-  roof_light_wall_light = scm_models_base[["base_roof_light_wall_light_model"]],
-  roof_light_wall_salv = scm_models_base[["base_roof_light_wall_salv_model"]],
-  roof_salv_wall_strong = scm_models_base[["base_roof_salv_wall_strong_model"]],
-  roof_salv_wall_light = scm_models_base[["base_roof_salv_wall_light_model"]],
-  roof_salv_wall_salv = scm_models_base[["base_roof_salv_wall_salv_model"]]
+  rain_total = scm_models_base[["base_rain_model"]]
+  #roof_strong_wall_strong = scm_models_base[["base_roof_strong_wall_strong_model"]],
+  #roof_strong_wall_light = scm_models_base[["base_roof_strong_wall_light_model"]],
+  #roof_strong_wall_salv = scm_models_base[["base_roof_strong_wall_salv_model"]],
+  #roof_light_wall_strong = scm_models_base[["base_roof_light_wall_strong_model"]],
+  #roof_light_wall_light = scm_models_base[["base_roof_light_wall_light_model"]],
+  #roof_light_wall_salv = scm_models_base[["base_roof_light_wall_salv_model"]],
+  #roof_salv_wall_strong = scm_models_base[["base_roof_salv_wall_strong_model"]],
+  #roof_salv_wall_light = scm_models_base[["base_roof_salv_wall_light_model"]],
+  #roof_salv_wall_salv = scm_models_base[["base_roof_salv_wall_salv_model"]]
 )
 
   ## common predictions btw class & base regression
@@ -213,18 +213,18 @@ base_col_models_list <- list(
   ## wind and rainfall predictions are based on high impact data (damage >= 10)
 
   trunc_col_models_list <- list(
-  track_min_dist = scm_models_high[["trunc_track_model"]],
+  #track_min_dist = scm_models_high[["trunc_track_model"]],
   wind_max = scm_models_high[["trunc_wind_model"]],
-  rain_total = scm_models_high[["trunc_rain_model"]],
-  roof_strong_wall_strong = scm_models_high[["trunc_roof_strong_wall_strong_model"]],
-  roof_strong_wall_light = scm_models_high[["trunc_roof_strong_wall_light_model"]],
-  roof_strong_wall_salv = scm_models_high[["trunc_roof_strong_wall_salv_model"]],
-  roof_light_wall_strong = scm_models_high[["trunc_roof_light_wall_strong_model"]],
-  roof_light_wall_light = scm_models_high[["trunc_roof_light_wall_light_model"]],
-  roof_light_wall_salv = scm_models_high[["trunc_roof_light_wall_salv_model"]],
-  roof_salv_wall_strong = scm_models_high[["trunc_roof_salv_wall_strong_model"]],
-  roof_salv_wall_light = scm_models_high[["trunc_roof_salv_wall_light_model"]],
-  roof_salv_wall_salv = scm_models_high[["trunc_roof_salv_wall_salv_model"]]
+  rain_total = scm_models_high[["trunc_rain_model"]]
+  #roof_strong_wall_strong = scm_models_high[["trunc_roof_strong_wall_strong_model"]],
+  #roof_strong_wall_light = scm_models_high[["trunc_roof_strong_wall_light_model"]],
+  #roof_strong_wall_salv = scm_models_high[["trunc_roof_strong_wall_salv_model"]],
+  #roof_light_wall_strong = scm_models_high[["trunc_roof_light_wall_strong_model"]],
+  #roof_light_wall_light = scm_models_high[["trunc_roof_light_wall_light_model"]],
+  #roof_light_wall_salv = scm_models_high[["trunc_roof_light_wall_salv_model"]],
+  #roof_salv_wall_strong = scm_models_high[["trunc_roof_salv_wall_strong_model"]],
+  #roof_salv_wall_light = scm_models_high[["trunc_roof_salv_wall_light_model"]],
+  #roof_salv_wall_salv = scm_models_high[["trunc_roof_salv_wall_salv_model"]]
 )
   # add the predictions of wind and rainfall to the dataframe df
   df2 <- df %>%
