@@ -315,7 +315,7 @@ managed_folder_path <- dkuManagedFolderPath("ZijSaAqQ")
 # ------------ Models in a list -----------------------
 models <- list(damage_fit_reg_min,
                base_wind_model,
-               base_rain_model,
+               base_rain_model
                #base_track_model,
                #base_roof_strong_wall_strong_model,
                #base_roof_strong_wall_light_model,
