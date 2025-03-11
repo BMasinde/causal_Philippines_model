@@ -101,7 +101,7 @@ base_rain_model <- rpart(rain_total ~ track_min_dist,
 model_list <- list(
   #track_min_dist = base_track_model,
   wind_max = base_wind_model,
-  rain_total = base_rain_model,
+  rain_total = base_rain_model
   #roof_strong_wall_strong = base_roof_strong_wall_strong_model,
   #roof_strong_wall_light = base_roof_strong_wall_light_model,
   #roof_strong_wall_salv = base_roof_strong_wall_salv_model,
