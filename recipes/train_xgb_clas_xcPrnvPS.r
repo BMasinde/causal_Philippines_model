@@ -267,7 +267,7 @@ damage_fit_class_full <- train(
             rain_blue_ss +
             rain_yellow_ss +
             rain_orange_ss +
-            rain_red_ss,
+            rain_red_ss +
            track_min_dist, # Confounder adjustment
           data = df_base_train2, # USE TRAINING AND VALIDATION SETS COMBINED
           method = "xgbTree", # XGBoost method
@@ -355,7 +355,7 @@ damage_fit_class_full <- train(
             rain_blue_ss +
             rain_yellow_ss +
             rain_orange_ss +
-            rain_red_ss,
+            rain_red_ss +
            track_min_dist, # Confounder adjustment
           data = df_base_train2, # USE TRAINING AND VALIDATION SETS COMBINED
           method = "xgbTree", # XGBoost method
