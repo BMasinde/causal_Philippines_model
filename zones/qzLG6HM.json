@@ -5,6 +5,14 @@
     {
       "objectId": "ZO3oPxC1",
       "objectType": "MANAGED_FOLDER"
+    },
+    {
+      "objectId": "counterfactual_test_data",
+      "objectType": "DATASET"
+    },
+    {
+      "objectId": "compute_counterfactual_test_data",
+      "objectType": "RECIPE"
     }
   ],
   "shared": [

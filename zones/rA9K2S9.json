@@ -21,14 +21,6 @@
     {
       "objectId": "create_modeling_data",
       "objectType": "RECIPE"
-    },
-    {
-      "objectId": "counterfactual_test_data",
-      "objectType": "DATASET"
-    },
-    {
-      "objectId": "compute_counterfactual_test_data",
-      "objectType": "RECIPE"
     }
   ],
   "shared": [],
