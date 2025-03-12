@@ -11,6 +11,10 @@
     {
       "objectId": "5NPBmWH1",
       "objectType": "MANAGED_FOLDER"
+    },
+    {
+      "objectId": "base_data_regions",
+      "objectType": "DATASET"
     }
   ],
   "position": {},
