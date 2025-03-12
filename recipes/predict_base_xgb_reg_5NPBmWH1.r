@@ -90,68 +90,7 @@ for (model_name in trunc_model_names) {
 names(trunc_models_list)
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
-# Read the base .rds models --------------------------------------
-
-# reading classification model
-# base_clas_min_model  <- readRDS(
-#     file.path(clas_folder_path, "base_clas_min_model.rds")
-# )
-
-# # reading the base wind and rain models
-# base_track_model  <- readRDS(
-#     file.path(base_reg_path, "base_track_model.rds")
-# )
-
-# base_wind_model  <- readRDS(
-#     file.path(base_reg_path, "base_wind_model.rds")
-# )
-# base_rain_model  <- readRDS(
-#     file.path(base_reg_path, "base_rain_model.rds")
-# )
-
-# # base regression model
-# base_reg_model  <- readRDS(
-#     file.path(base_reg_path, "base_reg_min_model.rds")
-# )
-
-# # Reading the truncated .rds models -------------------------------
-
-# # reading the truncated track, wind and rain models
-# trunc_track_model  <- readRDS(
-#     file.path(trunc_reg_path, "trunc_track_model.rds")
-# )
-
-# trunc_wind_model  <- readRDS(
-#     file.path(trunc_reg_path, "trunc_wind_model.rds")
-# )
-# trunc_rain_model  <- readRDS(
-#     file.path(trunc_reg_path, "trunc_rain_model.rds")
-# )
-
-# # base regression model
-# trunc_reg_model  <- readRDS(
-#     file.path(trunc_reg_path, "trunc_reg_min_model.rds")
-# )
-
-# -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
-# # Putting models into lists
-
-# ## trained SCM models on base data
-# base_models <- list(
-#   "track_model" = base_track_model
-#   "wind_model" = base_wind_model,
-#   "rain_model" = base_rain_model,
-#   "base_reg_model" = base_reg_model
-# )
-
-# ## trained SCM models on high impact data (damage >= 10)
-
-# high_models <- list(
-#   "track_model_high" = trunc_track_model,
-#   "wind_model_high" = trunc_wind_model,
-#   "rain_model_high" = trunc_rain_model,
-#   "high_reg_model" =  trunc_reg_model
-# )
+names(base_models_list)
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # HURDLE METHOD FUNCTION
@@ -334,9 +273,8 @@ mlflow_end_run()
 folder_path <- dkuManagedFolderPath("5NPBmWH1")
 
 # Saving the predicted values
-# Define file path
 
-# Generate timestamp
+# Generate timestamp for tracking
 timestamp <- format(Sys.time(), "%Y%m%d_%H%M%S")
 
 # Define file path with timestamp
@@ -344,3 +282,21 @@ file_path <- file.path(folder_path, paste0("rmse_by_bin_", timestamp, ".csv"))
 
 # Write to CSV
 fwrite(as.data.frame(rmse_by_bin), file = file_path, row.names = FALSE)
+
+# -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
+# save models
+# we already have the models in the lists: trunc_models_list and base_models_list
+
+# combining the models to one list:
+
+models <- c(base_models_list, trunc_models_list)
+model_names <- names(models)
+
+#----------------------- Saving trained XGBOOST model ----------------------------------------
+mapply(function(model, name) {
+  saveRDS(model, file = paste0(folder_path, "/", name, ".rds"))
+}, models, model_names)
+
+# -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
+# Save hurlde function as a .rds
+saveRDS(predictDamage, file = paste0(folder_path, "/", "hurdle_function.rds"))
