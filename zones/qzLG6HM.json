@@ -7,7 +7,12 @@
       "objectType": "MANAGED_FOLDER"
     }
   ],
-  "shared": [],
+  "shared": [
+    {
+      "objectId": "5NPBmWH1",
+      "objectType": "MANAGED_FOLDER"
+    }
+  ],
   "position": {},
   "tags": [],
   "customFields": {},
