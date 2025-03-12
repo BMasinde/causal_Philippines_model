@@ -13,6 +13,10 @@
     {
       "objectId": "compute_counterfactual_test_data",
       "objectType": "RECIPE"
+    },
+    {
+      "objectId": "compute_ZO3oPxC1",
+      "objectType": "RECIPE"
     }
   ],
   "shared": [
