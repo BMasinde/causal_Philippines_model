@@ -1,5 +1,6 @@
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 library(dataiku)
+library(dplyr)
 
 # Recipe inputs
 base_data_regions <- dkuReadDataset("base_data_regions", samplingMethod="head", nbRows=100000)
