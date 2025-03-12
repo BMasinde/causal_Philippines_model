@@ -1,7 +1,12 @@
 {
   "name": "counterfactuals",
   "color": "#F9BE40",
-  "items": [],
+  "items": [
+    {
+      "objectId": "ZO3oPxC1",
+      "objectType": "MANAGED_FOLDER"
+    }
+  ],
   "shared": [],
   "position": {},
   "tags": [],
