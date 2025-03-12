@@ -95,7 +95,7 @@ counterfactual_test_data$damage_binary <- with(counterfactual_test_data, {
 counterfactual_test_data$damage_binary <- factor(counterfactual_test_data$damage_binary)
 
 # including labels to the factors
-counterfactual_test_data$damage_binary_2 <- factor(counterfactual_test_data2$damage_binary,
+counterfactual_test_data$damage_binary_2 <- factor(counterfactual_test_data$damage_binary,
                                        levels = c("0", "1"),  # Your current levels
                                        labels = c("Damage_below_10", "Damage_above_10"))  # New valid labels
 
