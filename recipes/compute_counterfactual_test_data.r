@@ -7,7 +7,7 @@ base_data_regions <- dkuReadDataset("base_data_regions", samplingMethod="head", 
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # Compute recipe outputs from inputs
-# Removing columns we don't need
+# Renaming and Removing columns we don't need
 counterfactual_test_data <- base_data_regions %>%
     rename(
     rain_total = HAZ_rainfall_Total,
@@ -65,7 +65,7 @@ counterfactual_test_data <- base_data_regions %>%
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # Handling NULL values in outcome (damage_perc)
 # Update damage_perc column based on conditions
-counterfactual_test_data$damage_perc <- with(modeling_data, {
+counterfactual_test_data$damage_perc <- with(counterfactual_test_data, {
   # Check if damage_perc is NA and if wind_max is less than 25 and rain_total is less than 50
   ifelse(
     is.na(damage_perc) & wind_max < 25 & rain_total < 50,  # condition to check
