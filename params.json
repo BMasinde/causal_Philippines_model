@@ -340,12 +340,12 @@
       },
       {
         "id": "fa2db5",
-        "title": "28/02/2025 Hurdle Method Update",
+        "title": "30/03/2025 Hurdle Method Update",
         "createdOn": 0,
         "items": [
           {
             "done": false,
-            "text": "Read the updated models (efficient code)",
+            "text": "Set threshold by default to 0.35",
             "createdOn": 1740755561829,
             "createdBy": "admin",
             "stateChangedOn": 0
