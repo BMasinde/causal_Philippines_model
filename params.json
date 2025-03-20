@@ -352,7 +352,7 @@
           },
           {
             "done": false,
-            "text": " Binned Metrics",
+            "text": "Hurdle function should load packages rpart and caret if not already loaded",
             "createdOn": 1740755569507,
             "createdBy": "admin",
             "stateChangedOn": 0
