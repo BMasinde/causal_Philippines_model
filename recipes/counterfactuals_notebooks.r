@@ -363,5 +363,46 @@ melor_2015  <- counterfactual_gen(df = counterfactual_test_data, tc = "melor2015
 head(melor_2015)
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
+# Counterfactual Testing on Typhoon Melor 2015
+
+# extracting the hurdle function from the list of models and functions
+hurdle_function  <- models_n_functions_list$hurdle_function
+
+# hurdle fuctions requires:
+# @param df the dataframe
+# @param base models as a list
+# @param high impact models as a list
+
+base_models  <- list(models_n_functions_list$base_clas_full_model, 
+                     models_n_functions_list$base_rain_model,
+                     models_n_functions_list$base_reg_model, 
+                     models_n_functions_list$base_wind_model
+                    ) 
+
+# makes sure the list has correct names
+names(base_models)  <- c("base_clas_full_model","base_rain_model", "base_reg_model", "base_wind_model")
+
+
+trunc_models  <- list(models_n_functions_list$trunc_rain_model, 
+                      models_n_functions_list$trunc_reg_model,
+                      models_n_functions_list$trunc_wind_model
+                    ) 
+
+# makes sure the list has correct names
+names(trunc_models)  <- c("trunc_rain_model","trunc_reg_model", "trunc_wind_model")
+
+
+counterfactual_hurdle_preds  <- hurdle_function(df = melor_2015, 
+                                               scm_models_base = base_models,
+                                               scm_models_high = trunc_models, 
+                                               threshold = 0.35 # threshold in train/test models is 0.35
+                                               ) 
+
+
+# TO DO List to make my work here easier
+# remember to set threshold to a default of 0.35
+# hurdle function should check if the packages dplyr, rpart and caret are loaded or preload them
+
+# -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # Recipe outputs
 matching_counterfactuals <- dkuManagedFolderPath("ZO3oPxC1")
