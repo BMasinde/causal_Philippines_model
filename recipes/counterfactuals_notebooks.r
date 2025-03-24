@@ -8,8 +8,31 @@ library(cluster)
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # Recipe inputs
+
+# Reading the data we need to generate counterfactuals
 counterfactual_test_data <- dkuReadDataset("counterfactual_test_data", samplingMethod="head", nbRows=100000)
-hurdle_predictions_testing <- dkuManagedFolderPath("5NPBmWH1")
+
+
+# path to hardle models and functions
+hurdle_components_path <- dkuManagedFolderPath("5NPBmWH1")
+
+# read all models and functions as a list
+
+# List all .rds files in the folder
+rds_files <- list.files(hurdle_components_path, pattern = "\\.rds$", full.names = TRUE)
+
+# Read all .rds files into a list
+models_n_functions_list <- lapply(rds_files, readRDS)
+
+# Print the names of the loaded objects
+names(models_n_functions_list) <- basename(rds_files)
+
+# Display the list
+print(models_n_functions_list)
+
+# -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
+# sanity check: is the read hurdle_function an actual function?
+class(models_n_functions_list$hurdle_function)
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 colnames(counterfactual_test_data)
@@ -281,10 +304,10 @@ counterfactual_gen  <- function(df, tc){
               wind_yellow_ss = wind_max * yellow_ss_frac,
               wind_orange_ss = wind_max * orange_ss_frac,
               wind_red_ss = wind_max * red_ss_frac,
-              rain_blue_ss = wind_max * blue_ls_frac,
-              rain_yellow_ss = wind_max * yellow_ls_frac,
-              rain_orange_ss = wind_max * orange_ls_frac,
-              rain_red_ss = wind_max * red_ls_frac
+              rain_blue_ss = rain_total * blue_ls_frac,
+              rain_yellow_ss = rain_total * yellow_ls_frac,
+              rain_orange_ss = rain_total * orange_ls_frac,
+              rain_red_ss = rain_total * red_ls_frac
               ) %>%
         select(-typhoon)
 
@@ -307,6 +330,14 @@ counterfactual_gen  <- function(df, tc){
             distinct(Mun_Code, .keep_all = TRUE) %>%  # Keeps the first occurrence of each Mun_Code
             mutate(rain_total = unique(counterfactual_data$rain_total),
                    wind_max = unique(counterfactual_data$wind_max),
+                   wind_blue_ss = wind_max * blue_ss_frac,
+                   wind_yellow_ss = wind_max * yellow_ss_frac,
+                   wind_orange_ss = wind_max * orange_ss_frac,
+                   wind_red_ss = wind_max * red_ss_frac,
+                   rain_blue_ss = rain_total * blue_ls_frac,
+                   rain_yellow_ss = rain_total * yellow_ls_frac,
+                   rain_orange_ss = rain_total * orange_ls_frac,
+                   rain_red_ss = rain_total * red_ls_frac,
                    damage_perc = 0, # set damage variable to zero or "Damage_below_10"
                    damage_binary = 0,
                    damage_binary_2 = "Damage_below_10"
