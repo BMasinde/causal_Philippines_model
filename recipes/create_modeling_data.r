@@ -118,10 +118,10 @@ modeling_data <- modeling_data %>%
     wind_yellow_ss = wind_max * yellow_ss_frac,
     wind_orange_ss = wind_max * orange_ss_frac,
     wind_red_ss = wind_max * red_ss_frac,
-    rain_blue_ss = wind_max * blue_ls_frac,
-    rain_yellow_ss = wind_max * yellow_ls_frac,
-    rain_orange_ss = wind_max * orange_ls_frac,
-    rain_red_ss = wind_max * red_ls_frac
+    rain_blue_ss = rain_total * blue_ls_frac,
+    rain_yellow_ss = rain_total * yellow_ls_frac,
+    rain_orange_ss = rain_total * orange_ls_frac,
+    rain_red_ss = rain_total * red_ls_frac
   )
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
