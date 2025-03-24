@@ -373,32 +373,32 @@ hurdle_function  <- models_n_functions_list$hurdle_function
 # @param base models as a list
 # @param high impact models as a list
 
-base_models  <- list(models_n_functions_list$base_clas_full_model, 
+base_models  <- list(models_n_functions_list$base_clas_full_model,
                      models_n_functions_list$base_rain_model,
-                     models_n_functions_list$base_reg_model, 
+                     models_n_functions_list$base_reg_model,
                      models_n_functions_list$base_wind_model
-                    ) 
+                    )
 
 # makes sure the list has correct names
 names(base_models)  <- c("base_clas_full_model","base_rain_model", "base_reg_model", "base_wind_model")
 
 
-trunc_models  <- list(models_n_functions_list$trunc_rain_model, 
+trunc_models  <- list(models_n_functions_list$trunc_rain_model,
                       models_n_functions_list$trunc_reg_model,
                       models_n_functions_list$trunc_wind_model
-                    ) 
+                    )
 
 # makes sure the list has correct names
 names(trunc_models)  <- c("trunc_rain_model","trunc_reg_model", "trunc_wind_model")
 
 
-counterfactual_hurdle_preds  <- hurdle_function(df = melor_2015, 
+counterfactual_hurdle_preds  <- hurdle_function(df = melor_2015,
                                                scm_models_base = base_models,
-                                               scm_models_high = trunc_models, 
+                                               scm_models_high = trunc_models,
                                                threshold = 0.35 # threshold in train/test models is 0.35
-                                               ) 
+                                               )
 
-
+# Remember hurdle function returns predictions
 # TO DO List to make my work here easier
 # remember to set threshold to a default of 0.35
 # hurdle function should check if the packages dplyr, rpart and caret are loaded or preload them
