@@ -199,8 +199,8 @@ nested_list <- cluster_summary %>%
   split(.$Cluster) %>%
   lapply(function(row) {
     list(
-      Luzon = row$Luzon[[1]], 
-      Visayas = row$Visayas[[1]], 
+      Luzon = row$Luzon[[1]],
+      Visayas = row$Visayas[[1]],
       Mindanao = row$Mindanao[[1]]
     )
   })
@@ -276,7 +276,15 @@ counterfactual_gen  <- function(df, tc){
         filter(typhoon == tc) %>% # keep the minimum distance from the filter
         mutate(track_min_dist = min(track_min_dist, na.rm = TRUE),
               rain_total = rain_total[which.min(track_min_dist)],
-              wind_max = wind_max[which.min(track_min_dist)]
+              wind_max = wind_max[which.min(track_min_dist)],
+              wind_blue_ss = wind_max * blue_ss_frac,
+              wind_yellow_ss = wind_max * yellow_ss_frac,
+              wind_orange_ss = wind_max * orange_ss_frac,
+              wind_red_ss = wind_max * red_ss_frac,
+              rain_blue_ss = wind_max * blue_ls_frac,
+              rain_yellow_ss = wind_max * yellow_ls_frac,
+              rain_orange_ss = wind_max * orange_ls_frac,
+              rain_red_ss = wind_max * red_ls_frac
               ) %>%
         select(-typhoon)
 
