@@ -5,6 +5,7 @@ library(parallel) # parallelize
 library(dplyr)
 library(FNN)
 library(cluster)
+library(ggplot2)
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # Recipe inputs
@@ -275,8 +276,35 @@ print(nested_list)  # Nested list with Mun_Code
 # print(nested_list)  # Nested list with Mun_Code (no extra nesting)
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
-mun_properties %>%
-    filter(Mun_Code %in% c("PH015501000", "PH072245000", "PH126303000"))
+# some 2nd level lists have no entries
+# cleaning up
+clean_list <- function(lst) {
+  # Recursively clean second-level entries
+  lst <- lapply(lst, function(sublist) {
+    if (is.list(sublist)) {
+      sublist <- clean_list(sublist)  # Recursively clean sublists
+      if (length(sublist) == 0) return(NULL)  # Remove empty sublists
+    } else if (length(sublist) == 0) {
+      return(NULL)  # Remove empty atomic vectors
+    }
+    return(sublist)
+  })
+  
+  # Remove NULL entries from first-level list
+  lst <- lst[!sapply(lst, is.null)]
+  
+  # Remove first-level entries that have 0 or only 1 non-empty sublist
+  lst <- lst[sapply(lst, function(sublist) length(sublist) > 1)]
+  
+  # If the entire list is empty, return NULL
+  if (length(lst) == 0) return(NULL)
+  
+  return(lst)
+}
+
+cleaned_list <- clean_list(nested_list)
+
+print(cleaned_list)
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # Creating a function that generates a counterfactual dataset
@@ -402,6 +430,49 @@ counterfactual_hurdle_preds  <- hurdle_function(df = melor_2015,
 # TO DO List to make my work here easier
 # remember to set threshold to a default of 0.35
 # hurdle function should check if the packages dplyr, rpart and caret are loaded or preload them
+
+# -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
+# append the results to the counterfactual dataset
+melor_2015  <- melor_2015 %>%
+    mutate(damage_preds = counterfactual_hurdle_preds)
+
+# -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
+# plotting boxplots of the counterfactuals
+
+# Assuming your data frame is named df
+# Loop through each entry in the nested list
+
+plots_list  <- list()
+means_list  <- list()
+
+for (i in seq_along(cleaned_list)) {
+  # Get the current entry
+  current_entry <- cleaned_list[[i]]
+  
+  # Convert the nested list entry to a data frame format
+  plot_data <- bind_rows(lapply(names(current_entry), function(region) {
+    data.frame(Mun_Code = unlist(current_entry[[region]]), island_regions = region, stringsAsFactors = FALSE)
+  }))
+  
+  # Merge with original data to get predicted damage
+  merged_data <- melor_2015 %>%
+    inner_join(plot_data, by = "Mun_Code")
+  
+  # Create boxplot
+  p <- ggplot(merged_data, aes(x = island_groups, y = damage_preds, fill = island_groups)) +
+    geom_boxplot() +
+    labs(title = paste("Predicted Damage Distribution - List Entry", i),
+         x = "Island Region",
+         y = "Predicted Damage") +
+    theme_minimal()
+    
+ # Save the plot in the list
+  plots_list[[i]] <- p
+  
+}
+
+# Check the list to confirm plots are stored
+print(plots_list)
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # Recipe outputs
