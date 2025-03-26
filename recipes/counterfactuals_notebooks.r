@@ -468,6 +468,14 @@ for (i in seq_along(cleaned_list)) {
     
  # Save the plot in the list
   plots_list[[i]] <- p
+    
+  # Calculate the mean of damage_preds for each island_groups
+  mean_values <- merged_data %>%
+    group_by(island_groups) %>%
+    summarise(mean_damage = mean(damage_preds, na.rm = TRUE))
+  
+  # Save the means in the list
+  means_list[[i]] <- mean_values
   
 }
 
