@@ -2,7 +2,12 @@
   "name": "Counterfactuals",
   "color": "#F9BE40",
   "items": [],
-  "shared": [],
+  "shared": [
+    {
+      "objectId": "base_data_regions",
+      "objectType": "DATASET"
+    }
+  ],
   "position": {},
   "tags": [],
   "customFields": {},
