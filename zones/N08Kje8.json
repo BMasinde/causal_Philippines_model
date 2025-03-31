@@ -1,7 +1,16 @@
 {
   "name": "Counterfactuals",
   "color": "#F9BE40",
-  "items": [],
+  "items": [
+    {
+      "objectId": "counterfactual_test_data",
+      "objectType": "DATASET"
+    },
+    {
+      "objectId": "compute_counterfactual_test_data",
+      "objectType": "RECIPE"
+    }
+  ],
   "shared": [
     {
       "objectId": "base_data_regions",
