@@ -327,6 +327,14 @@ mlflow_log_metric("w_avg", w_avg)
 # End MLflow run
 mlflow_end_run()
 
+
+# NOTE:
+# If you get a try catch error message
+# the problem is that you have not started mflow ui
+# go to anaconda, initialize the python environment that dataiku uses
+# then run mflow ui in terminal
+# then use the url in browser: http://127.0.0.1:5000
+
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # Writing binned RMSE to folder
 
