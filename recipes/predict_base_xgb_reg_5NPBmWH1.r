@@ -344,3 +344,21 @@ file_path <- file.path(folder_path, paste0("rmse_by_bin_", timestamp, ".csv"))
 
 # Write to CSV
 fwrite(as.data.frame(rmse_by_bin), file = file_path, row.names = FALSE)
+
+# -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
+# save models
+# we already have the models in the lists: trunc_models_list and base_models_list
+
+# combining the models to one list:
+
+models <- c(base_models_list, trunc_models_list)
+model_names <- names(models)
+
+#----------------------- Saving trained XGBOOST model ----------------------------------------
+mapply(function(model, name) {
+  saveRDS(model, file = paste0(folder_path, "/", name, ".rds"))
+}, models, model_names)
+
+# -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
+# Save hurlde function as a .rds
+saveRDS(predictDamage, file = paste0(folder_path, "/", "hurdle_function.rds"))
