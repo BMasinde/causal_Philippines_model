@@ -9,6 +9,10 @@
     {
       "objectId": "compute_counterfactual_test_data",
       "objectType": "RECIPE"
+    },
+    {
+      "objectId": "C0QXMnX7",
+      "objectType": "MANAGED_FOLDER"
     }
   ],
   "shared": [
