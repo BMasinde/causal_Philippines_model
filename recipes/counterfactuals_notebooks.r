@@ -6,6 +6,8 @@ library(dplyr)
 library(FNN)
 library(cluster)
 library(ggplot2)
+library(rpart)
+library(caret)
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # Recipe inputs
@@ -289,16 +291,16 @@ clean_list <- function(lst) {
     }
     return(sublist)
   })
-  
+
   # Remove NULL entries from first-level list
   lst <- lst[!sapply(lst, is.null)]
-  
+
   # Remove first-level entries that have 0 or only 1 non-empty sublist
   lst <- lst[sapply(lst, function(sublist) length(sublist) > 1)]
-  
+
   # If the entire list is empty, return NULL
   if (length(lst) == 0) return(NULL)
-  
+
   return(lst)
 }
 
@@ -448,16 +450,16 @@ means_list  <- list()
 for (i in seq_along(cleaned_list)) {
   # Get the current entry
   current_entry <- cleaned_list[[i]]
-  
+
   # Convert the nested list entry to a data frame format
   plot_data <- bind_rows(lapply(names(current_entry), function(region) {
     data.frame(Mun_Code = unlist(current_entry[[region]]), island_regions = region, stringsAsFactors = FALSE)
   }))
-  
+
   # Merge with original data to get predicted damage
   merged_data <- melor_2015 %>%
     inner_join(plot_data, by = "Mun_Code")
-  
+
   # Create boxplot
   p <- ggplot(merged_data, aes(x = island_groups, y = damage_preds, fill = island_groups)) +
     geom_boxplot() +
@@ -465,18 +467,18 @@ for (i in seq_along(cleaned_list)) {
          x = "Island Region",
          y = "Predicted Damage") +
     theme_minimal()
-    
+
  # Save the plot in the list
   plots_list[[i]] <- p
-    
+
   # Calculate the mean of damage_preds for each island_groups
   mean_values <- merged_data %>%
     group_by(island_groups) %>%
     summarise(mean_damage = mean(damage_preds, na.rm = TRUE))
-  
+
   # Save the means in the list
   means_list[[i]] <- mean_values
-  
+
 }
 
 # Check the list to confirm plots are stored
