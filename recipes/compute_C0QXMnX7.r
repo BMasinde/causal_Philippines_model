@@ -6,13 +6,15 @@ library(dplyr)
 library(FNN)
 library(cluster)
 library(ggplot2)
+library(rpart)
+library(caret)
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # Recipe inputs
 counterfactual_test_data <- dkuReadDataset("counterfactual_test_data", samplingMethod="head", nbRows=100000)
 
 # path to hardle models and functions
-hurdle_predictions_testing <- dkuManagedFolderPath("5NPBmWH1")
+hurdle_components_path <- dkuManagedFolderPath("5NPBmWH1")
 
 
 # read all models and functions as a list
@@ -155,16 +157,16 @@ clean_list <- function(lst) {
     }
     return(sublist)
   })
-  
+
   # Remove NULL entries from first-level list
   lst <- lst[!sapply(lst, is.null)]
-  
+
   # Remove first-level entries that have 0 or only 1 non-empty sublist
   lst <- lst[sapply(lst, function(sublist) length(sublist) > 1)]
-  
+
   # If the entire list is empty, return NULL
   if (length(lst) == 0) return(NULL)
-  
+
   return(lst)
 }
 
@@ -268,20 +270,67 @@ hurdle_function  <- models_n_functions_list$hurdle_function
 base_models  <- list(models_n_functions_list$base_clas_full_model,
                      models_n_functions_list$base_rain_model,
                      models_n_functions_list$base_reg_model,
-                     models_n_functions_list$base_wind_model
+                     models_n_functions_list$base_wind_model,
+                     models_n_functions_list$base_track_model,
+                     models_n_functions_list$base_roof_light_wall_light_model,
+                     models_n_functions_list$base_roof_light_wall_salv_model,
+                     models_n_functions_list$base_roof_light_wall_strong_model,
+                     models_n_functions_list$base_roof_salv_wall_light_model,
+                     models_n_functions_list$base_roof_salv_wall_salv_model,
+                     models_n_functions_list$base_roof_salv_wall_strong_model,
+                     models_n_functions_list$base_roof_strong_wall_light_model,
+                     models_n_functions_list$base_roof_strong_wall_salv_model,
+                     models_n_functions_list$base_roof_strong_wall_strong_model
                     )
 
 # makes sure the list has correct names
-names(base_models)  <- c("base_clas_full_model","base_rain_model", "base_reg_model", "base_wind_model")
+names(base_models)  <- c("base_clas_full_model",
+                         "base_rain_model", 
+                         "base_reg_model", 
+                         "base_wind_model",
+                         "base_track_model",
+                         "base_roof_light_wall_light_model",
+                         "base_roof_light_wall_salv_model",
+                         "base_roof_light_wall_strong_model",
+                         "base_roof_salv_wall_light_model",
+                         "base_roof_salv_wall_salv_model",
+                         "base_roof_salv_wall_strong_model",
+                         "base_roof_strong_wall_light_model",
+                         "base_roof_strong_wall_salv_model",
+                         "base_roof_strong_wall_strong_model"
+                        )
 
 
 trunc_models  <- list(models_n_functions_list$trunc_rain_model,
                       models_n_functions_list$trunc_reg_model,
-                      models_n_functions_list$trunc_wind_model
+                      models_n_functions_list$trunc_wind_model,
+                      models_n_functions_list$trunc_track_model,
+                      models_n_functions_list$trunc_roof_light_wall_light_model,
+                      models_n_functions_list$trunc_roof_light_wall_salv_model,
+                      models_n_functions_list$trunc_roof_light_wall_strong_model,
+                      models_n_functions_list$trunc_roof_salv_wall_light_model,
+                      models_n_functions_list$trunc_roof_salv_wall_salv_model,
+                      models_n_functions_list$trunc_roof_salv_wall_strong_model,
+                      models_n_functions_list$trunc_roof_strong_wall_light_model,
+                      models_n_functions_list$trunc_roof_strong_wall_salv_model,
+                      models_n_functions_list$trunc_roof_strong_wall_strong_model
                     )
 
 # makes sure the list has correct names
-names(trunc_models)  <- c("trunc_rain_model","trunc_reg_model", "trunc_wind_model")
+names(trunc_models)  <- c("trunc_rain_model",
+                          "trunc_reg_model", 
+                          "trunc_wind_model",
+                          "trunc_track_model",
+                          "trunc_roof_light_wall_light_model",
+                          "trunc_roof_light_wall_salv_model",
+                          "trunc_roof_light_wall_strong_model",
+                          "trunc_roof_salv_wall_light_model",
+                          "trunc_roof_salv_wall_salv_model",
+                          "trunc_roof_salv_wall_strong_model",
+                          "trunc_roof_strong_wall_light_model",
+                          "trunc_roof_strong_wall_salv_model",
+                          "trunc_roof_strong_wall_strong_model"
+                         )
 
 
 counterfactual_hurdle_preds  <- hurdle_function(df = melor_2015,
@@ -296,6 +345,9 @@ counterfactual_hurdle_preds  <- hurdle_function(df = melor_2015,
 # hurdle function should check if the packages dplyr, rpart and caret are loaded or preload them
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
+colnames(melor_2015)
+
+# -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # append the results to the counterfactual dataset
 melor_2015  <- melor_2015 %>%
     mutate(damage_preds = counterfactual_hurdle_preds)
@@ -307,19 +359,20 @@ melor_2015  <- melor_2015 %>%
 plots_list  <- list()
 means_list  <- list()
 
+
 for (i in seq_along(cleaned_list)) {
   # Get the current entry
   current_entry <- cleaned_list[[i]]
-  
+
   # Convert the nested list entry to a data frame format
   plot_data <- bind_rows(lapply(names(current_entry), function(region) {
     data.frame(Mun_Code = unlist(current_entry[[region]]), island_regions = region, stringsAsFactors = FALSE)
   }))
-  
+
   # Merge with original data to get predicted damage
   merged_data <- melor_2015 %>%
     inner_join(plot_data, by = "Mun_Code")
-  
+
   # Create boxplot
   p <- ggplot(merged_data, aes(x = island_groups, y = damage_preds, fill = island_groups)) +
     geom_boxplot() +
@@ -327,23 +380,31 @@ for (i in seq_along(cleaned_list)) {
          x = "Island Region",
          y = "Predicted Damage") +
     theme_minimal()
-    
+
  # Save the plot in the list
   plots_list[[i]] <- p
-    
+
   # Calculate the mean of damage_preds for each island_groups
   mean_values <- merged_data %>%
     group_by(island_groups) %>%
     summarise(mean_damage = mean(damage_preds, na.rm = TRUE))
-  
+
   # Save the means in the list
   means_list[[i]] <- mean_values
-  
+
 }
+
+# To Do
+# Convert this to a function
+# Turn off the plotting using if statement
+# Loop through several counterfactual datasets (Perhaps)
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # Check the list to confirm plots are stored
 print(plots_list)
+
+# -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
+means_list
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # Recipe outputs
