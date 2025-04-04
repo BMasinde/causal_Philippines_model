@@ -21,6 +21,10 @@
     {
       "objectId": "Zcih9bxs",
       "objectType": "MANAGED_FOLDER"
+    },
+    {
+      "objectId": "compute_Zcih9bxs",
+      "objectType": "RECIPE"
     }
   ],
   "shared": [
