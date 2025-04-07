@@ -21,6 +21,10 @@
     {
       "objectId": "agFjkxtc",
       "objectType": "MANAGED_FOLDER"
+    },
+    {
+      "objectId": "compute_agFjkxtc",
+      "objectType": "RECIPE"
     }
   ],
   "shared": [
