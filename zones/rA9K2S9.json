@@ -25,6 +25,10 @@
     {
       "objectId": "F8NXOAoc",
       "objectType": "MANAGED_FOLDER"
+    },
+    {
+      "objectId": "compute_F8NXOAoc",
+      "objectType": "RECIPE"
     }
   ],
   "shared": [],
