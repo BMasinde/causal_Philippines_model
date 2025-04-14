@@ -21,6 +21,10 @@
     {
       "objectId": "create_modeling_data",
       "objectType": "RECIPE"
+    },
+    {
+      "objectId": "F8NXOAoc",
+      "objectType": "MANAGED_FOLDER"
     }
   ],
   "shared": [],
