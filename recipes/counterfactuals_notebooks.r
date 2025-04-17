@@ -450,6 +450,7 @@ melor_2015  <- melor_2015 %>%
 
 plots_list  <- list()
 means_list  <- list()
+median_list  <- list()
 
 for (i in seq_along(cleaned_list)) {
   # Get the current entry
@@ -479,14 +480,29 @@ for (i in seq_along(cleaned_list)) {
   mean_values <- merged_data %>%
     group_by(island_groups) %>%
     summarise(mean_damage = mean(damage_preds, na.rm = TRUE))
-
-  # Save the means in the list
+    
+ # Save the means in the list
   means_list[[i]] <- mean_values
+    
+ # Calculate median of the damage_preds for each island groups
+    
+  median_values  <- merged_data %>%
+    group_by(island_groups) %>%
+    summarise(median_damage = median(damage_preds, na.rm = TRUE))
+
+  # save the medians in the list
+   median_list[[i]]  <- median_values
 
 }
 
 # Check the list to confirm plots are stored
 print(plots_list)
+
+# -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
+print(means_list)
+
+# -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
+print(median_list)
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # Recipe outputs
