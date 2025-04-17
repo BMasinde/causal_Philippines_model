@@ -358,7 +358,8 @@ counterfactual_gen  <- function(df, tc){
         remaining_mun <- df %>%
             filter(Mun_Code %in% missing_mun) %>% # after filtering Mun_Code has duplicates how do we remove duplicates?
             distinct(Mun_Code, .keep_all = TRUE) %>%  # Keeps the first occurrence of each Mun_Code
-            mutate(rain_total = unique(counterfactual_data$rain_total),
+            mutate(track_min_dist = unique(counterfactual_data$track_min_dist),
+                   rain_total = unique(counterfactual_data$rain_total),
                    wind_max = unique(counterfactual_data$wind_max),
                    wind_blue_ss = wind_max * blue_ss_frac,
                    wind_yellow_ss = wind_max * yellow_ss_frac,
@@ -391,6 +392,9 @@ counterfactual_gen  <- function(df, tc){
 melor_2015  <- counterfactual_gen(df = counterfactual_test_data, tc = "melor2015")
 
 head(melor_2015)
+
+# -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
+unique(melor_2015$track_min_dist)
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # Counterfactual Testing on Typhoon Melor 2015
