@@ -31,6 +31,9 @@ names(models_n_functions_list) <- basename(rds_files)
 print(models_n_functions_list)
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
+colnames(counterfactual_test_data)
+
+# -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # Creating a function that generates a counterfactual dataset
 
 #' @title counterfactual_gen
@@ -82,6 +85,7 @@ counterfactual_gen  <- function(df, tc, storm_surge, landslide){
             distinct(Mun_Code, .keep_all = TRUE) %>%  # Keeps the first occurrence of each Mun_Code
             mutate(rain_total = unique(counterfactual_data$rain_total),
                    wind_max = unique(counterfactual_data$wind_max),
+                   track_min_dist = unique(counterfactual_data$track_min_dist),
                    wind_blue_ss = wind_max * storm_surge,
                    wind_yellow_ss = wind_max * storm_surge,
                    wind_orange_ss = wind_max * storm_surge,
@@ -111,14 +115,14 @@ counterfactual_gen  <- function(df, tc, storm_surge, landslide){
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 melor_2015  <- counterfactual_gen(df = counterfactual_test_data,
-                                  tc = "melor2015", 
-                                  storm_surge = 0, 
+                                  tc = "melor2015",
+                                  storm_surge = 0,
                                   landslide =0)
 
 head(melor_2015)
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
-colnames
+melor_2015$track_min_dist
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # Predict for the counterfactual dataset
@@ -354,10 +358,10 @@ tc_counterfactual_dfs  <- list()
 
 # loof throught the tc_names to derive counterfactual dataframes
 
-for (tc in tc_names) { 
+for (tc in tc_names) {
     tc_counterfactual_dfs[[tc]]  <- counterfactual_gen(df = counterfactual_test_data,
-                                  tc = tc, 
-                                  storm_surge = 0, 
+                                  tc = tc,
+                                  storm_surge = 0,
                                   landslide =0)
 }
 
@@ -371,31 +375,38 @@ counterfactual_means  <- list()
 for (i in seq_along(tc_counterfactual_dfs)) {
     # i = 1 for debugging
     # predict damage using the hurdle method
-    damage_preds  <-  hurdle_function(df = tc_counterfactual_dfs[[i]], 
+    damage_preds  <-  hurdle_function(df = tc_counterfactual_dfs[[i]],
                      scm_models_base = base_models,
                      scm_models_high = trunc_models,
                      threshold = 0.35 # threshold in train/test models is 0.35
                     )
-    
+
     # create a new dataframe with damage prediction and island region
-    new_df <- tibble(preds = as.numeric(damage_preds), 
+    new_df <- tibble(preds = as.numeric(damage_preds),
                      island_groups = tc_counterfactual_dfs[[i]]$island_groups)
-    
+
     # get mean by group using dplyr
-    means  <-  new_df %>% group_by(island_groups) %>% 
+    means  <-  new_df %>% group_by(island_groups) %>%
     summarise_at(vars(preds), funs(mean(., na.rm=TRUE)))
-    
+
     # dplyr pipeline above returns a tibble
     # storing tibble to the list
-    
+
     counterfactual_means[[i]]  <- means
-    
+
 }
 
 names(counterfactual_means)  <- tc_names
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 counterfactual_means
+
+# -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
+## Prepping counterfactual datasets for 510 model
+head(tc_counterfactual_dfs[[1]])
+
+# -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
+colnames(tc_counterfactual_dfs[[1]])
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # Recipe outputs
