@@ -224,7 +224,8 @@ counterfactual_gen  <- function(df, tc){
         remaining_mun <- df %>%
             filter(Mun_Code %in% missing_mun) %>% # after filtering Mun_Code has duplicates how do we remove duplicates?
             distinct(Mun_Code, .keep_all = TRUE) %>%  # Keeps the first occurrence of each Mun_Code
-            mutate(rain_total = unique(counterfactual_data$rain_total),
+            mutate(track_min_dist = unique(counterfactual_data$track_min_dist), 
+                   rain_total = unique(counterfactual_data$rain_total),
                    wind_max = unique(counterfactual_data$wind_max),
                    wind_blue_ss = wind_max * blue_ss_frac,
                    wind_yellow_ss = wind_max * yellow_ss_frac,
@@ -285,8 +286,8 @@ base_models  <- list(models_n_functions_list$base_clas_full_model,
 
 # makes sure the list has correct names
 names(base_models)  <- c("base_clas_full_model",
-                         "base_rain_model", 
-                         "base_reg_model", 
+                         "base_rain_model",
+                         "base_reg_model",
                          "base_wind_model",
                          "base_track_model",
                          "base_roof_light_wall_light_model",
@@ -318,7 +319,7 @@ trunc_models  <- list(models_n_functions_list$trunc_rain_model,
 
 # makes sure the list has correct names
 names(trunc_models)  <- c("trunc_rain_model",
-                          "trunc_reg_model", 
+                          "trunc_reg_model",
                           "trunc_wind_model",
                           "trunc_track_model",
                           "trunc_roof_light_wall_light_model",
@@ -358,7 +359,7 @@ melor_2015  <- melor_2015 %>%
 
 plots_list  <- list()
 means_list  <- list()
-
+median_list  <-  list()
 
 for (i in seq_along(cleaned_list)) {
   # Get the current entry
@@ -391,6 +392,14 @@ for (i in seq_along(cleaned_list)) {
 
   # Save the means in the list
   means_list[[i]] <- mean_values
+    
+ # Calculate median of the damage_preds for each island groups
+  median_values  <- merged_data %>%
+    group_by(island_groups) %>%
+    summarise(median_damage = median(damage_preds, na.rm = TRUE))
+
+  # save the medians in the list
+   median_list[[i]]  <- median_values
 
 }
 
@@ -404,7 +413,10 @@ for (i in seq_along(cleaned_list)) {
 print(plots_list)
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
-means_list
+print(means_list)
+
+# -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
+print(median_list)
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # Recipe outputs
