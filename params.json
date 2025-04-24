@@ -73,7 +73,7 @@
       "r": {
         "mode": "EXPLICIT_ENV",
         "preventOverride": false,
-        "envName": "R_env"
+        "envName": "R_4_4_1"
       },
       "julia": {
         "mode": "INHERIT",
