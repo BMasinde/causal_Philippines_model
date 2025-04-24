@@ -89,6 +89,9 @@ for (model_name in model_names) {
 # base_track_model  <- readRDS(track_file_path)
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
+nrow(base_test)
+
+# -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # Apply predictions efficiently
 
 # Define models in a named list
