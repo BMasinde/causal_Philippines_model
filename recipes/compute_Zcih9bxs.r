@@ -303,6 +303,7 @@ print(cleaned_list)
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 plots_list  <- list()
 means_list  <- list()
+median_list  <- list()
 
 for (i in seq_along(cleaned_list)) {
   # Get the current entry
@@ -335,6 +336,14 @@ for (i in seq_along(cleaned_list)) {
 
   # Save the means in the list
   means_list[[i]] <- mean_values
+  
+  # Calculate median of the damage_preds for each island groups
+  median_values  <- merged_data %>%
+    group_by(island_groups) %>%
+    summarise(median_damage = median(damage_preds, na.rm = TRUE))
+
+  # save the medians in the list
+   median_list[[i]]  <- median_values
 
 }
 
@@ -342,7 +351,7 @@ for (i in seq_along(cleaned_list)) {
 print(plots_list)
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
-means_list
+print(median_list)
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # Hypothesis testing: Do all 21 tropical cyclones produce higher impact for the visayas region (on average)
