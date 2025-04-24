@@ -480,12 +480,12 @@ for (i in seq_along(cleaned_list)) {
   mean_values <- merged_data %>%
     group_by(island_groups) %>%
     summarise(mean_damage = mean(damage_preds, na.rm = TRUE))
-    
+
  # Save the means in the list
   means_list[[i]] <- mean_values
-    
+
  # Calculate median of the damage_preds for each island groups
-    
+
   median_values  <- merged_data %>%
     group_by(island_groups) %>%
     summarise(median_damage = median(damage_preds, na.rm = TRUE))
