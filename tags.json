@@ -3,13 +3,17 @@
     "deleted-recipe-editor": {
       "color": "#90a8b7"
     },
+    "full_scm": {
+      "color": "#0f6d82"
+    },
     "recipe-editor": {
       "color": "#1ac2ab"
     },
     "R_code": {
       "color": "#123883"
     },
-    "full_scm": {},
-    "xgboost": {}
+    "xgboost": {
+      "color": "#d66b9b"
+    }
   }
 }
