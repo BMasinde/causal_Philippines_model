@@ -71,9 +71,8 @@
         "envName": "python3_12"
       },
       "r": {
-        "mode": "EXPLICIT_ENV",
-        "preventOverride": false,
-        "envName": "R_4_4_1"
+        "mode": "USE_BUILTIN_MODE",
+        "preventOverride": false
       },
       "julia": {
         "mode": "INHERIT",
