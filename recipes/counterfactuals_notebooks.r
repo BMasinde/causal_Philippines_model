@@ -505,5 +505,32 @@ print(means_list)
 print(median_list)
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
+# Counterfactuals simulating storm getting weaker
+
+# creating a list of dataframes
+
+storm_decrease_datasets  <- list()
+
+for (iter in 1:3) {
+    factor <- 0.95 ^ iter
+    factor_increase <- 1.05 ^ iter  # if you want to increase by 5% each time
+
+    storm_decrease_datasets[[iter]] <- melor_2015 %>%
+        mutate(
+            rain_total = rain_total * factor,
+            wind_max = wind_max * factor,
+            track_min_dist = track_min_dist * factor_increase
+        )
+}
+
+# -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
+head(storm_decrease_datasets[[3]])
+
+# -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
+287*0.05
+
+# -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # Recipe outputs
+
+# output counterfactual predictions
 matching_counterfactuals <- dkuManagedFolderPath("ZO3oPxC1")
