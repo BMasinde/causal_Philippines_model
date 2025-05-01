@@ -19,11 +19,11 @@
       "objectType": "MANAGED_FOLDER"
     },
     {
-      "objectId": "ass_trunc_reg_train_test",
+      "objectId": "ass_XGBOOST_base_train_test",
       "objectType": "RECIPE"
     },
     {
-      "objectId": "ass_XGBOOST_base_train_test",
+      "objectId": "ass_XGBOOST_trunc_reg_train_test",
       "objectType": "RECIPE"
     }
   ],
