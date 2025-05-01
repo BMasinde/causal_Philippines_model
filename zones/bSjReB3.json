@@ -29,14 +29,6 @@
     {
       "objectId": "truncated_test",
       "objectType": "DATASET"
-    },
-    {
-      "objectId": "compute_DFdq9elg",
-      "objectType": "RECIPE"
-    },
-    {
-      "objectId": "DFdq9elg",
-      "objectType": "MANAGED_FOLDER"
     }
   ],
   "shared": [],

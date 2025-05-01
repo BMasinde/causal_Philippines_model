@@ -9,6 +9,14 @@
     {
       "objectId": "ass_XGBOOST_training_testing",
       "objectType": "RECIPE"
+    },
+    {
+      "objectId": "compute_DFdq9elg",
+      "objectType": "RECIPE"
+    },
+    {
+      "objectId": "DFdq9elg",
+      "objectType": "MANAGED_FOLDER"
     }
   ],
   "shared": [
