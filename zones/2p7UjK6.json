@@ -18,6 +18,10 @@
     {
       "objectId": "truncated_train",
       "objectType": "DATASET"
+    },
+    {
+      "objectId": "truncated_validation",
+      "objectType": "DATASET"
     }
   ],
   "position": {},
