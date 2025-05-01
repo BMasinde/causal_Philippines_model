@@ -22,6 +22,10 @@
     {
       "objectId": "truncated_validation",
       "objectType": "DATASET"
+    },
+    {
+      "objectId": "truncated_test",
+      "objectType": "DATASET"
     }
   ],
   "position": {},
