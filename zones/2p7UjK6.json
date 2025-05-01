@@ -19,12 +19,12 @@
       "objectType": "MANAGED_FOLDER"
     },
     {
-      "objectId": "compute_ZGOs5kwX",
-      "objectType": "RECIPE"
-    },
-    {
       "objectId": "ZGOs5kwX",
       "objectType": "MANAGED_FOLDER"
+    },
+    {
+      "objectId": "ass_trunc_reg_train_test",
+      "objectType": "RECIPE"
     }
   ],
   "shared": [
