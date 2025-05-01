@@ -2,7 +2,12 @@
   "name": "associational model",
   "color": "#C82423",
   "items": [],
-  "shared": [],
+  "shared": [
+    {
+      "objectId": "base_train",
+      "objectType": "DATASET"
+    }
+  ],
   "position": {},
   "tags": [],
   "customFields": {},
