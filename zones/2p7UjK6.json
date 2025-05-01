@@ -17,6 +17,14 @@
     {
       "objectId": "DFdq9elg",
       "objectType": "MANAGED_FOLDER"
+    },
+    {
+      "objectId": "compute_ZGOs5kwX",
+      "objectType": "RECIPE"
+    },
+    {
+      "objectId": "ZGOs5kwX",
+      "objectType": "MANAGED_FOLDER"
     }
   ],
   "shared": [
