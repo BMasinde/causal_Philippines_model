@@ -29,6 +29,14 @@
     {
       "objectId": "truncated_test",
       "objectType": "DATASET"
+    },
+    {
+      "objectId": "compute_ZGOs5kwX",
+      "objectType": "RECIPE"
+    },
+    {
+      "objectId": "ZGOs5kwX",
+      "objectType": "MANAGED_FOLDER"
     }
   ],
   "shared": [],
