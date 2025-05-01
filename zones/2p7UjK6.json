@@ -11,10 +11,6 @@
       "objectType": "RECIPE"
     },
     {
-      "objectId": "compute_DFdq9elg",
-      "objectType": "RECIPE"
-    },
-    {
       "objectId": "DFdq9elg",
       "objectType": "MANAGED_FOLDER"
     },
@@ -24,6 +20,10 @@
     },
     {
       "objectId": "ass_trunc_reg_train_test",
+      "objectType": "RECIPE"
+    },
+    {
+      "objectId": "ass_XGBOOST_base_train_test",
       "objectType": "RECIPE"
     }
   ],
