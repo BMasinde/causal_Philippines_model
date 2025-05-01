@@ -5,6 +5,10 @@
     {
       "objectId": "fZ8zhmA4",
       "objectType": "MANAGED_FOLDER"
+    },
+    {
+      "objectId": "compute_fZ8zhmA4",
+      "objectType": "RECIPE"
     }
   ],
   "shared": [
