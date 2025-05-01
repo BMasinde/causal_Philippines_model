@@ -6,6 +6,10 @@
     {
       "objectId": "base_train",
       "objectType": "DATASET"
+    },
+    {
+      "objectId": "base_test",
+      "objectType": "DATASET"
     }
   ],
   "position": {},
