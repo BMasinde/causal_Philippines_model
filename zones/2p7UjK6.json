@@ -1,7 +1,12 @@
 {
   "name": "associational model",
   "color": "#C82423",
-  "items": [],
+  "items": [
+    {
+      "objectId": "fZ8zhmA4",
+      "objectType": "MANAGED_FOLDER"
+    }
+  ],
   "shared": [
     {
       "objectId": "base_train",
