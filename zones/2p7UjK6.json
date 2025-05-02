@@ -25,6 +25,10 @@
     {
       "objectId": "ass_XGBOOST_trunc_reg_train_test",
       "objectType": "RECIPE"
+    },
+    {
+      "objectId": "K9arRZ6K",
+      "objectType": "MANAGED_FOLDER"
     }
   ],
   "shared": [
