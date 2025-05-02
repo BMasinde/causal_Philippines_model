@@ -158,6 +158,26 @@ conf_matrix <- confusionMatrix(as.factor(y_pred),
 print(conf_matrix)
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
+# confusion matrix by regions
+# Make sure the grouping variable is a factor
+# Make sure island_groups is a factor
+df_base_test$island_groups <- as.factor(df_base_test$island_groups)
+
+# Loop through each group and generate a confusion matrix
+for (grp in levels(df_base_test$island_groups)) {
+  
+  # Subset data for the current group
+  group_indices <- df_base_test$island_groups == grp
+  y_true_group <- df_base_test$damage_binary_2[group_indices]
+  y_pred_group <- y_pred[group_indices]
+  
+  # Generate and print confusion matrix
+  cat("Confusion Matrix for Island Group:", grp, "\n")
+  print(confusionMatrix(y_pred_group, y_true_group, positive = "Damage_above_10"))
+  cat("\n")
+}
+
+# -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 models_list[["base_clas_full_model"]]$bestTune
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
