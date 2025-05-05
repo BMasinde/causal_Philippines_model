@@ -31,7 +31,6 @@ names(models_n_functions_list) <- basename(rds_files)
 print(models_n_functions_list)
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
-# -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # Creating a function that generates a counterfactual dataset
 
 #' @title counterfactual_gen
@@ -128,7 +127,7 @@ ass_hurdle_function  <- models_n_functions_list$ass_hurdle_function
 ## clasification model extraction
 clas_model  <- models_n_functions_list$ass_XGBOOST_class
 
-## base regression model extraction 
+## base regression model extraction
 base_reg  <- models_n_functions_list$damage_fit_reg_base
 
 ## trunc regression model extraction
@@ -136,8 +135,8 @@ trunc_reg  <- models_n_functions_list$trunc_damage_fit_reg
 
 
 counterfactual_hurdle_preds  <- ass_hurdle_function(df = melor_2015,
-                                               ass_clas_model = clas_model, 
-                                                ass_base_model = base_reg, 
+                                               ass_clas_model = clas_model,
+                                                ass_base_model = base_reg,
                                                 ass_trunc_model = trunc_reg,
                                                threshold = 0.35 # threshold in train/test models is 0.35
                                                )
@@ -334,5 +333,25 @@ print(plots_list)
 print(median_list)
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
+# Counterfactual results for mapping
+counterfactual_results  <-  melor_2015 %>%
+    select(Mun_Code, damage_preds) %>%
+    rename("damage_preds_ass" = "damage_preds")
+
+# -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
+head(counterfactual_results)
+
+# -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # Recipe outputs
 ass_fixed_sec_hazards_counterfactuals <- dkuManagedFolderPath("V3ui5Jrj")
+
+# saving the counterfactual predictions
+
+# define full path
+output_path <- file.path(ass_fixed_sec_hazards_counterfactuals, "ass_counterfactuals_preds.csv")
+
+# Write the CSV file
+write.csv(counterfactual_results, output_path, row.names = FALSE)
+
+# -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
+write.csv?
