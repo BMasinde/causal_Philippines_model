@@ -124,6 +124,9 @@ melor_2015  <- counterfactual_gen(df = counterfactual_test_data,
 head(melor_2015)
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
+unique(melor_2015$rain_total)
+
+# -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # extracting the hurdle function from the list of models and functions
 hurdle_function  <- models_n_functions_list$hurdle_function
 
@@ -214,6 +217,9 @@ ggplot(melor_2015, aes(x = factor(island_groups), y = damage_preds)) +
   geom_boxplot()
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
+print(melor_2015$damage_preds)
+
+# -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # Finding similar municipalities
 # get unique municipality observations
 mun_properties  <- counterfactual_test_data %>%
@@ -278,7 +284,7 @@ all_numeric <- all_data %>% select(-Mun_Code, -island_groups, -region)
 
 # Perform clustering
 set.seed(123)  # For reproducibility
-k <- 10  # Number of clusters (adjust as needed)
+k <- 5  # Number of clusters (adjust as needed)
 clusters <- kmeans(all_numeric, centers = k, nstart = 25)
 
 # Add cluster assignments back to the data
@@ -394,5 +400,19 @@ print(plots_list)
 print(median_list)
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
+# Counterfactual results for mapping
+counterfactual_results  <-  melor_2015 %>%
+    select(Mun_Code, damage_preds) %>%
+    rename("damage_preds_adj_scm" = "damage_preds")
+
+# -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # Recipe outputs
 fixed_sec_haz_counterfactuals <- dkuManagedFolderPath("agFjkxtc")
+
+# saving the counterfactual predictions
+
+# define full path
+output_path <- file.path(fixed_sec_haz_counterfactuals, "adj_scm_counterfactuals_preds.csv")
+
+# Write the CSV file
+write.csv(counterfactual_results, output_path, row.names = FALSE)
