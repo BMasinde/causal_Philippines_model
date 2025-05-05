@@ -1,7 +1,16 @@
 {
   "name": "associational_counterfactuals",
   "color": "#F9BE40",
-  "items": [],
+  "items": [
+    {
+      "objectId": "K9arRZ6K",
+      "objectType": "MANAGED_FOLDER"
+    },
+    {
+      "objectId": "ass_hurdle_predictions_recipe",
+      "objectType": "RECIPE"
+    }
+  ],
   "shared": [
     {
       "objectId": "base_data_regions",
