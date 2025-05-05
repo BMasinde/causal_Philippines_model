@@ -9,6 +9,14 @@
     {
       "objectId": "ass_hurdle_predictions_recipe",
       "objectType": "RECIPE"
+    },
+    {
+      "objectId": "compute_V3ui5Jrj",
+      "objectType": "RECIPE"
+    },
+    {
+      "objectId": "V3ui5Jrj",
+      "objectType": "MANAGED_FOLDER"
     }
   ],
   "shared": [
