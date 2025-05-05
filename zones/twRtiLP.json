@@ -10,6 +10,10 @@
     {
       "objectId": "K9arRZ6K",
       "objectType": "MANAGED_FOLDER"
+    },
+    {
+      "objectId": "counterfactual_test_data",
+      "objectType": "DATASET"
     }
   ],
   "position": {},
