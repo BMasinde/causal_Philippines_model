@@ -352,6 +352,3 @@ output_path <- file.path(ass_fixed_sec_hazards_counterfactuals, "ass_counterfact
 
 # Write the CSV file
 write.csv(counterfactual_results, output_path, row.names = FALSE)
-
-# -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
-write.csv?
