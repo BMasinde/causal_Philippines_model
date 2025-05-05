@@ -238,7 +238,7 @@ all_numeric <- all_data %>% select(-Mun_Code, -island_groups, -region)
 
 # Perform clustering
 set.seed(123)  # For reproducibility
-k <- 10  # Number of clusters (adjust as needed)
+k <- 5  # Number of clusters (adjust as needed)
 clusters <- kmeans(all_numeric, centers = k, nstart = 25)
 
 # Add cluster assignments back to the data
@@ -336,7 +336,7 @@ for (i in seq_along(cleaned_list)) {
 
   # Save the means in the list
   means_list[[i]] <- mean_values
-  
+
   # Calculate median of the damage_preds for each island groups
   median_values  <- merged_data %>%
     group_by(island_groups) %>%
