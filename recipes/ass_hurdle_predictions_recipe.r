@@ -79,7 +79,6 @@ assPredictDamage <- function(df, ass_clas_model, ass_base_model, ass_trunc_model
 }
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
-
 # predicting on base test set data
 ## because we already implemented the hurdle method
 df_test <- bind_rows(
@@ -163,4 +162,17 @@ mlflow_end_run()
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # Recipe outputs
-ass_hurdle_predictions <- dkuManagedFolderPath("K9arRZ6K")
+ass_hurdle_folder_path <- dkuManagedFolderPath("K9arRZ6K")
+
+# save hurdle function as .rds file
+saveRDS(assPredictDamage, file = paste0(ass_hurdle_folder_path, "/", "ass_hurdle_function.rds"))
+
+# save the models required by the hurdle function
+## saving the classification model
+saveRDS(clas_model, file = paste0(ass_hurdle_folder_path, "/", "ass_XGBOOST_class.rds"))
+
+# saving the base regression model
+saveRDS(base_reg, file = paste0(ass_hurdle_folder_path, "/", "damage_fit_reg_base.rds"))
+
+# saving the truncated regression model
+saveRDS(trunc_reg, file = paste0(ass_hurdle_folder_path, "/", "trunc_damage_fit_reg.rds"))
