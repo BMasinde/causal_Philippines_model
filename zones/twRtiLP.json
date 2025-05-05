@@ -6,6 +6,10 @@
     {
       "objectId": "base_data_regions",
       "objectType": "DATASET"
+    },
+    {
+      "objectId": "K9arRZ6K",
+      "objectType": "MANAGED_FOLDER"
     }
   ],
   "position": {},
